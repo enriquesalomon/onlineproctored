@@ -299,19 +299,14 @@
             </ul>
           </li>
         
-          <li class="nav-header">MISCELLANEOUS</li>
+          <li class="nav-header">Exit</li>
           <li class="nav-item">
             <a href="iframe.html" class="nav-link">
-              <i class="nav-icon fas fa-ellipsis-h"></i>
-              <p>Tabbed IFrame Plugin</p>
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>Logout</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="https://adminlte.io/docs/3.1/" class="nav-link">
-              <i class="nav-icon fas fa-file"></i>
-              <p>Documentation</p>
-            </a>
-          </li>
+         
         
          
           
