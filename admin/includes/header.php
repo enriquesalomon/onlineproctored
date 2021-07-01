@@ -25,6 +25,30 @@
   <link rel="stylesheet" href="assets/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="assets/plugins/summernote/summernote-bs4.min.css">
+  <style>
+    .main-sidebar { background-color: rgb(65,177,91) !important }
+   .nav-header {
+    background-color: inherit;
+    color: #FFFFFF !important;
+    
+   }
+   .d-block{
+    background-color: inherit;
+    color: #FFFFFF !important;
+    
+   }
+   .nav-item p {
+    background-color: inherit;
+    color: #FFFFFF !important;
+    
+   }
+   .brand-text{
+    background-color: inherit;
+    color: #FFFFFF !important;
+    
+   }
+}
+  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
