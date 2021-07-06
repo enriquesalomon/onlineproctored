@@ -32,6 +32,7 @@
   <link rel="stylesheet" href="assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="toastr/css/toastr.min.css">
 
   <style>
     .main-sidebar { background-color: rgb(65,177,91) !important }
@@ -58,5 +59,4 @@
 }
   </style>
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
-<div class="wrapper">
+

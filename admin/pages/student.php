@@ -56,7 +56,7 @@ include('../includes/topbar.php');
  <!-- Main Sidebar Container -->
  <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="#" class="brand-link">
       <img src="../assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">Admin</span>
     </a>
@@ -101,10 +101,42 @@ include('../includes/topbar.php');
               </p>
             </a>
           </li>
+
+          
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-folder-open"></i>
+              <p>
+                OPE
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="./exam.php" class="nav-link">
+                  <i class="far fa-file nav-icon"></i>
+                  <p>Exam</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="./quiz.php" class="nav-link">
+                  <i class="far fa-file nav-icon"></i>
+                  <p>Quiz</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/mailbox/materials.php" class="nav-link">
+                  <i class="far fa-file nav-icon"></i>
+                  <p>Materials for Study</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+         
          
           <li class="nav-item menu-open">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-envelope"></i>
+              <i class="nav-icon far fa-user-circle"></i>
               <p>
                 Admission
                 <i class="fas fa-angle-left right"></i>
@@ -113,13 +145,13 @@ include('../includes/topbar.php');
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="student.php" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-user-circle nav-icon"></i>
                   <p>Student</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="gradelevel.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="far fa-file nav-icon"></i>
                   <p>Grade Level</p>
                 </a>
               </li>

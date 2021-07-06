@@ -1,5 +1,4 @@
-</div>
-  <!-- /.content-wrapper -->
+
   <footer class="main-footer">
     <strong>Copyright &copy; Online Proctored Exam</strong>
     All rights reserved.
@@ -50,5 +49,6 @@
 <script src="assets/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="assets/dist/js/pages/dashboard.js"></script>
+<script src="toastr/js/toastr.min.js"></script>
 </body>
 </html>

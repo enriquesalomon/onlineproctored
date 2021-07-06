@@ -6,9 +6,10 @@ session_start();
 $username = "";
 $errors = array();
 
-$db = mysqli_connect('localhost', 'user', '123456');
+$db = mysqli_connect('localhost', 'root', '123456','ope');
 
-if (isset($_POST['admin_login'])) {
+
+if (isset($_POST['user_login'])) {
 
 $username = mysqli_real_escape_string($db, $_POST['username']);
 
@@ -30,7 +31,7 @@ if (count($errors) == 0) {
 
 $password = $password;
 
-$query = "SELECT * FROM franchisees WHERE username='$username' AND password='$password'";
+$query = "SELECT * FROM user WHERE username='$username' AND password='$password'";
 
 $results = mysqli_query($db, $query);
 if (mysqli_num_rows($results) == 1) {
@@ -38,30 +39,8 @@ if (mysqli_num_rows($results) == 1) {
 
 $_SESSION['username'] = $username;
 $_SESSION['success'] = " ".$username."!";
+header('location: index.php');
 
-
-$get1row=mysqli_query($db,"select * from franchisees where username='$username' and password='$password'");
-$get1row=mysqli_fetch_array($get1row);
-
-
-$usertype=$get1row['user_type'];
-$status=$get1row['status'];
-
-
-if($usertype=="OUTLET"){
-   
-    $_SESSION['user_type_outlet']=$get1row['user_type'];
-     $_SESSION['outletid'] =$get1row['franchiseeid']; 
-      $_SESSION['franchiseeid'] =$get1row['from_franchisee_head_id']; 
-  if($status=="ACTIVE"){ header('location: home_outlet.php');}else{header('location: login.php');}
-       
-   
-}elseif($usertype=="FRANCHISEE"){
-    $_SESSION['user_type_franchisee']="FRANCHISEE";
-     $_SESSION['outletid']=0;
-    $_SESSION['franchiseeid'] =$get1row['franchiseeid']; 
-    header('location: home.php');
-}
 
 }else {
 

@@ -103,7 +103,7 @@ include('../includes/topbar.php');
           </li>
 
           
-          <li class="nav-item">
+          <li class="nav-item menu-open">
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-folder-open"></i>
               <p>
@@ -119,7 +119,7 @@ include('../includes/topbar.php');
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./quiz.php" class="nav-link">
+                <a href="./quiz.php" class="nav-link active">
                   <i class="far fa-file nav-icon"></i>
                   <p>Quiz</p>
                 </a>
@@ -134,9 +134,9 @@ include('../includes/topbar.php');
           </li>
          
          
-          <li class="nav-item menu-open">
+          <li class="nav-item">
             <a href="#" class="nav-link">
-            <i class="nav-icon far fa-user-circle"></i>
+              <i class="nav-icon far fa-envelope"></i>
               <p>
                 Admission
                 <i class="fas fa-angle-left right"></i>
@@ -145,13 +145,13 @@ include('../includes/topbar.php');
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="student.php" class="nav-link">
-                  <i class="fas fa-user-circle nav-icon"></i>
+                  <i class="fas fa-circle nav-icon"></i>
                   <p>Student</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="gradelevel.php" class="nav-link active">
-                  <i class="far fa-file nav-icon"></i>
+                <a href="gradelevel.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
                   <p>Grade Level</p>
                 </a>
               </li>
@@ -184,12 +184,12 @@ include('../includes/topbar.php');
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Manage Grade Level</h1>
+            <h1>Manage Quiz</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Grade Level List</li>
+              <li class="breadcrumb-item active">Quiz List</li>
             </ol>
           </div>
         </div>
@@ -197,10 +197,11 @@ include('../includes/topbar.php');
     </section>
 
     <!-- Main content -->
+    
     <section class="content">
        <div class="container-fluid">
-       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-gradelevel">Add Grade Level</button>
-   
+       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-quiz">Add Quiz</button>
+
         <div class="row">
           <div class="col-12">
            
@@ -708,4 +709,5 @@ include('../includes/topbar.php');
 </script>
 </body>
 </html>
-<?php include 'modal-add-gradelevel.php'?>
+
+<?php include 'modal-add-quiz.php'?>
