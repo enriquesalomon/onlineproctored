@@ -1,3 +1,15 @@
+<?php
+@ob_start();
+session_start();
+if ( isset( $_SESSION['username'])) {
+$username=$_SESSION['username'];
+
+} else {
+    header('location: index.php');
+}
+include('dbconnect.php');
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -195,7 +207,18 @@ include('../includes/topbar.php');
         </div>
       </div><!-- /.container-fluid -->
     </section>
+    <?php
+if ( isset( $_SESSION['studentadded']) ) {
+include('toast-add.php');
+}
+if ( isset( $_SESSION['error']) ) {
+  include('toast-error.php');
+  }
 
+unset($_SESSION['studentadded']);
+unset($_SESSION['error']);
+
+?> 
     <!-- Main content -->
     
     <section class="content">
@@ -709,5 +732,7 @@ include('../includes/topbar.php');
 </script>
 </body>
 </html>
+<?php
+include 'modal-add-student.php';
+?>
 
-<?php include 'modal-add-student.php'?>

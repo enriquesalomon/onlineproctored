@@ -52,6 +52,7 @@
     <?php
   // If upload button is clicked ...
   if (isset($_POST['save'])) {
+ 
     include 'dbconnect.php';
 
  
@@ -66,7 +67,8 @@
             if($erow>0) {
                     // $_SESSION["username_taken"]="duplicate";
                     //  
-                       exit();
+                    $_SESSION["error"]="error";
+                    header('location:gradelevel.php');
                       }      
             }
 
@@ -74,8 +76,9 @@
         if (!mysqli_query($conn, $sql)) {
             echo("Error description: " . mysqli_error($conn));
                 }else{
-                      $_SESSION["gradeleveladded"]="gradeleveladded";
+                      $_SESSION["gradeleveladded"]="add";
                       header('location:gradelevel.php');
+                      
                 }
 
   }

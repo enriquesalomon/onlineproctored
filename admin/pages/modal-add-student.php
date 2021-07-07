@@ -62,7 +62,7 @@
 							<label class="control-label" style="position:relative; top:7px;">Address:</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" name="streetname"required>
+							<textarea id="address" class="form-control" rows="2" name="address"required>Complete Address</textarea>
 						</div>
 					</div>
 								<div style="height:10px;"></div>
