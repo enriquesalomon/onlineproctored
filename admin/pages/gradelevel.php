@@ -1,3 +1,14 @@
+<?php
+@ob_start();
+session_start();
+if ( isset( $_SESSION['username'])) {
+$username=$_SESSION['username'];
+
+} else {
+    header('location: index.php');
+}
+include('dbconnect.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -195,7 +206,14 @@ include('../includes/topbar.php');
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
+    <?php
+    if ( isset( $_SESSION['gradeleveladded']) ) {
+     include('toast-add.php');
+    }   
+    unset($_SESSION['gradeleveladded']);    
+    
+?>
+    <?php include 'modal-add-gradelevel.php'?>
     <!-- Main content -->
     <section class="content">
        <div class="container-fluid">
@@ -708,4 +726,3 @@ include('../includes/topbar.php');
 </script>
 </body>
 </html>
-<?php include 'modal-add-gradelevel.php'?>
