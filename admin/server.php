@@ -29,17 +29,25 @@ array_push($errors, "Password is required.");
 
 if (count($errors) == 0) {
 
+
+$query=mysqli_query($db,"SELECT * FROM user WHERE username='$username' AND password='$password'");
+while($row=mysqli_fetch_array($query)){
+     $_SESSION['nickname']  =  $row['nickname'];
+}
+    
+
 $password = $password;
-
 $query = "SELECT * FROM user WHERE username='$username' AND password='$password'";
-
 $results = mysqli_query($db, $query);
 if (mysqli_num_rows($results) == 1) {
     
 
 $_SESSION['username'] = $username;
 $_SESSION['success'] = " ".$username."!";
+
 header('location: index.php');
+
+
 
 
 }else {

@@ -3,6 +3,7 @@
 session_start();
 if ( isset( $_SESSION['username']) ) {
 $username=$_SESSION['username'];
+$nickname=$_SESSION['nickname'];
 if ( isset( $_SESSION['success']) ) {
 $successmsg=$_SESSION['success'];
 include 'toast-welcome.php';
