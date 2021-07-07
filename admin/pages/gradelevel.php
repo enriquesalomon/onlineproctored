@@ -241,6 +241,7 @@ include 'modal-add-gradelevel.php';
                     <th>ID</th>
                     <th>Grade Level</th>
                     <th>Section</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -257,7 +258,12 @@ include 'modal-add-gradelevel.php';
                 <tr>
                 <td><?php echo $id; ?></td>
                 <td><?php echo $gradelevel; ?></td>
-                <td><?php echo $section; ?></td>                      
+                <td><?php echo $section; ?></td>       
+                <td><?php 
+                   echo '     <button type="button" class="btn btn-block bg-gradient-info btn-xs">Edit</button>'; 
+                   echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs">Delete</button>';
+                   ?>
+               </td>                  
                 </tr> 
 <?php
 }                      

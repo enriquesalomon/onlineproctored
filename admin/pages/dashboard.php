@@ -29,8 +29,15 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+<?php
+include('dbconnect.php');
 
+$query=mysqli_query($conn,"select count(*) as num from exam");
+while($row=mysqli_fetch_array($query)){
+?>
+
+                <h3><?php echo ($row['num']);?></h3>
+<?php }?>
                 <p>Total Exam</p>
               </div>
               <div class="icon">
@@ -44,7 +51,14 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+              <?php
+include('dbconnect.php');
+
+$query=mysqli_query($conn,"select count(*) as num from quiz");
+while($row=mysqli_fetch_array($query)){
+?>                
+                <h3><?php echo ($row['num']);?></h3>
+<?php }?>
 
                 <p>Total Quiz</p>
               </div>
@@ -59,7 +73,14 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+              <?php
+include('dbconnect.php');
+
+$query=mysqli_query($conn,"select count(*) as num from student");
+while($row=mysqli_fetch_array($query)){
+?>                      
+             <h3><?php echo ($row['num']);?></h3>
+<?php }?>
 
                 <p>Total Student</p>
               </div>
@@ -83,8 +104,7 @@
               </div>
               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" onclick='success_toast()'  data-target="#add-exam">toast</button>
-
+           
           </div>
           <!-- ./col -->
         </div>

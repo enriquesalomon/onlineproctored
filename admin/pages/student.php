@@ -256,19 +256,18 @@ unset($_SESSION['error']);
                 <?php 
                 $id=$getrow['id'];
                 $fullname=$getrow['firstname'] .' '.$getrow['middlename'] .' '.$getrow['lastname'];
-                $gradesection=$getrow['gradesection'];
-
-                $query = mysqli_query($conn,"SELECT * FROM gradelevel where id='$gradesection'");
-                while ($result = mysqli_fetch_array($query)) {
-                  $gradesection= $result['gradelevel']. ' ' .$result['section'];
-                }
+                $gradesection=$getrow['gradesection'];             
 
                 $contact=$getrow['contact'];     
                 $email=$getrow['email'];
                 $address=$getrow['address'];   
                 $opeusername=$getrow['opeusername'];
                 $opepassword=$getrow['opepassword'];   
-                $dateadded=$getrow['dateaddedd'];              
+                $dateadded=$getrow['dateaddedd'];   
+                
+                $getrow1=mysqli_query($conn,"SELECT * FROM gradelevel where id='$gradesection'");
+                $getrow1=mysqli_fetch_array($getrow1);
+                 $gradesection=$getrow1['gradelevel'].' '.$getrow1['section'];
                 ?>             
                 <tr>
                 <td><?php echo $id; ?></td>

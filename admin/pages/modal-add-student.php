@@ -15,7 +15,7 @@
 							<label class="control-label" style="position:relative; top:7px;">Grade & Section:</label>
 						</div>
 						<div class="col-lg-8">
-                            <select name="grade" id="grade" class="form-control custom-select">
+                            <select name="grade" id="grade" class="form-control custom-select" required>
                             <option selected value="" disabled>Select Grade & Section</option>
                           <?php
                                   include('dbconnect.php'); 
@@ -120,8 +120,7 @@
             </div>
         </div>
     </div>
-	<?php
-  // If upload button is clicked ...
+	<?php 
   if (isset($_POST['save'])) {
  
     include 'dbconnect.php';
