@@ -5,7 +5,7 @@ if ( isset( $_SESSION['username']) ) {
 $username=$_SESSION['username'];
 if ( isset( $_SESSION['success']) ) {
 $successmsg=$_SESSION['success'];
-//include 'toast.php';
+include 'toast-welcome.php';
 }
 unset($_SESSION['success']);
 } else {

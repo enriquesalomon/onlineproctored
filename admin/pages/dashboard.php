@@ -1,4 +1,4 @@
-<body class="hold-transition sidebar-mini layout-fixed" onload='success_toast()'>
+<body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -83,7 +83,7 @@
               </div>
               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal"  data-target="#add-exam">toast</button>
+            <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" onclick='success_toast()'  data-target="#add-exam">toast</button>
 
           </div>
           <!-- ./col -->
@@ -99,8 +99,18 @@
   </div>
   <!-- /.content-wrapper -->
   <script>
-    toastr.options = {
-  "preventDuplicates": true,
+    
+
+function  success_toast(){     
+  Command: toastr["success"]("My name is Inigo Montoya. You killed my father. Prepare to die!")
+
+toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-top-right",
+  "preventDuplicates": false,
   "onclick": null,
   "showDuration": "300",
   "hideDuration": "1000",
@@ -111,12 +121,7 @@
   "showMethod": "fadeIn",
   "hideMethod": "fadeOut"
 }
-$(document).ready(function() {
-  success_toast(){
-      if ($successmsg=="success"){        
-      toastr.success("success message");
-      }
-});
+}
  
 
   </script>
