@@ -279,11 +279,14 @@ unset($_SESSION['error']);
                 <td><?php echo $opeusername; ?></td>  
                 <td><?php echo $opepassword; ?></td>
                 <td><?php echo $dateadded; ?></td>     
-                <td><?php 
-                   echo '     <button type="button" class="btn btn-block bg-gradient-info btn-xs" data-toggle="modal" data-target="#edit-student">Edit</button>'; 
+                <td>
+                 
+                <a href="#edit<?php echo $id; ?>" data-toggle="modal" class="btn btn-block bg-gradient-info btn-xs"><i class="fas fa-user-trash"></i> Delete</a></br> 
+                <?php 
+                   echo '  <a href="#edit<?php echo $id; ?>" data-toggle="modal" class="btn btn-block bg-gradient-info btn-xs"><i class="fas fa-user-edit"></i> Edit</a></br> '; 
                    echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs">Delete</button>';
                    ?>
-                  
+  
                </td>              
                 </tr> 
               <?php
