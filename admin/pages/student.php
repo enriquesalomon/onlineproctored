@@ -280,9 +280,10 @@ unset($_SESSION['error']);
                 <td><?php echo $opepassword; ?></td>
                 <td><?php echo $dateadded; ?></td>     
                 <td><?php 
-                   echo '     <button type="button" class="btn btn-block bg-gradient-info btn-xs">Edit</button>'; 
+                   echo '     <button type="button" class="btn btn-block bg-gradient-info btn-xs" data-toggle="modal" data-target="#edit-student">Edit</button>'; 
                    echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs">Delete</button>';
                    ?>
+                  
                </td>              
                 </tr> 
               <?php
@@ -363,5 +364,6 @@ unset($_SESSION['error']);
 </html>
 <?php
 include 'modal-add-student.php';
+include 'modal-edit-student.php';
 ?>
 

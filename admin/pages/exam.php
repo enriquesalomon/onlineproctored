@@ -239,7 +239,7 @@ unset($_SESSION['error']);
                   <th>Id</th>
                     <th>Grade & Section</th>
                     <th>Time Limit</th>
-                    <th>Question Limit(mins)</th>
+                    <th>Question Limit(secs)</th>
                     <th>Exam Title</th>
                     <th>Exam Description</th>
                     <th>Date Added</th>

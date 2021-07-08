@@ -238,7 +238,7 @@ unset($_SESSION['error']);
                   <th>Id</th>
                     <th>Grade & Section</th>
                     <th>Time Limit</th>
-                    <th>Question Limit(mins)</th>
+                    <th>Question Limit(secs)</th>
                     <th>Quiz Title</th>
                     <th>Quiz Description</th>
                     <th>Action</th>
