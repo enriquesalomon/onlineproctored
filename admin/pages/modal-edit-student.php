@@ -15,7 +15,7 @@
 							<label class="control-label" style="position:relative; top:7px;">Grade & Section:</label>
 						</div>
 						<div class="col-lg-8">
-                            <select name="grade" id="grade" class="form-control custom-select" required>
+                            <select name="grade" id="" class="form-control custom-select" required>
                             <option selected value="" disabled>Select Grade & Section</option>
                           <?php
                                   include('dbconnect.php'); 
@@ -82,7 +82,7 @@
 							<label class="control-label" style="position:relative; top:7px;">Address:</label>
 						</div>
 						<div class="col-lg-8">
-							<textarea id="address" class="form-control" rows="2" name="address"required></textarea>
+							<textarea id="" class="form-control" rows="2" name="address"required></textarea>
 						</div>
 					</div>
 								<div style="height:10px;"></div>

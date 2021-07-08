@@ -27,6 +27,7 @@ include('dbconnect.php');
   <link rel="stylesheet" href="../assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../assets/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <style>
     .main-sidebar { background-color: rgb(65,177,91) !important }
    .nav-header {
@@ -280,12 +281,20 @@ unset($_SESSION['error']);
                 <td><?php echo $opepassword; ?></td>
                 <td><?php echo $dateadded; ?></td>     
                 <td>
+                 <?php 
+                  echo "<a href='#edit".$id."' data-toggle='modal' class='btn btn-block bg-gradient-info btn-xs'><i class='fas fa-user'></i> Edit</a>";
+              
+                 echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs">Delete</button>';
                  
-                <a href="#edit<?php echo $id; ?>" data-toggle="modal" class="btn btn-block bg-gradient-info btn-xs"><i class="fas fa-user-trash"></i> Delete</a></br> 
-                <?php 
-                   echo '  <a href="#edit<?php echo $id; ?>" data-toggle="modal" class="btn btn-block bg-gradient-info btn-xs"><i class="fas fa-user-edit"></i> Edit</a></br> '; 
-                   echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs">Delete</button>';
+                 
                    ?>
+
+                <?php
+                 
+                    echo " <button  type='button' name='submitreport_approve'  class='btn btn-block btn-success btn-lg submitreport_approve'> Approve Report to Replenish Wallet</button>
+                  <button  type='button' name='submitreport_disapprove'  class='btn btn-block btn-danger btn-lg submitreport_disapprove'> Disapprove Report</button>";
+                 
+                 ?>
   
                </td>              
                 </tr> 
@@ -346,6 +355,10 @@ unset($_SESSION['error']);
 <!-- AdminLTE for demo purposes -->
 <script src="../assets/dist/js/demo.js"></script>
 <!-- Page specific script -->
+
+<script src="	https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 <script>
   $(function () {
     $("#example1").DataTable({
@@ -363,8 +376,163 @@ unset($_SESSION['error']);
     });
   });
 </script>
+<script>
+
+
+$(document).ready(function(){
+  $('.submitreport_approve').on('click', function(){
+
+      $('#approvesummaryreport').modal('show');
+
+        $tr =$(this).closest('tr');
+
+        var data=$tr.children("td").map(function(){
+          return $(this).text();
+        }).get();
+
+
+       
+
+
+  });
+});
+
+</script>
 </body>
 </html>
+
+
+
+
+
+
+
+<!-- Add New -->
+<div class="modal fade" id="approvesummaryreport"tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    
+                    <center><h4 class="modal-title" id="myModalLabel">Edit Student</h4></center>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+				<div class="container-fluid">
+				<form method="POST" action="student.php"enctype="multipart/form-data">				
+				<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Grade & Section:</label>
+						</div>
+						<div class="col-lg-8">
+                            <select name="grade" id="" class="form-control custom-select" required>
+                            <option selected value="" disabled>Select Grade & Section</option>
+                          <?php
+                                  include('dbconnect.php'); 
+                          $query = mysqli_query($conn,"SELECT * FROM gradelevel");
+
+                          while ($result = mysqli_fetch_array($query)) {
+                          echo "<option value=" .$result['id']. ">" .$result['gradelevel'].' '.$result['section']."</option>";
+                          }
+                          ?>
+                          </select>
+						</div>
+					</div>
+					
+					<div style="height:10px;"></div>
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Firstname:</label>
+						</div>
+						<div class="col-lg-8">
+							<input type="text" class="form-control" name="firstname"required>
+						</div>
+					</div>
+					<div style="height:10px;"></div>
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Middle:</label>
+						</div>
+							<div style="height:10px;"></div>
+						<div class="col-lg-8">
+							<input type="text" class="form-control" name="middlename"required>
+						</div>
+					</div>
+					<div style="height:10px;"></div>
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Lastname:</label>
+						</div>
+						<div class="col-lg-8">
+							<input type="text" class="form-control" name="lastname"required>
+						</div>
+					</div>
+						<div style="height:10px;"></div>
+						
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Contact:</label>
+						</div>
+						<div class="col-lg-8">
+							<input type="text" class="form-control" name="contactno"required>
+						</div>
+					</div>
+								<div style="height:10px;"></div>
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Email:</label>
+						</div>
+						<div class="col-lg-8">
+							<input type="email" class="form-control" name="email"required>
+						</div>
+					</div>
+									<div style="height:10px;"></div>				
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Address:</label>
+						</div>
+						<div class="col-lg-8">
+							<textarea id="" class="form-control" rows="2" name="address"required></textarea>
+						</div>
+					</div>
+								<div style="height:10px;"></div>
+				
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">OPE Username:</label>
+						</div>
+						<div class="col-lg-8">
+							<input type="text" class="form-control" name="username"required>
+						</div>
+					</div>
+
+									<div style="height:10px;"></div>
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">OPE Password:</label>
+						</div>
+						<div class="col-lg-8">
+							<input type="text" class="form-control" name="password"required>
+						</div>
+					</div>
+					   <div style="height:10px;"></div>                     
+                
+					
+                </div> 
+				</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                    <button type="submit"name="save" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
+                    	
+				</form>
+                </div>
+				
+            </div>
+        </div>
+    </div>
+	
+
+
+
 <?php
 include 'modal-add-student.php';
 include 'modal-edit-student.php';
