@@ -212,11 +212,21 @@ include('../includes/topbar.php');
 if ( isset( $_SESSION['studentadded']) ) {
 include('toast-add.php');
 }
+if ( isset( $_SESSION['studentedited']) ) {
+  include('toast-edited.php');
+  }
+if ( isset( $_SESSION['studentdeleted']) ) {
+  include('toast-deleted.php');
+  }
+  
+
 if ( isset( $_SESSION['error']) ) {
   include('toast-error.php');
   }
 
 unset($_SESSION['studentadded']);
+unset($_SESSION['studentedited']);
+unset($_SESSION['studentdeleted']);
 unset($_SESSION['error']);
 
 ?> 
@@ -236,8 +246,12 @@ unset($_SESSION['error']);
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>ID</th>
+                    <th hidden>ID</th>
+                    <th hidden>Fname</th>
+                    <th hidden>Mname</th>
+                    <th hidden>Lname</th>
                     <th>Fullname</th>
+                    <th hidden>IDGradeSection</th>
                     <th>Grade & Section</th>
                     <th>Contact#</th>
                     <th>Email</th>
@@ -256,8 +270,12 @@ unset($_SESSION['error']);
                 ?>
                 <?php 
                 $id=$getrow['id'];
+                $fname=$getrow['firstname'];
+                $mname=$getrow['middlename'];
+                $lname=$getrow['lastname'];
+
                 $fullname=$getrow['firstname'] .' '.$getrow['middlename'] .' '.$getrow['lastname'];
-                $gradesection=$getrow['gradesection'];             
+                $gradesectionid=$getrow['gradesection'];             
 
                 $contact=$getrow['contact'];     
                 $email=$getrow['email'];
@@ -266,13 +284,17 @@ unset($_SESSION['error']);
                 $opepassword=$getrow['opepassword'];   
                 $dateadded=$getrow['dateaddedd'];   
                 
-                $getrow1=mysqli_query($conn,"SELECT * FROM gradelevel where id='$gradesection'");
+                $getrow1=mysqli_query($conn,"SELECT * FROM gradelevel where id='$gradesectionid'");
                 $getrow1=mysqli_fetch_array($getrow1);
                  $gradesection=$getrow1['gradelevel'].' '.$getrow1['section'];
                 ?>             
                 <tr>
-                <td><?php echo $id; ?></td>
+                <td hidden><?php echo $id; ?></td>
+                <td hidden ><?php echo $fname; ?></td>
+                <td hidden><?php echo $mname; ?></td>
+                <td hidden><?php echo $lname; ?></td>
                 <td><?php echo $fullname; ?></td>
+                <td hidden><?php echo $gradesectionid; ?></td>
                 <td><?php echo $gradesection; ?></td>                
                 <td><?php echo $contact; ?></td>   
                 <td><?php echo $email; ?></td>
@@ -282,19 +304,14 @@ unset($_SESSION['error']);
                 <td><?php echo $dateadded; ?></td>     
                 <td>
                  <?php 
-                  echo "<a href='#edit".$id."' data-toggle='modal' class='btn btn-block bg-gradient-info btn-xs'><i class='fas fa-user'></i> Edit</a>";
-              
-                 echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs">Delete</button>';
+                 
+                  echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
+                 echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletestudent">Delete</button>';
                  
                  
                    ?>
 
-                <?php
-                 
-                    echo " <button  type='button' name='submitreport_approve'  class='btn btn-block btn-success btn-lg submitreport_approve'> Approve Report to Replenish Wallet</button>
-                  <button  type='button' name='submitreport_disapprove'  class='btn btn-block btn-danger btn-lg submitreport_disapprove'> Disapprove Report</button>";
-                 
-                 ?>
+               
   
                </td>              
                 </tr> 
@@ -380,9 +397,9 @@ unset($_SESSION['error']);
 
 
 $(document).ready(function(){
-  $('.submitreport_approve').on('click', function(){
+  $('.editbtn').on('click', function(){
 
-      $('#approvesummaryreport').modal('show');
+      $('#editmodal').modal('show');
 
         $tr =$(this).closest('tr');
 
@@ -390,6 +407,17 @@ $(document).ready(function(){
           return $(this).text();
         }).get();
 
+        $('#id').val(data[0]);      
+          $('#fname').val(data[1]);
+         
+          $('#mname').val(data[2]);
+          $('#lname').val(data[3]);
+          $('#gradeedit').val(data[5]);
+          $('#contact').val(data[7]);
+          $('#email').val(data[8]);
+          $('#addressedit').val(data[9]);
+          $('#username').val(data[10]);
+          $('#password').val(data[11]);
 
        
 
@@ -397,18 +425,72 @@ $(document).ready(function(){
   });
 });
 
+$(document).ready(function(){
+  $('.deletebtn').on('click', function(){
+
+      $('#deletemodal').modal('show');
+
+        $tr =$(this).closest('tr');
+
+        var data=$tr.children("td").map(function(){
+          return $(this).text();
+        }).get();
+
+        $('#iddelete').val(data[0]);  
+        $('#fullname').val(data[1] +' ' +data[2]+' ' +data[3]);       
+       
+  });
+});
+
+
 </script>
 </body>
 </html>
 
 
+<!--modal delete student -->
+<div id="deletemodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal-dialog modal-md" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<form action="query-delete.php" method="POST">
+<div class="modal-body">
+ <center><h6>Are you sure you want to delete this record?</h6> </center>
+<input type="hidden" name="iddelete" id="iddelete">
+<div style="height:10px;"></div>
+					<div class="row">
+						<div class="col-lg-2">
+							<label class="control-label" style="position:relative; top:7px;">Fullname:</label>
+						</div>
+						<div class="col-lg-10">
+							<input type="text" id="fullname" class="form-control" name="fullname"required readonly>
+						</div>
+					</div>
+					<div style="height:10px;"></div>
+</div>
 
+
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+<button type="submit" name="deletestudent" class="btn btn-primary">Yes</button>
+</div>       
+</form>
+
+
+</div>
+</div>
+</div>
 
 
 
 
 <!-- Add New -->
-<div class="modal fade" id="approvesummaryreport"tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="editmodal"tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
@@ -418,13 +500,14 @@ $(document).ready(function(){
                 </div>
                 <div class="modal-body">
 				<div class="container-fluid">
-				<form method="POST" action="student.php"enctype="multipart/form-data">				
+				<form method="POST" action="query-edit.php" enctype="multipart/form-data">				
 				<div class="row">
 						<div class="col-lg-4">
 							<label class="control-label" style="position:relative; top:7px;">Grade & Section:</label>
 						</div>
 						<div class="col-lg-8">
-                            <select name="grade" id="" class="form-control custom-select" required>
+            <input type="hidden" class="form-control" id="id" name="id" required >
+                            <select name="grade" id="gradeedit" class="form-control custom-select" required>
                             <option selected value="" disabled>Select Grade & Section</option>
                           <?php
                                   include('dbconnect.php'); 
@@ -435,16 +518,17 @@ $(document).ready(function(){
                           }
                           ?>
                           </select>
+                         
 						</div>
 					</div>
-					
+       
 					<div style="height:10px;"></div>
 					<div class="row">
 						<div class="col-lg-4">
 							<label class="control-label" style="position:relative; top:7px;">Firstname:</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" name="firstname"required>
+							<input type="text" id="fname" class="form-control" name="firstname"required>
 						</div>
 					</div>
 					<div style="height:10px;"></div>
@@ -454,7 +538,7 @@ $(document).ready(function(){
 						</div>
 							<div style="height:10px;"></div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" name="middlename"required>
+							<input type="text" class="form-control" id="mname" name="middlename"required>
 						</div>
 					</div>
 					<div style="height:10px;"></div>
@@ -463,7 +547,7 @@ $(document).ready(function(){
 							<label class="control-label" style="position:relative; top:7px;">Lastname:</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" name="lastname"required>
+							<input type="text" class="form-control" id="lname" name="lastname"required>
 						</div>
 					</div>
 						<div style="height:10px;"></div>
@@ -473,7 +557,7 @@ $(document).ready(function(){
 							<label class="control-label" style="position:relative; top:7px;">Contact:</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" name="contactno"required>
+							<input type="text" class="form-control" id="contact" name="contactno"required>
 						</div>
 					</div>
 								<div style="height:10px;"></div>
@@ -482,7 +566,7 @@ $(document).ready(function(){
 							<label class="control-label" style="position:relative; top:7px;">Email:</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="email" class="form-control" name="email"required>
+							<input type="email" class="form-control" id="email" name="email"required>
 						</div>
 					</div>
 									<div style="height:10px;"></div>				
@@ -491,7 +575,7 @@ $(document).ready(function(){
 							<label class="control-label" style="position:relative; top:7px;">Address:</label>
 						</div>
 						<div class="col-lg-8">
-							<textarea id="" class="form-control" rows="2" name="address"required></textarea>
+							<textarea  class="form-control" rows="2" id="addressedit" name="address" required></textarea>
 						</div>
 					</div>
 								<div style="height:10px;"></div>
@@ -501,7 +585,7 @@ $(document).ready(function(){
 							<label class="control-label" style="position:relative; top:7px;">OPE Username:</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" name="username"required>
+							<input type="text" class="form-control" id="username" name="username"required>
 						</div>
 					</div>
 
@@ -511,7 +595,7 @@ $(document).ready(function(){
 							<label class="control-label" style="position:relative; top:7px;">OPE Password:</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" name="password"required>
+							<input type="text" class="form-control" id="password" name="password"required>
 						</div>
 					</div>
 					   <div style="height:10px;"></div>                     
@@ -521,7 +605,7 @@ $(document).ready(function(){
 				</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-                    <button type="submit"name="save" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
+                    <button type="submit"name="editstudent" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
                     	
 				</form>
                 </div>
@@ -535,6 +619,6 @@ $(document).ready(function(){
 
 <?php
 include 'modal-add-student.php';
-include 'modal-edit-student.php';
+
 ?>
 
