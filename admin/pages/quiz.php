@@ -17,17 +17,6 @@ include('dbconnect.php');
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Online Proctored Web App | Admin</title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../assets/plugins/fontawesome-free/css/all.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="../assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="../assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../assets/dist/css/adminlte.min.css">
-  
   <style>
 
 
@@ -70,12 +59,34 @@ include('dbconnect.php');
 z-index:6000 !important;
 }
 </style>
-<!--date picker-->
-<link rel="stylesheet" href="../assets/css/bootstrap-datepicker.css" />
-<script src="../assets/js/jquery-1.10.2.js" type="text/javascript"></script>
-<script src="../assets/js/bootstrap.js" type="text/javascript"></script>
-<script src="../assets/js/bootstrap-datepicker.js" type="text/javascript"></script>
-
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="../assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="../assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="../assets/plugins/jqvmap/jqvmap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="../assets/plugins/daterangepicker/daterangepicker.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="../assets/plugins/summernote/summernote-bs4.min.css">
+   
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../assets/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../toastr/css/toastr.min.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -400,6 +411,16 @@ unset($_SESSION['error_remarks']);
 
 
 
+<!-- jQuery UI 1.11.4 -->
+<script src="../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
 <script>
 
 
@@ -457,7 +478,7 @@ $(document).ready(function(){
                 </div>
                 <div class="modal-body">
 				<div class="container-fluid">
-				<form method="POST" enctype="multipart/form-data">				
+				<form method="POST" action="query-edit.php" enctype="multipart/form-data">				
 				<div class="row">
                                     <div class="col-lg-4">
                                       <label class="control-label" style="position:relative; top:7px;">Date of Exam</label>
@@ -520,7 +541,7 @@ $(document).ready(function(){
 							<label class="control-label" style="position:relative; top:7px;">Quiz Title:</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" id="quiztitle" name="quiztitle"required>
+							<input type="text" class="form-control" id="quiztitle" name="quiztitle" required>
                            
 						</div>
 					</div>
@@ -580,7 +601,7 @@ $(document).ready(function(){
 
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-<button type="submit" name="deleteexam" class="btn btn-primary">Yes</button>
+<button type="submit" name="deletequiz" class="btn btn-primary">Yes</button>
 </div>       
 </form>
 

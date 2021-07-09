@@ -2,6 +2,13 @@
  date_default_timezone_set('Asia/Manila');
 $date = date('Y-m-d H:i:s');
 ?>
+<!--date picker-->
+<link rel="stylesheet" href="../assets/css/bootstrap-datepicker.css" />
+<script src="../assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="../assets/js/bootstrap.js" type="text/javascript"></script>
+<script src="../assets/js/bootstrap-datepicker.js" type="text/javascript"></script>
+
+
 <!-- Add New -->
 <div class="modal fade" id="add-exam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog ">

@@ -56,7 +56,7 @@
     color: #FFFFFF !important;
     
    }
-}
+
   </style>
 </head>
 
