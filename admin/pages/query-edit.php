@@ -65,6 +65,42 @@ session_start();
                 }
 
   }
+
+
+  
+  if (isset($_POST['editexam'])) {
+  
+    $id= mysqli_real_escape_string($conn, $_POST['idedit']);
+    $dateexam= mysqli_real_escape_string($conn, $_POST['dateexam']);
+		$grade= mysqli_real_escape_string($conn, $_POST['grade']);
+        $examtimelimit = mysqli_real_escape_string($conn, $_POST['examtimelimit']);
+        $questiontimelimit = mysqli_real_escape_string($conn, $_POST['questiontimelimit']);		
+        $examtitle = mysqli_real_escape_string($conn, $_POST['examtitle']);
+        $examdescription = mysqli_real_escape_string($conn, $_POST['examdescription']);	
+
+        if(!empty($_POST["grade"])) {
+            $check=mysqli_query($conn,"select * from gradelevel where examdate='" . $_POST["dateexam"] . "' AND id <> '$id' ");
+           $erow=mysqli_fetch_array($check);
+            if($erow>0) {
+              $_SESSION["error_remarks"]="Cannot be saved, found exam date duplication";
+                 
+                    $_SESSION["error"]="error";
+                    header('location:exam.php');
+                    exit();
+                      }      
+            }
+               
+
+                if (!mysqli_query($conn, "UPDATE exam set examdate='$dateexam',grade='$grade',examtimelimit='$examtimelimit',questiontimelimit='$questiontimelimit',examtitle='$examtitle',examdescription='$examdescription' where id='$id'")) {
+            echo("Error description: " . mysqli_error($conn));
+                }else{
+                      $_SESSION["examedited"]="edit";
+                      header('location:exam.php');
+                      
+                }
+
+  }
+ 
  
 
   

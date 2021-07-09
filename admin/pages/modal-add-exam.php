@@ -1,3 +1,10 @@
+<?php
+ date_default_timezone_set('Asia/Manila');
+$date = date('Y-m-d H:i:s');
+?>
+
+
+
 <!-- Add New -->
 <div class="modal fade" id="add-exam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog ">
@@ -9,8 +16,24 @@
                 </div>
                 <div class="modal-body">
 				<div class="container-fluid">
-				<form method="POST" enctype="multipart/form-data">				
-					
+				<form method="POST" enctype="multipart/form-data">	
+			
+                     <div class="row">
+                                    <div class="col-lg-4">
+                                      <label class="control-label" style="position:relative; top:7px;">Date of Exam</label>
+                                    </div>
+                                <div class="col-lg-8">
+                                    <div class="input-group">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                    </div>
+                              
+                  
+                                <input id="dateexam2" class="form-control"  name="dateexams" placeholder="mm/dd/yyyy" type="calendar" readonly />
+                                </div>
+                               </div>
+                      </div>			
+					  <div style="height:10px;"></div>
 				<div class="row">
 						<div class="col-lg-4">
 							<label class="control-label" style="position:relative; top:7px;">Grade & Section:</label>
@@ -69,6 +92,8 @@
          
 						</div>
 					</div>
+
+					
 									
                 </div> 
 				</div>
@@ -82,6 +107,16 @@
             </div>
         </div>
     </div>
+
+	
+
+<script type="text/javascript">
+$('#dateexam2').datepicker();
+ $('.datepicker').datepicker({
+   weekStart:1,
+   color: 'red'
+ });
+</script>
 	<?php 
   if (isset($_POST['save'])) {
  
@@ -89,6 +124,7 @@
 
  
   	// Get image name
+	  $dateexam= mysqli_real_escape_string($conn, $_POST['dateexams']);
 		$grade= mysqli_real_escape_string($conn, $_POST['grade']);
         $examtimelimit = mysqli_real_escape_string($conn, $_POST['examtimelimit']);
         $questiontimelimit = mysqli_real_escape_string($conn, $_POST['questiontimelimit']);		
@@ -96,7 +132,7 @@
         $examdescription = mysqli_real_escape_string($conn, $_POST['examdescription']);	
 		$date = date('Y-m-d H:i:s');
      
-        $sql = "INSERT INTO exam VALUES (DEFAULT,'$grade','$examtimelimit','$questiontimelimit','$examtitle','$examdescription','$date')";   
+        $sql = "INSERT INTO exam VALUES (DEFAULT,'$dateexam','$grade','$examtimelimit','$questiontimelimit','$examtitle','$examdescription','$date')";   
         if (!mysqli_query($conn, $sql)) {
             echo("Error description: " . mysqli_error($conn));
                 }else{

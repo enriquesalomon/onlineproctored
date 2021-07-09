@@ -441,7 +441,7 @@ $(document).ready(function(){
 </div>
 </div>
 
-<!-- Add New -->
+<!-- Add edit -->
 <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content">

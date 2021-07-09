@@ -27,7 +27,12 @@ include('dbconnect.php');
   <link rel="stylesheet" href="../assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../assets/dist/css/adminlte.min.css">
+  
+
   <style>
+
+
+
     .main-sidebar { background-color: rgb(65,177,91) !important }
    .nav-header {
     background-color: inherit;
@@ -49,12 +54,27 @@ include('dbconnect.php');
     color: #FFFFFF !important;
     
    }
+
+
    [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:focus, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:hover {
-    background-color: rgb(50 143 232 / 90%);
     color: #f8f9fa !important;
+    background-color: rgb(50 143 232 / 90%);
+
 }
 
   </style>
+<style>
+.datepicker{
+z-index:6000 !important;
+}
+</style>
+<!--date picker-->
+<link rel="stylesheet" href="../assets/css/bootstrap-datepicker.css" />
+<script src="../assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="../assets/js/bootstrap.js" type="text/javascript"></script>
+<script src="../assets/js/bootstrap-datepicker.js" type="text/javascript"></script>
+
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -212,16 +232,26 @@ include('../includes/topbar.php');
 if ( isset( $_SESSION['examadded']) ) {
 include('toast-add.php');
 }
+if ( isset( $_SESSION['examedited']) ) {
+  include('toast-edited.php');
+  }
+
+
+
 if ( isset( $_SESSION['error']) ) {
   include('toast-error.php');
   }
 
 unset($_SESSION['examadded']);
+unset($_SESSION['examedited']);
 unset($_SESSION['error']);
+unset($_SESSION['error_remarks']);
+
 
 ?> 
  <!-- Main content -->
     
+ <?php include 'modal-add-exam.php'?>
  <section class="content">
        <div class="container-fluid">
        <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-exam">Add Student</button>
@@ -237,6 +267,8 @@ unset($_SESSION['error']);
                   <thead>
                   <tr>
                   <th>Id</th>
+                  <th>Exam Date</th>
+                  <th hidden>IDGradeSection</th>
                     <th>Grade & Section</th>
                     <th>Time Limit</th>
                     <th>Question Limit(secs)</th>
@@ -253,8 +285,9 @@ unset($_SESSION['error']);
                 while($getrow=mysqli_fetch_array($query)){
                 ?>
                 <?php 
-                $id=$getrow['id'];               
-                $gradesection=$getrow['grade'];       
+                $id=$getrow['id'];   
+                $examdate=$getrow['examdate'];             
+                $gradesectionid=$getrow['grade'];       
 
                 $examtimelimit=$getrow['examtimelimit'];     
                 $questiontimelimit=$getrow['questiontimelimit'];
@@ -262,13 +295,15 @@ unset($_SESSION['error']);
                 $examdescription=$getrow['examdescription']; 
                 $dateadded=$getrow['dateaddedd'];  
 
-                $getrow1=mysqli_query($conn,"SELECT * FROM gradelevel where id='$gradesection'");
+                $getrow1=mysqli_query($conn,"SELECT * FROM gradelevel where id='$gradesectionid'");
                 $getrow1=mysqli_fetch_array($getrow1);
                  $gradesection=$getrow1['gradelevel'].' '.$getrow1['section'];
                 
                 ?>             
                 <tr>
                 <td><?php echo $id; ?></td>
+                <td><?php echo $examdate; ?></td>
+                <td hidden><?php echo $gradesectionid; ?></td> 
                 <td><?php echo $gradesection; ?></td>                
                 <td><?php echo $examtimelimit; ?></td>   
                 <td><?php echo $questiontimelimit; ?></td>
@@ -276,8 +311,9 @@ unset($_SESSION['error']);
                 <td><?php echo $examdescription; ?></td>  
                 <td><?php echo $dateadded; ?></td>       
                 <td><?php 
-                   echo '     <button type="button" class="btn btn-block bg-gradient-info btn-xs">Edit</button>'; 
-                   echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs">Delete</button>';
+                    echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
+                    echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletegradelevel">Delete</button>';
+                   
                    ?>
                </td>                  
                 </tr> 
@@ -339,24 +375,179 @@ unset($_SESSION['error']);
 <!-- AdminLTE for demo purposes -->
 <script src="../assets/dist/js/demo.js"></script>
 <!-- Page specific script -->
+
+<script src="	https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+
+
 <script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
+
+
+$(document).ready(function(){
+  $('.editbtn').on('click', function(){
+
+      $('#editmodal').modal('show');
+
+        $tr =$(this).closest('tr');
+
+        var data=$tr.children("td").map(function(){
+          return $(this).text();
+        }).get();
+
+        $('#id').val(data[0]);     
+        $('#dateexam1').val(data[1]);   
+        $('#gradeedit').val(data[2]);         
+        $('#timelimit').val(data[4]);    
+        $('#questionlimit').val(data[5]);      
+        $('#examtitle').val(data[6]);         
+        $('#examdescription').val(data[7]);   
+   
+
   });
+});
+
+$(document).ready(function(){
+  $('.deletebtn').on('click', function(){
+
+      $('#deletemodal').modal('show');
+
+        $tr =$(this).closest('tr');
+
+        var data=$tr.children("td").map(function(){
+          return $(this).text();
+        }).get();
+
+        $('#iddelete').val(data[0]);  
+        $('#gradelevel').val(data[2] +' ' +data[3]);       
+       
+  });
+});
+
+
 </script>
+
+   
+
+  
+<!-- Edit -->
+<div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    
+                    <center><h4 class="modal-title" id="myModalLabel">Edit Exam</h4></center>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+				<div class="container-fluid">
+				<form method="POST" action="query-edit.php" enctype="multipart/form-data">
+        <div class="row">
+                                    <div class="col-lg-4">
+                                      <label class="control-label" style="position:relative; top:7px;">Date of Exam</label>
+                                    </div>
+                                <div class="col-lg-8">
+                                    <div class="input-group">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                    </div>
+                              
+                  
+                                <input id="dateexam1" class="form-control"  name="dateexam" placeholder="mm/dd/yyyy" type="calendar" readonly  />
+                                </div>
+                               </div>
+                      </div>			
+					  <div style="height:10px;"></div>	 
+				<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Grade & Section:</label>
+						</div>
+						<div class="col-lg-8">
+            <input type="hidden" class="form-control" id="id" name="idedit" required >
+                            <select name="grade" id="gradeedit" class="form-control custom-select" required>
+                            <option selected value="" disabled>Select Grade & Section</option>
+                          <?php
+                                  include('dbconnect.php'); 
+                          $query = mysqli_query($conn,"SELECT * FROM gradelevel");
+
+                          while ($result = mysqli_fetch_array($query)) {
+                          echo "<option value=" .$result['id']. ">" .$result['gradelevel'].' '.$result['section']."</option>";
+                          }
+                          ?>
+                          </select>
+						</div>
+					</div>
+					
+					<div style="height:10px;"></div>
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Exam Time Limit:</label>
+						</div>
+						<div class="col-lg-8">
+							<input type="text" class="form-control" id="timelimit" name="examtimelimit"required>
+						</div>
+					</div>
+					<div style="height:10px;"></div>
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Question Limit to display:</label>
+						</div>
+							<div style="height:10px;"></div>
+						<div class="col-lg-8">
+							<input type="text" class="form-control" id="questionlimit" name="questiontimelimit"required>
+						</div>
+					</div>
+						<div style="height:10px;"></div>
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Exam Title:</label>
+						</div>
+						<div class="col-lg-8">
+							<input type="text" class="form-control" id="examtitle" name="examtitle"required>
+                           
+						</div>
+					</div>
+								<div style="height:10px;"></div>
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Exam Description:</label>
+						</div>
+						<div class="col-lg-8">
+                        <textarea  class="form-control" rows="4" id="examdescription" name="examdescription"></textarea>
+         
+						</div>
+					</div>
+
+        
+
+									
+                </div> 
+				</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                    <button type="submit"name="editexam" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
+                    	
+				</form>
+                </div>
+				
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript">
+$('#dateexam1').datepicker();
+$('.datepicker').datepicker({
+weekStart:1,
+color: 'red'
+});
+</script>
+
+
 </body>
 </html>
 
-<?php include 'modal-add-exam.php'?>
+
+
+ 
+    
