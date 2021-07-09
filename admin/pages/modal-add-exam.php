@@ -2,9 +2,6 @@
  date_default_timezone_set('Asia/Manila');
 $date = date('Y-m-d H:i:s');
 ?>
-
-
-
 <!-- Add New -->
 <div class="modal fade" id="add-exam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog ">

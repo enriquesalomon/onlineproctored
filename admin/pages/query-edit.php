@@ -102,7 +102,39 @@ session_start();
   }
  
  
-
   
+  
+  if (isset($_POST['editquiz'])) {
+  
+    $id= mysqli_real_escape_string($conn, $_POST['idedit']);
+    $dateexam= mysqli_real_escape_string($conn, $_POST['datequiz']);
+		$grade= mysqli_real_escape_string($conn, $_POST['grade']);
+        $examtimelimit = mysqli_real_escape_string($conn, $_POST['quiztimelimit']);
+        $questiontimelimit = mysqli_real_escape_string($conn, $_POST['questiontimelimit']);		
+        $examtitle = mysqli_real_escape_string($conn, $_POST['quiztitle']);
+        $examdescription = mysqli_real_escape_string($conn, $_POST['examdescription']);	
+
+        if(!empty($_POST["grade"])) {
+            $check=mysqli_query($conn,"select * from quiz where quizdate='" . $_POST["datequiz"] . "' AND id <> '$id' ");
+           $erow=mysqli_fetch_array($check);
+            if($erow>0) {
+              $_SESSION["error_remarks"]="Cannot be saved, found quiz date duplication";
+                 
+                    $_SESSION["error"]="error";
+                    header('location:quiz.php');
+                    exit();
+                      }      
+            }
+               
+
+                if (!mysqli_query($conn, "UPDATE quiz set quizdate='$dateexam',grade='$grade',quiztimelimit='$examtimelimit',questiontimelimit='$questiontimelimit',quiztitle='$examtitle',quizdescription='$examdescription' where id='$id'")) {
+            echo("Error description: " . mysqli_error($conn));
+                }else{
+                      $_SESSION["quizedited"]="edit";
+                      header('location:quiz.php');
+                      
+                }
+
+  }
 
 ?>

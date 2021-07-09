@@ -33,7 +33,7 @@ include('dbconnect.php');
 
 
 
-    .main-sidebar { background-color: rgb(65,177,91) !important }
+    .main-sidebar { background-color: rgb(67 144 85) !important }
    .nav-header {
     background-color: inherit;
     color: #FFFFFF !important;
