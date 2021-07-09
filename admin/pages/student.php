@@ -28,7 +28,11 @@ include('dbconnect.php');
   <!-- Theme style -->
   <link rel="stylesheet" href="../assets/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  
   <style>
+
+
+
     .main-sidebar { background-color: rgb(65,177,91) !important }
    .nav-header {
     background-color: inherit;
@@ -50,10 +54,14 @@ include('dbconnect.php');
     color: #FFFFFF !important;
     
    }
+
+
    [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:focus, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:hover {
-    background-color: rgb(50 143 232 / 90%);
     color: #f8f9fa !important;
+    background-color: rgb(50 143 232 / 90%) !important;
+
 }
+
 
   </style>
 </head>

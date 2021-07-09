@@ -1,5 +1,11 @@
+<style>
+.main-header {
+background-color: #304861;
+color: #1f2d3d;
+}
+</style>
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand ">
     <!-- Left navbar links -->
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
 

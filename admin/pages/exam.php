@@ -29,6 +29,8 @@ include('dbconnect.php');
   <link rel="stylesheet" href="../assets/dist/css/adminlte.min.css">
   
 
+
+
   <style>
 
 
@@ -58,9 +60,11 @@ include('dbconnect.php');
 
    [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:focus, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:hover {
     color: #f8f9fa !important;
-    background-color: rgb(50 143 232 / 90%);
+    background-color: rgb(50 143 232 / 90%) !important;
 
 }
+
+
 
   </style>
 <style>
@@ -235,7 +239,9 @@ include('toast-add.php');
 if ( isset( $_SESSION['examedited']) ) {
   include('toast-edited.php');
   }
-
+if ( isset( $_SESSION['examdeleted']) ) {
+include('toast-deleted.php');
+}
 
 
 if ( isset( $_SESSION['error']) ) {
@@ -244,6 +250,7 @@ if ( isset( $_SESSION['error']) ) {
 
 unset($_SESSION['examadded']);
 unset($_SESSION['examedited']);
+unset($_SESSION['examdeleted']);
 unset($_SESSION['error']);
 unset($_SESSION['error_remarks']);
 
@@ -420,7 +427,7 @@ $(document).ready(function(){
         }).get();
 
         $('#iddelete').val(data[0]);  
-        $('#gradelevel').val(data[2] +' ' +data[3]);       
+        $('#exam').val(data[1] +' ' +data[6]);       
        
   });
 });
@@ -546,6 +553,45 @@ color: 'red'
 
 </body>
 </html>
+
+
+<!--modal delete  -->
+<div id="deletemodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal-dialog modal-md" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<form action="query-delete.php" method="POST">
+<div class="modal-body">
+ <center><h6>Are you sure you want to delete Exam Schedule?</h6> </center>
+<input type="hidden" name="iddelete" id="iddelete">
+<div style="height:10px;"></div>
+					<div class="row">
+						<div class="col-lg-2">
+							<label class="control-label" style="position:relative; top:7px;">Exam:</label>
+						</div>
+						<div class="col-lg-10">
+							<input type="text" id="exam" class="form-control" name="" required readonly>
+						</div>
+					</div>
+					<div style="height:10px;"></div>
+</div>
+
+
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+<button type="submit" name="deleteexam" class="btn btn-primary">Yes</button>
+</div>       
+</form>
+
+
+</div>
+</div>
+</div>
 
 
 

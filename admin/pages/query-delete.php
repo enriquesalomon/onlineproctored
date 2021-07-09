@@ -46,4 +46,35 @@ if (isset($_POST['deletegradelevel'])) {
 
 }
 }
+
+
+
+if (isset($_POST['deleteexam'])) {
+  
+  $id= mysqli_real_escape_string($conn, $_POST['iddelete']);
+
+      if(!empty($_POST["iddelete"])) { 
+        
+          // check if has 1-1 relationship to other table
+          $check=mysqli_query($conn,"select * from examresult where id='" . $id . "'");
+          $erow=mysqli_fetch_array($check);
+           if($erow>0) {
+                    $_SESSION["error_remarks"]="Cannot be deleted, found existing record to exam result";
+                   //  
+                   $_SESSION["error"]="error";
+                   header('location:exam.php');
+                   exit();
+                     }      
+           
+
+              if (!mysqli_query($conn, "DELETE from exam where id='$id'")) {
+          echo("Error description: " . mysqli_error($conn));
+              }else{
+                    $_SESSION["examdeleted"]="delete";
+                    header('location:exam.php');
+                    
+              }
+
+}
+}
 ?>
