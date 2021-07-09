@@ -145,4 +145,7 @@ toastr.options = {
  
 
   </script>
+  <?php 
+include 'modal-logout.php';
+  ?>
   

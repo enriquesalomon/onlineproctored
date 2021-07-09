@@ -106,7 +106,7 @@
         
           <li class="nav-header">Exit</li>
           <li class="nav-item">
-            <a href="login.php" class="nav-link">
+            <a href="#" class="nav-link "data-toggle="modal" data-target="#logoutModal">
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>Logout</p>
             </a>
