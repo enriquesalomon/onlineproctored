@@ -93,7 +93,7 @@ z-index:6000 !important;
 <div class="wrapper">
   <!-- Navbar -->
 <?php 
-include('../includes/topbar.php');
+include('../includes/pagetopbar.php');
 ?>
   <!-- /.navbar -->
 

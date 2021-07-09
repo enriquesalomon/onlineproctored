@@ -87,7 +87,7 @@ include('dbconnect.php');
 <div class="wrapper">
   <!-- Navbar -->
 <?php 
-include('../includes/topbar.php');
+include('../includes/pagetopbar.php');
 ?>
   <!-- /.navbar -->
 
