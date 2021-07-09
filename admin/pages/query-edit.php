@@ -23,7 +23,7 @@ session_start();
                     // $_SESSION["username_taken"]="duplicate";
                     //  
                     $_SESSION["error"]="error";
-                    header('location:gradelevel.php');
+                    header('location:student.php');
                       }      
             }
 
@@ -37,4 +37,36 @@ session_start();
 
   }
  
+
+  if (isset($_POST['editgradevel'])) {
+  
+    $id= mysqli_real_escape_string($conn, $_POST['id']);
+		$grade= mysqli_real_escape_string($conn, $_POST['grade']);    
+    $section= mysqli_real_escape_string($conn, $_POST['section']);  
+
+        if(!empty($_POST["grade"])) {
+            $check=mysqli_query($conn,"select * from gradelevel where gradelevel='" . $_POST["grade"] . "' AND section='" . $_POST["section"] . "' AND id <> '$id' ");
+           $erow=mysqli_fetch_array($check);
+            if($erow>0) {
+                    // $_SESSION["username_taken"]="duplicate";
+                    //  
+                    $_SESSION["error"]="error";
+                    header('location:gradelevel.php');
+                      }      
+            }
+               
+
+                if (!mysqli_query($conn, "UPDATE gradelevel set gradelevel='$grade',section='$section' where id='$id'")) {
+            echo("Error description: " . mysqli_error($conn));
+                }else{
+                      $_SESSION["gradeleveledited"]="edit";
+                      header('location:gradelevel.php');
+                      
+                }
+
+  }
+ 
+
+  
+
 ?>

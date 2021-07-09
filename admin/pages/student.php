@@ -228,6 +228,7 @@ unset($_SESSION['studentadded']);
 unset($_SESSION['studentedited']);
 unset($_SESSION['studentdeleted']);
 unset($_SESSION['error']);
+unset($_SESSION['error_remarks']);
 
 ?> 
     <!-- Main content -->

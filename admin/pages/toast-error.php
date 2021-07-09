@@ -39,17 +39,19 @@
 <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
 <script type="text/javascript">
+var reason = "Data not saved";
+reason = '<?php echo $_SESSION["error_remarks"]; ?>';
    var Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
       showConfirmButton: false,
-      timer: 3000
+      timer: 6000
     });
     
     Toast.fire({
   icon: 'error',
   title: 'Error',
-  text: 'Data not saved'
+  text: reason
   
  
 })

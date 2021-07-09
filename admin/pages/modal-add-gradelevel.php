@@ -62,13 +62,14 @@
         $section = mysqli_real_escape_string($conn, $_POST['section']);
 
         if(!empty($_POST["section"])) {
-            $check=mysqli_query($conn,"select * from gradelevel where section='" . $_POST["section"] . "'");
+            $check=mysqli_query($conn,"select * from gradelevel where section='" . $_POST["section"] . "' AND gradelevel='" . $_POST["grade"] . "'");
            $erow=mysqli_fetch_array($check);
             if($erow>0) {
-                    // $_SESSION["username_taken"]="duplicate";
+                $_SESSION["error_remarks"]="Record duplication found!. Cannot be saved.";
                     //  
                     $_SESSION["error"]="error";
                     header('location:gradelevel.php');
+                    exit();
                       }      
             }
 

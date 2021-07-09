@@ -213,12 +213,23 @@ include('../includes/topbar.php');
 if ( isset( $_SESSION['gradeleveladded']) ) {
 include('toast-add.php');
 }
+if ( isset( $_SESSION['gradeleveledited']) ) {
+  include('toast-edited.php');
+  }
+
+  if ( isset( $_SESSION['gradeleveldeleted']) ) {
+    include('toast-deleted.php');
+    }
+  
 if ( isset( $_SESSION['error']) ) {
   include('toast-error.php');
   }
 
 unset($_SESSION['gradeleveladded']);
+unset($_SESSION['gradeleveledited']);
+unset($_SESSION['gradeleveldeleted']);
 unset($_SESSION['error']);
+unset($_SESSION['error_remarks']);
 include 'modal-add-gradelevel.php';
 ?> 
     
@@ -260,8 +271,9 @@ include 'modal-add-gradelevel.php';
                 <td><?php echo $gradelevel; ?></td>
                 <td><?php echo $section; ?></td>       
                 <td><?php 
-                   echo '     <button type="button" class="btn btn-block bg-gradient-info btn-xs">Edit</button>'; 
-                   echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs">Delete</button>';
+                echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
+                echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletegradelevel">Delete</button>';
+                
                    ?>
                </td>                  
                 </tr> 
@@ -324,6 +336,11 @@ include 'modal-add-gradelevel.php';
 <!-- AdminLTE for demo purposes -->
 <script src="../assets/dist/js/demo.js"></script>
 <!-- Page specific script -->
+
+<script src="	https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
 <script>
   $(function () {
     $("#example1").DataTable({
@@ -341,6 +358,139 @@ include 'modal-add-gradelevel.php';
     });
   });
 </script>
+<script>
+
+
+$(document).ready(function(){
+  $('.editbtn').on('click', function(){
+
+      $('#editmodal').modal('show');
+
+        $tr =$(this).closest('tr');
+
+        var data=$tr.children("td").map(function(){
+          return $(this).text();
+        }).get();
+
+        $('#id').val(data[0]);      
+          $('#grade').val(data[1]);         
+          $('#section').val(data[2]);    
+   
+
+  });
+});
+
+$(document).ready(function(){
+  $('.deletebtn').on('click', function(){
+
+      $('#deletemodal').modal('show');
+
+        $tr =$(this).closest('tr');
+
+        var data=$tr.children("td").map(function(){
+          return $(this).text();
+        }).get();
+
+        $('#iddelete').val(data[0]);  
+        $('#gradelevel').val(data[1] +' ' +data[2]);       
+       
+  });
+});
+
+
+</script>
 </body>
 </html>
+
+
+<!--modal delete  -->
+<div id="deletemodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal-dialog modal-md" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<form action="query-delete.php" method="POST">
+<div class="modal-body">
+ <center><h6>Are you sure you want to delete this record?</h6> </center>
+<input type="hidden" name="iddelete" id="iddelete">
+<div style="height:10px;"></div>
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Grade & Section:</label>
+						</div>
+						<div class="col-lg-8">
+							<input type="text" id="gradelevel" class="form-control" name="gradelevel" required readonly>
+						</div>
+					</div>
+					<div style="height:10px;"></div>
+</div>
+
+
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+<button type="submit" name="deletegradelevel" class="btn btn-primary">Yes</button>
+</div>       
+</form>
+
+
+</div>
+</div>
+</div>
+
+<!-- Add New -->
+<div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    
+                <h4 class="modal-title" id="myModalLabel">Edit Grade Level</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+				<div class="container-fluid">
+				<form method="POST" action="query-edit.php" enctype="multipart/form-data">			
+					
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Grade Level:</label>
+						</div>
+						<div class="col-lg-8">
+            <input type="hidden" class="form-control" id="id" name="id" required >
+                            <select name="grade" id="grade" class="form-control custom-select">
+                            <option disabled>Select one</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            </select>
+						</div>
+					</div>
+					<div style="height:10px;"></div>
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Section:</label>
+						</div>
+						<div class="col-lg-8">
+							<input type="text" class="form-control" name="section" id="section" required>
+						</div>
+					</div>				
+					
+                </div> 
+				</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                    <button type="submit" name="editgradevel" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
+   
+                </div>
+                </form>
+				
+            </div>
+        </div>
+    </div>
 

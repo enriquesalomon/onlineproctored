@@ -17,4 +17,33 @@ session_start();
 
   }
 }
+
+if (isset($_POST['deletegradelevel'])) {
+  
+  $id= mysqli_real_escape_string($conn, $_POST['iddelete']);
+
+      if(!empty($_POST["iddelete"])) { 
+        
+          // check if has 1-1 relationship to other table
+          $check=mysqli_query($conn,"select * from student where gradesection='" . $id . "'");
+          $erow=mysqli_fetch_array($check);
+           if($erow>0) {
+                    $_SESSION["error_remarks"]="Cannot be deleted, found existing record to student records";
+                   //  
+                   $_SESSION["error"]="error";
+                   header('location:gradelevel.php');
+                   exit();
+                     }      
+           
+
+              if (!mysqli_query($conn, "DELETE from gradelevel where id='$id'")) {
+          echo("Error description: " . mysqli_error($conn));
+              }else{
+                    $_SESSION["gradeleveldeleted"]="delete";
+                    header('location:gradelevel.php');
+                    
+              }
+
+}
+}
 ?>
