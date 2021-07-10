@@ -51,7 +51,7 @@ session_start();
                     // $_SESSION["username_taken"]="duplicate";
                     //  
                     $_SESSION["error"]="error";
-                    header('location:gradelevel.php');
+                    header('location:classes.php');
                       }      
             }
                
@@ -60,7 +60,7 @@ session_start();
             echo("Error description: " . mysqli_error($conn));
                 }else{
                       $_SESSION["gradeleveledited"]="edit";
-                      header('location:gradelevel.php');
+                      header('location:classes.php');
                       
                 }
 

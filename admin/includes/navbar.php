@@ -38,7 +38,7 @@
           
          
           <li class="nav-header">MANAGEMENT</li>         
-          <li class="nav-item">
+   <!--       <li class="nav-item">
             <a href="pages/student.php" class="nav-link">
               <i class="nav-icon fas fa-columns"></i>
               <p>
@@ -101,7 +101,7 @@
               </li>
              
             </ul>
-          </li>
+          </li> -->
           <!-- newwww  -->
          
           <li class="nav-item">

@@ -68,7 +68,7 @@
                 $_SESSION["error_remarks"]="Record duplication found!. Cannot be saved.";
                     //  
                     $_SESSION["error"]="error";
-                    header('location:gradelevel.php');
+                    header('location:classes.php');
                     exit();
                       }      
             }
@@ -78,7 +78,7 @@
             echo("Error description: " . mysqli_error($conn));
                 }else{
                       $_SESSION["gradeleveladded"]="add";
-                      header('location:gradelevel.php');
+                      header('location:classes.php');
                       
                 }
 

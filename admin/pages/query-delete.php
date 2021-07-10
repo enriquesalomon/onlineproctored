@@ -31,7 +31,7 @@ if (isset($_POST['deletegradelevel'])) {
                     $_SESSION["error_remarks"]="Cannot be deleted, found existing record to student records";
                    //  
                    $_SESSION["error"]="error";
-                   header('location:gradelevel.php');
+                   header('location:classes.php');
                    exit();
                      }      
            
@@ -40,7 +40,7 @@ if (isset($_POST['deletegradelevel'])) {
           echo("Error description: " . mysqli_error($conn));
               }else{
                     $_SESSION["gradeleveldeleted"]="delete";
-                    header('location:gradelevel.php');
+                    header('location:classes.php');
                     
               }
 
