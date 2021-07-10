@@ -296,7 +296,7 @@ unset($_SESSION['error_remarks']);
     
     <section class="content">
        <div class="container-fluid">
-       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-student">Add Student</button>
+       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-student">New</button>
 
         <div class="row">
           <div class="col-12">

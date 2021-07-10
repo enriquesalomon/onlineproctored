@@ -111,7 +111,7 @@
                       }      
             }
 
-        $sql = "INSERT INTO studentclass VALUES (DEFAULT,'$controlno','$studentname','$classname','$date','Active')";   
+        $sql = "INSERT INTO studentclass VALUES (DEFAULT,'$controlno','$studentnameid','$studentname','$classnameid','$classname','$date','Active')";   
         if (!mysqli_query($conn, $sql)) {
             echo("Error description: " . mysqli_error($conn));
                 }else{

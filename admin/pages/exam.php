@@ -308,13 +308,10 @@ unset($_SESSION['error_remarks']);
                   <tr>
                   <th>Id</th>
                   <th>Exam Date</th>
-                  <th hidden>IDGradeSection</th>
-                    <th>Grade & Section</th>
-                    <th>Time Limit</th>
-                    <th>Question Limit(secs)</th>
-                    <th>Exam Title</th>
-                    <th>Exam Description</th>
-                    <th>Date Added</th>
+                  <th>Exam Name</th>
+                    <th>Class Name</th>
+                    <th>Exam Duration</th>
+                    <th>Created On</th>
                     <th>Action</th>
                   </tr>
                   </thead>

@@ -134,11 +134,73 @@ if (isset($_POST['deletesubject'])) {
                      }      
          
 
-              if (!mysqli_query($conn, "DELETE from subjectclass where id='$id'")) {
+              if (!mysqli_query($conn, "DELETE from subjects where id='$id'")) {
           echo("Error description: " . mysqli_error($conn));
               }else{
                     $_SESSION["deleted"]="delete";
                     header('location:subject.php');
+                    
+              }
+
+}
+}
+
+
+if (isset($_POST['deleteassignsubject'])) {
+  
+  $id= mysqli_real_escape_string($conn, $_POST['iddelete']);
+  
+
+      if(!empty($_POST["iddelete"])) { 
+        
+          // check if has 1-1 relationship to other table
+        //  $check=mysqli_query($conn,"select * from subjectclass where subjectname='$subjectname' ");
+        //  $erow=mysqli_fetch_array($check);
+        // If   if($erow>0) {
+          //          $_SESSION["error_remarks"]="Cannot be deleted, found existing record to Subject Class";
+                   //  
+            //       $_SESSION["error"]="error";
+             //      header('location:subject.php');
+             //      exit();
+             //        }      
+         
+
+              if (!mysqli_query($conn, "DELETE from subjectclass where id='$id'")) {
+          echo("Error description: " . mysqli_error($conn));
+              }else{
+                    $_SESSION["deleted"]="delete";
+                    header('location:assignsubject.php');
+                    
+              }
+
+}
+}
+
+
+if (isset($_POST['deleteassignstudent'])) {
+  
+  $id= mysqli_real_escape_string($conn, $_POST['iddelete']);
+  
+
+      if(!empty($_POST["iddelete"])) { 
+        
+          // check if has 1-1 relationship to other table
+        //  $check=mysqli_query($conn,"select * from subjectclass where subjectname='$subjectname' ");
+        //  $erow=mysqli_fetch_array($check);
+        // If   if($erow>0) {
+          //          $_SESSION["error_remarks"]="Cannot be deleted, found existing record to Subject Class";
+                   //  
+            //       $_SESSION["error"]="error";
+             //      header('location:subject.php');
+             //      exit();
+             //        }      
+         
+
+              if (!mysqli_query($conn, "DELETE from studentclass where id='$id'")) {
+          echo("Error description: " . mysqli_error($conn));
+              }else{
+                    $_SESSION["deleted"]="delete";
+                    header('location:assignstudent.php');
                     
               }
 

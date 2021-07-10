@@ -293,7 +293,7 @@ unset($_SESSION['error_remarks']);
     <?php include 'modal-add-subject.php'?>
     <section class="content">
        <div class="container-fluid">
-       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-subject">Add Subject</button>
+       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-subject">New</button>
 
         <div class="row">
           <div class="col-12">
@@ -305,7 +305,7 @@ unset($_SESSION['error_remarks']);
               <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Id</th>
+                  <th hidden>Id</th>
                   <th>Subject Name</th>                 
                     <th>Created On</th>
                     <th>Status</th>
@@ -326,13 +326,13 @@ unset($_SESSION['error_remarks']);
                 
                 ?>             
                 <tr>
-                <td><?php echo $id; ?></td>
+                <td hidden><?php echo $id; ?></td>
                 <td><?php echo $subjectname; ?></td>
                 <td><?php echo $createdon; ?></td>                
                 <td><?php echo $status; ?></td>  
                 <td><?php               
                   echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
-                   echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletequiz">Delete</button>';
+                   echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" >Delete</button>';
                   
                    ?>
                </td>                  
@@ -487,7 +487,7 @@ $(document).ready(function(){
             <div class="modal-content">
                 <div class="modal-header">
                     
-                    <center><h4 class="modal-title" id="myModalLabel">Edit Quiz</h4></center>
+                    <center><h4 class="modal-title" id="myModalLabel">Edit Subject</h4></center>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">

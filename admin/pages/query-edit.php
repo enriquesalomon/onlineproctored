@@ -167,4 +167,82 @@ session_start();
 
   }
 
+  
+
+  if (isset($_POST['editassignsubject'])) {
+  
+    $id= mysqli_real_escape_string($conn, $_POST['idedit']);
+		$subjectnameid= mysqli_real_escape_string($conn, $_POST['subjectname']);  
+    $classnameid= mysqli_real_escape_string($conn, $_POST['classname']);    
+
+    $getrow1=mysqli_query($conn,"SELECT * FROM class where id='$classnameid'");
+    $getrow1=mysqli_fetch_array($getrow1);
+     $classname=$getrow1['classname'];
+
+     $getrow2=mysqli_query($conn,"SELECT * FROM subjects where id='$subjectnameid'");
+     $getrow2=mysqli_fetch_array($getrow2);
+      $subjectname=$getrow2['subjectname'];
+
+    if(!empty($_POST["classname"])) {
+        $check=mysqli_query($conn,"select * from subjectclass where classid='".$classnameid."' and subjectid='".$subjectnameid."' ");
+       $erow=mysqli_fetch_array($check);
+        if($erow>0) {
+            $_SESSION["error_remarks"]="Record duplication found!. Cannot be saved.";
+                //  
+                $_SESSION["error"]="error";
+                header('location:assignsubject.php');
+                exit();
+                  }      
+        }
+
+
+                if (!mysqli_query($conn, "UPDATE subjectclass set classid='$classnameid',classname='$classname',subjectid='$subjectnameid',subjectname='$subjectname' where id='$id'")) {
+            echo("Error description: " . mysqli_error($conn));
+                }else{
+                      $_SESSION["edited"]="edit";
+                      header('location:assignsubject.php');
+                      
+                }
+
+  }
+  
+  if (isset($_POST['editassignstudent'])) {
+  
+    $id= mysqli_real_escape_string($conn, $_POST['idedit']);
+		$classnameid= mysqli_real_escape_string($conn, $_POST['classnameedit']);  
+    $studentnameid= mysqli_real_escape_string($conn, $_POST['studentnameedit']);  
+     $controlno= mysqli_real_escape_string($conn, $_POST['controlnoedit']);  
+
+    $getrow1=mysqli_query($conn,"SELECT * FROM class where id='$classnameid'");
+    $getrow1=mysqli_fetch_array($getrow1);
+     $classname=$getrow1['classname'];
+
+     $getrow2=mysqli_query($conn,"SELECT * FROM student where id='$studentnameid'");
+     $getrow2=mysqli_fetch_array($getrow2);
+      $studentname=$getrow2['firstname'].' '.$getrow2['middlename'].' '.$getrow2['lastname']  ;
+
+    if(!empty($_POST["classname"])) {
+        $check=mysqli_query($conn,"select * from studentclass where controlno='".$controlno."' and studentid='".$studentnameid."' and classid='".$classnameid."' WHERE id <> '".$id."'");
+       $erow=mysqli_fetch_array($check);
+        if($erow>0) {
+            $_SESSION["error_remarks"]="Record duplication found!. Cannot be saved.";
+                //  
+                $_SESSION["error"]="error";
+                header('location:assignstudent.php');
+                exit();
+                  }      
+        }
+
+
+                if (!mysqli_query($conn, "UPDATE studentclass set controlno='$controlno',studentid='$studentnameid',studentname='$studentname',classid='$classnameid',classname='$classname' where id='$id'")) {
+            echo("Error description: " . mysqli_error($conn));
+                }else{
+                      $_SESSION["edited"]="edit";
+                      header('location:assignstudent.php');
+                      
+                }
+
+  }
+  
+  
 ?>

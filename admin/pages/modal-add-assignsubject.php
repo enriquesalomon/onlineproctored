@@ -15,7 +15,7 @@
 							<label class="control-label" style="position:relative; top:7px;">Class Name:</label>
 						</div>
 						<div class="col-lg-8">
-                            <select name="classname" id="classname" class="form-control custom-select" required>
+                            <select name="classnameid" id="classname" class="form-control custom-select" required>
                             <option selected value="" disabled>Select Class</option>
                           <?php
                                   include('dbconnect.php'); 
@@ -35,7 +35,7 @@
 							<label class="control-label" style="position:relative; top:7px;">Subject Name:</label>
 						</div>
 						<div class="col-lg-8">
-                            <select name="subjectname" id="subject" class="form-control custom-select" required>
+                            <select name="subjectnameid" id="subject" class="form-control custom-select" required>
                             <option selected value="" disabled>Select Subject</option>
                           <?php
                                   include('dbconnect.php'); 
@@ -75,19 +75,19 @@
  
   	// Get image name
 
-        $subjectname = mysqli_real_escape_string($conn, $_POST['subjectname']);
-        $classname = mysqli_real_escape_string($conn, $_POST['classname']);
+        $subjectnameid = mysqli_real_escape_string($conn, $_POST['subjectnameid']);
+        $classnameid = mysqli_real_escape_string($conn, $_POST['classnameid']);
         
-        $getrow1=mysqli_query($conn,"SELECT * FROM class where id='$classname'");
+        $getrow1=mysqli_query($conn,"SELECT * FROM class where id='$classnameid'");
         $getrow1=mysqli_fetch_array($getrow1);
-         $classnameid=$getrow1['classname'];
+         $classname=$getrow1['classname'];
 
-         $getrow2=mysqli_query($conn,"SELECT * FROM subjects where id='$subjectname'");
+         $getrow2=mysqli_query($conn,"SELECT * FROM subjects where id='$subjectnameid'");
          $getrow2=mysqli_fetch_array($getrow2);
-          $subjectnameid=$getrow2['subjectname'];
+          $subjectname=$getrow2['subjectname'];
 
-        if(!empty($_POST["classname"])) {
-            $check=mysqli_query($conn,"select * from subjectclass where classname='".$classnameid."' and subjectname='".$subjectnameid."' ");
+        if(!empty($_POST["classnameid"])) {
+            $check=mysqli_query($conn,"select * from subjectclass where classid='".$classnameid."' and subjectid='".$subjectnameid."' ");
            $erow=mysqli_fetch_array($check);
             if($erow>0) {
                 $_SESSION["error_remarks"]="Record duplication found!. Cannot be saved.";
@@ -98,7 +98,7 @@
                       }      
             }
 
-        $sql = "INSERT INTO subjectclass VALUES (DEFAULT,'$classnameid','$subjectnameid','$date')";   
+        $sql = "INSERT INTO subjectclass VALUES (DEFAULT,'$classnameid','$classname','$subjectnameid','$subjectname','$date')";   
         if (!mysqli_query($conn, $sql)) {
             echo("Error description: " . mysqli_error($conn));
                 }else{

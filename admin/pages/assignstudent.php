@@ -312,6 +312,8 @@ unset($_SESSION['error_remarks']);
                     <th>Created On</th>                                
                   <th>Status</th> 
                     <th>Action</th>
+                    <th hidden>classid</th>
+                    <th hidden>studentid</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -323,10 +325,12 @@ unset($_SESSION['error_remarks']);
                 <?php 
                 $id=$getrow['id'];  
                 $controlno=$getrow['controlno'];  
+                $studentid=$getrow['studentid']; 
                 $studentname=$getrow['studentname']; 
                 $classname=$getrow['classname'];
                 $createdon=$getrow['createdon']; 
-                $status=$getrow['status'];  
+                $status=$getrow['status']; 
+                $classid=$getrow['classid'];   
                 
                 ?>             
                 <tr>
@@ -341,7 +345,9 @@ unset($_SESSION['error_remarks']);
                    echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletequiz">Delete</button>';
                   
                    ?>
-               </td>                  
+               </td>                
+               <td hidden><?php echo $classid; ?></td>     
+               <td hidden><?php echo $studentid; ?></td>          
                 </tr> 
 <?php
 }                      
@@ -460,8 +466,9 @@ $(document).ready(function(){
         }).get();
 
         $('#id').val(data[0]);     
-        $('#subjectnameid').val(data[1]);  
-        $('#classnameid').val(data[2]);  
+        $('#classidedit').val(data[7]);  
+        $('#studentidedit').val(data[8]);  
+        $('#controlnoidedit').val(data[1]);  
          
         
    
@@ -481,8 +488,9 @@ $(document).ready(function(){
         }).get();
 
         $('#iddelete').val(data[0]);  
-        $('#subjectnameiddelete').val(data[1])  ;  
-        $('#classnameiddelete').val(data[2])  ;  
+        $('#classnameiddelete').val(data[3])  ;  
+        $('#studentnameiddelete').val(data[2])  ;  
+        $('#controlnoiddelete').val(data[1])  ;  
              
        
   });
@@ -497,7 +505,7 @@ $(document).ready(function(){
             <div class="modal-content">
                 <div class="modal-header">
                     
-                    <center><h4 class="modal-title" id="myModalLabel">Edit Quiz</h4></center>
+                    <center><h4 class="modal-title" id="myModalLabel">Edit Assign Student</h4></center>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -505,31 +513,64 @@ $(document).ready(function(){
 				<form method="POST" action="query-edit.php" enctype="multipart/form-data">				
         <input type="hidden" class="form-control" id="id" name="idedit" required >
 			
-					<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Subject Name:</label>
-						</div>
-						<div class="col-lg-8">
-							<input type="text" class="form-control" id="subjectnameid" name="subjectname" required>
-						</div>
-					</div>
-
-          <div style="height:10px;"></div>
-          <div class="row">
+        <div class="row">
 						<div class="col-lg-4">
 							<label class="control-label" style="position:relative; top:7px;">Class Name:</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" id="classnameid" name="classname" required>
+                            <select name="classnameedit" id="classidedit"  class="form-control custom-select" required>
+                            <option selected value="" disabled>Select Class</option>
+                          <?php
+                                  include('dbconnect.php'); 
+                          $query = mysqli_query($conn,"SELECT * FROM class");
+
+                          while ($result = mysqli_fetch_array($query)) {
+                          echo "<option value="  .$result['id']. ">" .$result['classname']."</option>";
+                          }
+                          ?>
+                          </select>
 						</div>
 					</div>
+					
+          <div style="height:10px;"></div>
+                    <div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Student Name:</label>
+						</div>
+						<div class="col-lg-8">
+                            <select name="studentnameedit" id="studentidedit" class="form-control custom-select" required>
+                            <option selected value="" disabled>Select Student</option>
+                          <?php
+                                  include('dbconnect.php'); 
+                          $query = mysqli_query($conn,"SELECT * FROM student");
+
+                          while ($result = mysqli_fetch_array($query)) {
+                          echo "<option value="  .$result['id']. ">" .$result['firstname'].' '.$result['middlename'].' ' .$result['lastname']."</option>";
+                          }
+                          ?>
+                          </select>
+						</div>
+					</div>
+					
+					<div style="height:10px;"></div>
+                    <div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Control No:</label>
+						</div>
+						<div class="col-lg-8">
+							<input type="text" class="form-control" id="controlnoidedit" name="controlnoedit" required>
+						</div>
+					</div>				
+
+					
+					<div style="height:10px;"></div>
 
 									
                 </div> 
 				</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-                    <button type="submit"name="editsubject" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
+                    <button type="submit"name="editassignstudent" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
                     	
 				</form>
                 </div>
@@ -556,16 +597,7 @@ $(document).ready(function(){
  <center><h6>Are you sure you want to delete this Subject?</h6> </center>
 <input type="hidden" name="iddelete" id="iddelete">
 <div style="height:10px;"></div>
-					<div class="row">
-						<div class="col-lg-2">
-							<label class="control-label" style="position:relative; top:7px;">Subject:</label>
-						</div>
-						<div class="col-lg-10">
-							<input type="text" id="subjectnameiddelete" class="form-control" name="" required readonly>
-						</div>
-					</div>
 
-          <div style="height:10px;"></div>
 					<div class="row">
 						<div class="col-lg-2">
 							<label class="control-label" style="position:relative; top:7px;">Class:</label>
@@ -574,13 +606,33 @@ $(document).ready(function(){
 							<input type="text" id="classnameiddelete" class="form-control" name="" required readonly>
 						</div>
 					</div>
+
+          <div style="height:10px;"></div>
+
+					<div class="row">
+						<div class="col-lg-2">
+							<label class="control-label" style="position:relative; top:7px;">Student:</label>
+						</div>
+						<div class="col-lg-10">
+							<input type="text" id="studentnameiddelete" class="form-control" name="" required readonly>
+						</div>
+					</div>
+          <div style="height:10px;"></div>
+					<div class="row">
+						<div class="col-lg-3">
+							<label class="control-label" style="position:relative; top:7px;">Controlno:</label>
+						</div>
+						<div class="col-lg-9">
+							<input type="text" id="controlnoiddelete" class="form-control" name="" required readonly>
+						</div>
+					</div>
 					<div style="height:10px;"></div>
 </div>
 
 
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-<button type="submit" name="deletesubject" class="btn btn-primary">Yes</button>
+<button type="submit" name="deleteassignstudent" class="btn btn-primary">Yes</button>
 </div>       
 </form>
 

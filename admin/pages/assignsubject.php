@@ -305,12 +305,13 @@ unset($_SESSION['error_remarks']);
               <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Id</th>
-                  
-                  <th>Class Name</th>      
+                  <th hidden>Id</th>                    
+                  <th>Class Name</th>   
                   <th>Subject Name</th>                 
                     <th>Created On</th>
                     <th>Action</th>
+                    <th hidden>Classid</th>  
+                  <th hidden >Subjectid</th> 
                   </tr>
                   </thead>
                   <tbody>
@@ -321,14 +322,16 @@ unset($_SESSION['error_remarks']);
                 ?>
                 <?php 
                 $id=$getrow['id'];  
+                $classid=$getrow['classid']; 
                 $classname=$getrow['classname'];  
+                $subjectid=$getrow['subjectid']; 
                 $subjectname=$getrow['subjectname']; 
                 $createdon=$getrow['createdon'];   
                 
                 ?>             
                 <tr>
-                <td><?php echo $id; ?></td>
-                <td><?php echo $classname; ?></td>
+                <td hidden><?php echo $id; ?></td>               
+                <td><?php echo $classname; ?></td>               
                 <td><?php echo $subjectname; ?></td>
                 <td><?php echo $createdon; ?></td>  
                 <td><?php               
@@ -336,7 +339,9 @@ unset($_SESSION['error_remarks']);
                    echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletequiz">Delete</button>';
                   
                    ?>
-               </td>                  
+               </td>  
+               <td hidden ><?php echo $classid; ?></td>  
+               <td hidden><?php echo $subjectid; ?></td>              
                 </tr> 
 <?php
 }                      
@@ -455,8 +460,8 @@ $(document).ready(function(){
         }).get();
 
         $('#id').val(data[0]);     
-        $('#subjectnameid').val(data[1]);  
-        $('#classnameid').val(data[2]);  
+        $('#subjectnameidedit').val(data[6]);  
+        $('#classnameidedit').val(data[5]); 
          
         
    
@@ -476,8 +481,8 @@ $(document).ready(function(){
         }).get();
 
         $('#iddelete').val(data[0]);  
-        $('#subjectnameiddelete').val(data[1])  ;  
-        $('#classnameiddelete').val(data[2])  ;  
+        $('#subjectnameiddelete').val(data[2])  ;  
+        $('#classnameiddelete').val(data[1])  ;  
              
        
   });
@@ -492,7 +497,7 @@ $(document).ready(function(){
             <div class="modal-content">
                 <div class="modal-header">
                     
-                    <center><h4 class="modal-title" id="myModalLabel">Edit Quiz</h4></center>
+                    <center><h4 class="modal-title" id="myModalLabel">Edit Assign Subject to Class</h4></center>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -505,26 +510,48 @@ $(document).ready(function(){
 							<label class="control-label" style="position:relative; top:7px;">Subject Name:</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" id="subjectnameid" name="subjectname" required>
+            <select name="subjectname" id="subjectnameidedit" class="form-control custom-select" required>
+                            <option selected value="" disabled>Select Grade & Section</option>
+                          <?php
+                                  include('dbconnect.php'); 
+                          $query = mysqli_query($conn,"SELECT * FROM subjects");
+
+                          while ($result = mysqli_fetch_array($query)) {
+                          echo "<option value=" .$result['id']. ">" .$result['subjectname']."</option>";
+                          }
+                          ?>
+                          </select>
 						</div>
 					</div>
 
           <div style="height:10px;"></div>
           <div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Class Name:</label>
+							<label class="control-label" style="position:relative; top:7px;">Subject Name:</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" id="classnameid" name="classname" required>
+            <select name="classname" id="classnameidedit" class="form-control custom-select" required>
+                            <option selected value="" disabled>Select Grade & Section</option>
+                          <?php
+                                  include('dbconnect.php'); 
+                          $query = mysqli_query($conn,"SELECT * FROM class");
+
+                          while ($result = mysqli_fetch_array($query)) {
+                          echo "<option value=" .$result['id']. ">" .$result['classname']."</option>";
+                          }
+                          ?>
+                          </select>
 						</div>
 					</div>
+
+          <div style="height:10px;"></div>
 
 									
                 </div> 
 				</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-                    <button type="submit"name="editsubject" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
+                    <button type="submit"name="editassignsubject" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
                     	
 				</form>
                 </div>
@@ -532,6 +559,9 @@ $(document).ready(function(){
             </div>
         </div>
     </div>
+</body>
+</html>
+    
 </body>
 </html>
 
@@ -551,6 +581,15 @@ $(document).ready(function(){
  <center><h6>Are you sure you want to delete this Subject?</h6> </center>
 <input type="hidden" name="iddelete" id="iddelete">
 <div style="height:10px;"></div>
+<div class="row">
+						<div class="col-lg-2">
+							<label class="control-label" style="position:relative; top:7px;">Class:</label>
+						</div>
+						<div class="col-lg-10">
+							<input type="text" id="classnameiddelete" class="form-control" name="" required readonly>
+						</div>
+					</div>
+					<div style="height:10px;"></div>
 					<div class="row">
 						<div class="col-lg-2">
 							<label class="control-label" style="position:relative; top:7px;">Subject:</label>
@@ -561,21 +600,13 @@ $(document).ready(function(){
 					</div>
 
           <div style="height:10px;"></div>
-					<div class="row">
-						<div class="col-lg-2">
-							<label class="control-label" style="position:relative; top:7px;">Class:</label>
-						</div>
-						<div class="col-lg-10">
-							<input type="text" id="classnameiddelete" class="form-control" name="" required readonly>
-						</div>
-					</div>
-					<div style="height:10px;"></div>
+				
 </div>
 
 
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-<button type="submit" name="deletesubject" class="btn btn-primary">Yes</button>
+<button type="submit" name="deleteassignsubject" class="btn btn-primary">Yes</button>
 </div>       
 </form>
 
