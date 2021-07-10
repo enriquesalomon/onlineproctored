@@ -102,8 +102,98 @@
              
             </ul>
           </li>
+          <!-- newwww  -->
          
-        
+          <li class="nav-item">
+            <a href="pages/classes.php" class="nav-link">
+              <i class="nav-icon fas fa-columns"></i>
+              <p>
+                Classes
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-user-circle"></i>
+              <p>
+                Subject
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="./pages/subject.php" class="nav-link">
+                <i class="far fas-file nav-icon"></i>
+                  <p>Subject</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="./pages/assignsubject.php" class="nav-link">
+                <i class="far fas-file nav-icon"></i>
+                  <p>Assign Subject</p>
+                </a>
+              </li>
+             
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+            <i class="nav-icon far fa-user-circle"></i>
+              <p>
+                Student
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="./pages/student.php" class="nav-link">
+                <i class="far fas-file nav-icon"></i>
+                  <p>Student</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="./pages/assignstudent.php" class="nav-link">
+                <i class="far fas-file nav-icon"></i>
+                  <p>Assign Student</p>
+                </a>
+              </li>
+             
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-folder-open"></i>
+              <p>
+                Exam
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="./pages/exam.php" class="nav-link">
+                <i class="far fas-file nav-icon"></i>
+                  <p>Exam</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="./pages/examsubject.php" class="nav-link">
+                <i class="far fas-file nav-icon"></i>
+                  <p>Exam Subject</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/question.php" class="nav-link">
+                  <i class="far fas-file nav-icon"></i>
+                  <p>Question</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
           <li class="nav-header">Exit</li>
           <li class="nav-item">
             <a href="#" class="nav-link "data-toggle="modal" data-target="#logoutModal">

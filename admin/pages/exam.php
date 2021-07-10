@@ -137,72 +137,97 @@ include('../includes/pagetopbar.php');
           
          
           <li class="nav-header">MANAGEMENT</li>         
+          <!-- newwww  -->
+         
           <li class="nav-item">
-            <a href="student.php" class="nav-link">
+            <a href="classes.php" class="nav-link ">
               <i class="nav-icon fas fa-columns"></i>
               <p>
-                Student
+                Classes
               </p>
             </a>
           </li>
 
-          
+          <li class="nav-item ">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-user-circle"></i>
+              <p>
+                Subject
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="./subject.php" class="nav-link ">
+                <i class="far fas-file nav-icon"></i>
+                  <p>Subject</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="./assignsubject.php" class="nav-link ">
+                <i class="far fas-file nav-icon"></i>
+                  <p>Assign Subject</p>
+                </a>
+              </li>
+             
+            </ul>
+          </li>
+
+          <li class="nav-item ">
+            <a href="#" class="nav-link">
+            <i class="nav-icon far fa-user-circle"></i>
+              <p>
+                Student
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="./student.php" class="nav-link ">
+                <i class="far fas-file nav-icon"></i>
+                  <p>Student</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="./assignstudent.php" class="nav-link">
+                <i class="far fas-file nav-icon"></i>
+                  <p>Assign Student</p>
+                </a>
+              </li>
+             
+            </ul>
+          </li>
+
           <li class="nav-item menu-open">
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-folder-open"></i>
               <p>
-                OPE
+                Exam
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="./exam.php" class="nav-link active">
-                  <i class="far fa-file nav-icon"></i>
+                <i class="far fas-file nav-icon"></i>
                   <p>Exam</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./quiz.php" class="nav-link">
-                  <i class="far fa-file nav-icon"></i>
-                  <p>Quiz</p>
+                <a href="./examsubject.php" class="nav-link">
+                <i class="far fas-file nav-icon"></i>
+                  <p>Exam Subject</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/mailbox/materials.php" class="nav-link">
-                  <i class="far fa-file nav-icon"></i>
-                  <p>Materials for Study</p>
+                <a href="./question.php" class="nav-link">
+                  <i class="far fas-file nav-icon"></i>
+                  <p>Question</p>
                 </a>
               </li>
             </ul>
           </li>
-         
-         
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-user-circle"></i>
-              <p>
-                Admission
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="student.php" class="nav-link">
-                  <i class="far fa-user-circle nav-icon"></i>
-                  <p>Student</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="gradelevel.php" class="nav-link">
-                  <i class="far fa-file nav-icon"></i>
-                  <p>Grade Level</p>
-                </a>
-              </li>
-             
-            </ul>
-          </li>
-         
+
         
           <li class="nav-header">Exit</li>
           <li class="nav-item">

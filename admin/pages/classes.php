@@ -17,7 +17,6 @@ include('dbconnect.php');
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Online Proctored Web App | Admin</title>
 
-  
   <style>
 
 
@@ -138,12 +137,10 @@ include('../includes/pagetopbar.php');
           
          
           <li class="nav-header">MANAGEMENT</li>         
-          
-
-           <!-- newwww  -->
+         
          
            <li class="nav-item">
-            <a href="classes.php" class="nav-link ">
+            <a href="./classes.php" class="nav-link active">
               <i class="nav-icon fas fa-columns"></i>
               <p>
                 Classes
@@ -151,7 +148,7 @@ include('../includes/pagetopbar.php');
             </a>
           </li>
 
-          <li class="nav-item ">
+          <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-user-circle"></i>
               <p>
@@ -161,13 +158,13 @@ include('../includes/pagetopbar.php');
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./subject.php" class="nav-link ">
+                <a href="./subject.php" class="nav-link">
                 <i class="far fas-file nav-icon"></i>
                   <p>Subject</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./assignsubject.php" class="nav-link ">
+                <a href="./assignsubject.php" class="nav-link">
                 <i class="far fas-file nav-icon"></i>
                   <p>Assign Subject</p>
                 </a>
@@ -176,7 +173,7 @@ include('../includes/pagetopbar.php');
             </ul>
           </li>
 
-          <li class="nav-item menu-open">
+          <li class="nav-item">
             <a href="#" class="nav-link">
             <i class="nav-icon far fa-user-circle"></i>
               <p>
@@ -186,7 +183,7 @@ include('../includes/pagetopbar.php');
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./student.php" class="nav-link active">
+                <a href="./student.php" class="nav-link">
                 <i class="far fas-file nav-icon"></i>
                   <p>Student</p>
                 </a>
@@ -211,19 +208,19 @@ include('../includes/pagetopbar.php');
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./exam.php" class="nav-link">
+                <a href="./pages/exam.php" class="nav-link">
                 <i class="far fas-file nav-icon"></i>
                   <p>Exam</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./examsubject.php" class="nav-link">
+                <a href="./pages/quiz.php" class="nav-link">
                 <i class="far fas-file nav-icon"></i>
                   <p>Exam Subject</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./question.php" class="nav-link">
+                <a href="pages/mailbox/materials" class="nav-link">
                   <i class="far fas-file nav-icon"></i>
                   <p>Question</p>
                 </a>
@@ -258,45 +255,44 @@ include('../includes/pagetopbar.php');
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Student Management</h1>
+            <h1>Classes Management</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Student </li>
+              <li class="breadcrumb-item active">Class</li>
             </ol>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
     <?php
-if ( isset( $_SESSION['studentadded']) ) {
+if ( isset( $_SESSION['quizadded']) ) {
 include('toast-add.php');
 }
-if ( isset( $_SESSION['studentedited']) ) {
+if ( isset( $_SESSION['quizedited']) ) {
   include('toast-edited.php');
   }
-if ( isset( $_SESSION['studentdeleted']) ) {
-  include('toast-deleted.php');
-  }
-  
+if ( isset( $_SESSION['quizdeleted']) ) {
+include('toast-deleted.php');
+}
 
 if ( isset( $_SESSION['error']) ) {
   include('toast-error.php');
   }
 
-unset($_SESSION['studentadded']);
-unset($_SESSION['studentedited']);
-unset($_SESSION['studentdeleted']);
+unset($_SESSION['quizadded']);
+unset($_SESSION['quizedited']);
+unset($_SESSION['quizdeleted']);
 unset($_SESSION['error']);
 unset($_SESSION['error_remarks']);
 
 ?> 
     <!-- Main content -->
-    
+    <?php include 'modal-add-quiz.php'?>
     <section class="content">
        <div class="container-fluid">
-       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-student">Add Student</button>
+       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-quiz">Add Class</button>
 
         <div class="row">
           <div class="col-12">
@@ -305,82 +301,66 @@ unset($_SESSION['error_remarks']);
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+              <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th hidden>ID</th>
-                    <th hidden>Fname</th>
-                    <th hidden>Mname</th>
-                    <th hidden>Lname</th>
-                    <th>Fullname</th>
-                    <th hidden>IDGradeSection</th>
+                  <th>Id</th>
+                  <th>Quiz Date</th>
+                  <th hidden>IDGradeSection</th>
                     <th>Grade & Section</th>
-                    <th>Contact#</th>
-                    <th>Email</th>
-                    <th>Address</th>
-                    <th>OPE Username</th>
-                    <th>OPE Password</th>
+                    <th>Time Limit</th>
+                    <th>Question Limit(secs)</th>
+                    <th>Quiz Title</th>
+                    <th>Quiz Description</th>
                     <th>Date Added</th>
-                    <th>Action</th> 
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
                 <?php
                 include('dbconnect.php');                           
-                $query=mysqli_query($conn," select *  from Student");                                            
+                $query=mysqli_query($conn," select *  from quiz");                                            
                 while($getrow=mysqli_fetch_array($query)){
                 ?>
                 <?php 
-                $id=$getrow['id'];
-                $fname=$getrow['firstname'];
-                $mname=$getrow['middlename'];
-                $lname=$getrow['lastname'];
+                $id=$getrow['id'];  
+                $quizdate=$getrow['quizdate'];  
+                $gradesectionid=$getrow['grade'];             
+                  
 
-                $fullname=$getrow['firstname'] .' '.$getrow['middlename'] .' '.$getrow['lastname'];
-                $gradesectionid=$getrow['gradesection'];             
+                $quiztimelimit=$getrow['quiztimelimit'];     
+                $questiontimelimit=$getrow['questiontimelimit'];
+                $quiztitle=$getrow['quiztitle'];   
+                $quizdescription=$getrow['quizdescription']; 
+                $dateadded=$getrow['dateaddedd'];  
 
-                $contact=$getrow['contact'];     
-                $email=$getrow['email'];
-                $address=$getrow['address'];   
-                $opeusername=$getrow['opeusername'];
-                $opepassword=$getrow['opepassword'];   
-                $dateadded=$getrow['dateaddedd'];   
-                
                 $getrow1=mysqli_query($conn,"SELECT * FROM gradelevel where id='$gradesectionid'");
                 $getrow1=mysqli_fetch_array($getrow1);
                  $gradesection=$getrow1['gradelevel'].' '.$getrow1['section'];
+                
                 ?>             
                 <tr>
-                <td hidden><?php echo $id; ?></td>
-                <td hidden ><?php echo $fname; ?></td>
-                <td hidden><?php echo $mname; ?></td>
-                <td hidden><?php echo $lname; ?></td>
-                <td><?php echo $fullname; ?></td>
-                <td hidden><?php echo $gradesectionid; ?></td>
+                <td><?php echo $id; ?></td>
+                <td><?php echo $quizdate; ?></td>
+                <td hidden><?php echo $gradesectionid; ?></td> 
                 <td><?php echo $gradesection; ?></td>                
-                <td><?php echo $contact; ?></td>   
-                <td><?php echo $email; ?></td>
-                <td><?php echo $address; ?></td>
-                <td><?php echo $opeusername; ?></td>  
-                <td><?php echo $opepassword; ?></td>
-                <td><?php echo $dateadded; ?></td>     
-                <td>
-                 <?php 
-                 
+                <td><?php echo $quiztimelimit; ?></td>   
+                <td><?php echo $questiontimelimit; ?></td>
+                <td><?php echo $quiztitle; ?></td>
+                <td><?php echo $quizdescription; ?></td>  
+                <td><?php echo $dateadded; ?></td>       
+                <td><?php 
+                 echo ' <button type="button" class="btn btn-block bg-gradient-success btn-xs questbtn">Questionnaire</button>';                  
                   echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
-                 echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletestudent">Delete</button>';
-                 
-                 
+                   echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletequiz">Delete</button>';
+                  
                    ?>
-
-               
-  
-               </td>              
+               </td>                  
                 </tr> 
-              <?php
-              }                      
-              ?>                                            
-                    </tbody>   
+<?php
+}                      
+?>                                            
+                    </tbody>                     
                 </table>
               </div>
               <!-- /.card-body -->
@@ -423,6 +403,8 @@ unset($_SESSION['error_remarks']);
 <script src="../assets/dist/js/demo.js"></script>
 <!-- Page specific script -->
 
+
+
 <script src="	https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
@@ -440,6 +422,7 @@ unset($_SESSION['error_remarks']);
 <!-- Bootstrap 4 -->
 <script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+
 <!-- DataTables  & Plugins -->
 <script src="../assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -453,12 +436,14 @@ unset($_SESSION['error_remarks']);
 <script src="../assets/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="../assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="../assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-
 <script>
+
+
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      //"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis" ]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
@@ -469,6 +454,9 @@ unset($_SESSION['error_remarks']);
       "autoWidth": false,
       "responsive": true,
     });
+
+   
+
   });
 </script>
 <script>
@@ -485,20 +473,14 @@ $(document).ready(function(){
           return $(this).text();
         }).get();
 
-        $('#id').val(data[0]);      
-          $('#fname').val(data[1]);
-         
-          $('#mname').val(data[2]);
-          $('#lname').val(data[3]);
-          $('#gradeedit').val(data[5]);
-          $('#contact').val(data[7]);
-          $('#email').val(data[8]);
-          $('#addressedit').val(data[9]);
-          $('#username').val(data[10]);
-          $('#password').val(data[11]);
-
-       
-
+        $('#id').val(data[0]);     
+        $('#datequiz1').val(data[1]);   
+        $('#gradeedit').val(data[2]);         
+        $('#timelimit').val(data[4]);    
+        $('#questionlimit').val(data[5]);      
+        $('#quiztitle').val(data[6]);         
+        $('#quizdescription').val(data[7]);     
+   
 
   });
 });
@@ -515,76 +497,49 @@ $(document).ready(function(){
         }).get();
 
         $('#iddelete').val(data[0]);  
-        $('#fullname').val(data[1] +' ' +data[2]+' ' +data[3]);       
+        $('#exam').val(data[1] +' ' +data[6]);       
        
   });
 });
 
 
 </script>
-</body>
-</html>
 
-
-<!--modal delete student -->
-<div id="deletemodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-<div class="modal-dialog modal-md" role="document">
-<div class="modal-content">
-<div class="modal-header">
-<h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-<form action="query-delete.php" method="POST">
-<div class="modal-body">
- <center><h6>Are you sure you want to delete this record?</h6> </center>
-<input type="hidden" name="iddelete" id="iddelete">
-<div style="height:10px;"></div>
-					<div class="row">
-						<div class="col-lg-2">
-							<label class="control-label" style="position:relative; top:7px;">Fullname:</label>
-						</div>
-						<div class="col-lg-10">
-							<input type="text" id="fullname" class="form-control" name="fullname"required readonly>
-						</div>
-					</div>
-					<div style="height:10px;"></div>
-</div>
-
-
-<div class="modal-footer">
-<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-<button type="submit" name="deletestudent" class="btn btn-primary">Yes</button>
-</div>       
-</form>
-
-
-</div>
-</div>
-</div>
-
-
-
-
-<!-- Add New -->
-<div class="modal fade" id="editmodal"tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- Edit -->
+<div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
                     
-                    <center><h4 class="modal-title" id="myModalLabel">Edit Student</h4></center>
+                    <center><h4 class="modal-title" id="myModalLabel">Edit Quiz</h4></center>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
 				<div class="container-fluid">
 				<form method="POST" action="query-edit.php" enctype="multipart/form-data">				
 				<div class="row">
+                                    <div class="col-lg-4">
+                                      <label class="control-label" style="position:relative; top:7px;">Date of Exam</label>
+                                    </div>
+                                <div class="col-lg-8">
+                                    <div class="input-group">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                    </div>
+                              
+                  
+                                <input id="datequiz1" class="form-control"  name="datequiz" placeholder="mm/dd/yyyy" type="calendar" readonly />
+                                </div>
+                               </div>
+                      </div>			
+					  <div style="height:10px;"></div>              
+   
+				<div class="row">
 						<div class="col-lg-4">
 							<label class="control-label" style="position:relative; top:7px;">Grade & Section:</label>
 						</div>
 						<div class="col-lg-8">
-            <input type="hidden" class="form-control" id="id" name="id" required >
+            <input type="hidden" class="form-control" id="id" name="idedit" required >
                             <select name="grade" id="gradeedit" class="form-control custom-select" required>
                             <option selected value="" disabled>Select Grade & Section</option>
                           <?php
@@ -596,94 +551,54 @@ $(document).ready(function(){
                           }
                           ?>
                           </select>
-                         
 						</div>
 					</div>
-       
+					
 					<div style="height:10px;"></div>
 					<div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Firstname:</label>
+							<label class="control-label" style="position:relative; top:7px;">Quiz Time Limit:</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" id="fname" class="form-control" name="firstname"required>
+							<input type="text" class="form-control" id="timelimit" name="quiztimelimit"required>
 						</div>
 					</div>
 					<div style="height:10px;"></div>
 					<div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Middle:</label>
+							<label class="control-label" style="position:relative; top:7px;">Question Limit to display:</label>
 						</div>
 							<div style="height:10px;"></div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" id="mname" name="middlename"required>
-						</div>
-					</div>
-					<div style="height:10px;"></div>
-					<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Lastname:</label>
-						</div>
-						<div class="col-lg-8">
-							<input type="text" class="form-control" id="lname" name="lastname"required>
+							<input type="text" class="form-control" id="questionlimit" name="questiontimelimit"required>
 						</div>
 					</div>
 						<div style="height:10px;"></div>
-						
 					<div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Contact:</label>
+							<label class="control-label" style="position:relative; top:7px;">Quiz Title:</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" id="contact" name="contactno"required>
+							<input type="text" class="form-control" id="quiztitle" name="quiztitle" required>
+                           
 						</div>
 					</div>
 								<div style="height:10px;"></div>
 					<div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Email:</label>
+							<label class="control-label" style="position:relative; top:7px;">Quiz Description:</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="email" class="form-control" id="email" name="email"required>
+                        <textarea id="quizdescription" class="form-control" rows="4" name="examdescription"></textarea>
+         
 						</div>
 					</div>
-									<div style="height:10px;"></div>				
-					<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Address:</label>
-						</div>
-						<div class="col-lg-8">
-							<textarea  class="form-control" rows="2" id="addressedit" name="address" required></textarea>
-						</div>
-					</div>
-								<div style="height:10px;"></div>
-				
-					<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">OPE Username:</label>
-						</div>
-						<div class="col-lg-8">
-							<input type="text" class="form-control" id="username" name="username"required>
-						</div>
-					</div>
-
-									<div style="height:10px;"></div>
-					<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">OPE Password:</label>
-						</div>
-						<div class="col-lg-8">
-							<input type="text" class="form-control" id="password" name="password"required>
-						</div>
-					</div>
-					   <div style="height:10px;"></div>                     
-                
-					
+									
                 </div> 
 				</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-                    <button type="submit"name="editstudent" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
+                    <button type="submit"name="editquiz" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
                     	
 				</form>
                 </div>
@@ -691,16 +606,48 @@ $(document).ready(function(){
             </div>
         </div>
     </div>
-	
+</body>
+</html>
 
 
+<!--modal delete  -->
+<div id="deletemodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal-dialog modal-md" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<form action="query-delete.php" method="POST">
+<div class="modal-body">
+ <center><h6>Are you sure you want to delete Quiz Schedule?</h6> </center>
+<input type="hidden" name="iddelete" id="iddelete">
+<div style="height:10px;"></div>
+					<div class="row">
+						<div class="col-lg-2">
+							<label class="control-label" style="position:relative; top:7px;">Exam:</label>
+						</div>
+						<div class="col-lg-10">
+							<input type="text" id="exam" class="form-control" name="" required readonly>
+						</div>
+					</div>
+					<div style="height:10px;"></div>
+</div>
 
-<?php
-include 'modal-add-student.php';
 
-?>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+<button type="submit" name="deletequiz" class="btn btn-primary">Yes</button>
+</div>       
+</form>
+
+
+</div>
+</div>
+</div>
 <?php 
 include 'modal-logout.php';
 ?>
-
 
