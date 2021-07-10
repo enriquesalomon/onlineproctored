@@ -211,13 +211,13 @@ include('../includes/pagetopbar.php');
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./exam.php" class="nav-link active">
+                <a href="./exam.php" class="nav-link ">
                 <i class="far fas-file nav-icon"></i>
                   <p>Exam</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./examsubject.php" class="nav-link">
+                <a href="./examsubject.php" class="nav-link active">
                 <i class="far fas-file nav-icon"></i>
                   <p>Exam Subject</p>
                 </a>
@@ -257,12 +257,12 @@ include('../includes/pagetopbar.php');
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Exam Management</h1>
+            <h1>Exam Subject Management</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Exam </li>
+              <li class="breadcrumb-item active">Exam Subject </li>
             </ol>
           </div>
         </div>
@@ -294,7 +294,7 @@ unset($_SESSION['error_remarks']);
 ?> 
  <!-- Main content -->
     
- <?php include 'modal-add-exam.php'?>
+ <?php include 'modal-add-examsubject.php'?>
  <section class="content">
        <div class="container-fluid">
        <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-exam">Add Exam</button>
@@ -311,40 +311,49 @@ unset($_SESSION['error_remarks']);
                   <tr>
                   <th hidden>Id</th>
                   <th>Exam Name</th>
-                    <th>Class Name</th>
-                      <th>Result Date & Time</th>
-                    <th>Created On</th>
+                    <th>Subject</th>
+                      <th>Exam Datetime</th>
+                      <th>Total Question</th>
+                      <th>Right Answer Mark</th>
+                      <th>Wrong Answer Mark</th>
                     <th>Action</th>
-                    <th hidden>classid </th>
+                    <th >examid</th>
+                    <th >subjectid </th>
                   </tr>
                   </thead>
                   <tbody>
                 <?php
                 include('dbconnect.php');                           
-                $query=mysqli_query($conn," select *  from exam");                                            
+                $query=mysqli_query($conn," select *  from examsubject");                                            
                 while($getrow=mysqli_fetch_array($query)){
                 ?>
                 <?php 
                 $id=$getrow['id'];   
-                $examname=$getrow['examname'];             
-                $classnameid=$getrow['classname'];             
-                $resultdatetime=$getrow['resultdatetime'];
-                if ($resultdatetime ==''){
-                  $resultdatetime= "Not Publish";
-                }
-                $createdon=$getrow['createdon'];  
 
-                $getrow1=mysqli_query($conn,"SELECT * FROM class where id='$classnameid'");
+                $examid=$getrow['examid'];             
+                $subjectid=$getrow['subjectid'];            
+               
+                $examdatetime=$getrow['examdatetime']; 
+                $totalquestion=$getrow['totalquestion']; 
+                $rightmark=$getrow['rightmark'];  
+                $wrongmark=$getrow['wrongmark']; 
+
+                $getrow1=mysqli_query($conn,"SELECT * FROM exam where id='$examid'");
                 $getrow1=mysqli_fetch_array($getrow1);
-                 $classname=$getrow1['classname'];
+                 $examname=$getrow1['examname'];
+                 $getrow2=mysqli_query($conn,"SELECT * FROM subjects where id='$subjectid'");
+                 $getrow2=mysqli_fetch_array($getrow2);
+                  $examname=$getrow2['subjectname'];
                 
                 ?>             
                 <tr>
                 <td hidden><?php echo $id; ?></td>
                 <td><?php echo $examname; ?></td>
-                <td ><?php echo $classname; ?></td>               
-                <td><?php echo $resultdatetime; ?></td>   
-                <td><?php echo $createdon; ?></td>    
+                <td ><?php echo $subjectname; ?></td>               
+                <td><?php echo $examdatetime; ?></td>   
+                <td><?php echo $totalquestion; ?></td> 
+                <td><?php echo $rightmark; ?></td>
+                <td><?php echo $wrongmark; ?></td>   
                 <td><?php 
                      echo ' <button type="button" class="btn btn-block bg-gradient-success btn-xs questbtn">Questionnaire</button>';
                     echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
@@ -352,7 +361,9 @@ unset($_SESSION['error_remarks']);
                    
                    ?>
                </td>   
-               <td hidden><?php echo $classnameid; ?></td>                 
+               <td hidden><?php echo $examid; ?></td>   
+               <td hidden><?php echo $subjectid; ?></td>   
+                             
                 </tr> 
 <?php
 }                      

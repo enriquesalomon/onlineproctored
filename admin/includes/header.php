@@ -35,12 +35,17 @@
   <link rel="stylesheet" href="toastr/css/toastr.min.css">
 
   <style>
-    .main-sidebar { background-color: rgb(67 144 85) !important }
+    .main-sidebar { background-color: rgb(165,42,42) !important }
+
+   /**
+   .main-sidebar { background-color: rgb(67 144 85) !important }
+    */
    .nav-header {
     background-color: inherit;
     color: #FFFFFF !important;
     
    }
+   
    .d-block{
     background-color: inherit;
     color: #FFFFFF !important;

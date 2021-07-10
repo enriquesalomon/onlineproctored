@@ -19,10 +19,11 @@ include('dbconnect.php');
 
   
   <style>
+    .main-sidebar { background-color: rgb(165,42,42) !important }
 
-
-
-    .main-sidebar { background-color: rgb(67 144 85) !important }
+/**
+.main-sidebar { background-color: rgb(67 144 85) !important }
+ */
    .nav-header {
     background-color: inherit;
     color: #FFFFFF !important;
@@ -569,7 +570,7 @@ $(document).ready(function(){
                 <div class="modal-body">
 				<div class="container-fluid">
 				<form method="POST" action="query-edit.php" enctype="multipart/form-data">				
-				
+        <input type="hidden" class="form-control" id="id" name="idedit" required >
 					<div class="row">
 						<div class="col-lg-4">
 							<label class="control-label" style="position:relative; top:7px;">Firstname:</label>

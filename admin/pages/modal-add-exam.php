@@ -22,82 +22,36 @@ $date = date('Y-m-d H:i:s');
 				<div class="container-fluid">
 				<form method="POST" enctype="multipart/form-data">	
 			
-                     <div class="row">
-                                    <div class="col-lg-4">
-                                      <label class="control-label" style="position:relative; top:7px;">Date of Exam</label>
-                                    </div>
-                                <div class="col-lg-8">
-                                    <div class="input-group">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                    </div>
-                              
-                  
-                                <input id="dateexam2" class="form-control"  name="dateexams" placeholder="mm/dd/yyyy" type="calendar" readonly />
-                                </div>
-                               </div>
-                      </div>			
-					  <div style="height:10px;"></div>
-				<div class="row">
+        <div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Grade & Section:</label>
+							<label class="control-label" style="position:relative; top:7px;">Exam Name:</label>
 						</div>
 						<div class="col-lg-8">
-                            <select name="grade" id="grade" class="form-control custom-select" required>
-                            <option selected value="" disabled>Select Grade & Section</option>
+							<input type="text" class="form-control" name="examname"required>
+                           
+						</div>
+					</div>
+								<div style="height:10px;"></div>
+				<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Class:</label>
+						</div>
+						<div class="col-lg-8">
+                            <select name="classname" id="" class="form-control custom-select" required>
+                            <option selected value="" disabled>Select Class</option>
                           <?php
                                   include('dbconnect.php'); 
-                          $query = mysqli_query($conn,"SELECT * FROM gradelevel");
+                          $query = mysqli_query($conn,"SELECT * FROM class");
 
                           while ($result = mysqli_fetch_array($query)) {
-                          echo "<option value=" .$result['id']. ">" .$result['gradelevel'].' '.$result['section']."</option>";
+                          echo "<option value=" .$result['id']. ">" .$result['classname']."</option>";
                           }
                           ?>
                           </select>
 						</div>
 					</div>
 					
-					<div style="height:10px;"></div>
-					<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Exam Time Limit:</label>
-						</div>
-						<div class="col-lg-8">
-							<input type="text" class="form-control" name="examtimelimit"required>
-						</div>
-					</div>
-					<div style="height:10px;"></div>
-					<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Question Limit to display:</label>
-						</div>
-							<div style="height:10px;"></div>
-						<div class="col-lg-8">
-							<input type="text" class="form-control" name="questiontimelimit"required>
-						</div>
-					</div>
-						<div style="height:10px;"></div>
-					<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Exam Title:</label>
-						</div>
-						<div class="col-lg-8">
-							<input type="text" class="form-control" name="examtitle"required>
-                           
-						</div>
-					</div>
-								<div style="height:10px;"></div>
-					<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Exam Description:</label>
-						</div>
-						<div class="col-lg-8">
-                        <textarea id="inputDescription" class="form-control" rows="4" name="examdescription"></textarea>
-         
-						</div>
-					</div>
-
-					
+								
 									
                 </div> 
 				</div>
@@ -128,15 +82,23 @@ $('#dateexam2').datepicker();
 
  
   	// Get image name
-	  $dateexam= mysqli_real_escape_string($conn, $_POST['dateexams']);
-		$grade= mysqli_real_escape_string($conn, $_POST['grade']);
-        $examtimelimit = mysqli_real_escape_string($conn, $_POST['examtimelimit']);
-        $questiontimelimit = mysqli_real_escape_string($conn, $_POST['questiontimelimit']);		
-        $examtitle = mysqli_real_escape_string($conn, $_POST['examtitle']);
-        $examdescription = mysqli_real_escape_string($conn, $_POST['examdescription']);	
+	  $examname= mysqli_real_escape_string($conn, $_POST['examname']);
+		$classname= mysqli_real_escape_string($conn, $_POST['classname']);       
 		$date = date('Y-m-d H:i:s');
+
+    if(!empty($_POST["classname"])) {
+      $check=mysqli_query($conn,"select * from exam where examname='" . $_POST["examname"] . "' AND  classname='" . $_POST["classname"] . "'");
+     $erow=mysqli_fetch_array($check);
+      if($erow>0) {
+        $_SESSION["error_remarks"]="Cannot be saved, found exam info duplication";
+           
+              $_SESSION["error"]="error";
+              header('location:exam.php');
+              exit();
+                }      
+      }
      
-        $sql = "INSERT INTO exam VALUES (DEFAULT,'$dateexam','$grade','$examtimelimit','$questiontimelimit','$examtitle','$examdescription','$date')";   
+        $sql = "INSERT INTO exam VALUES (DEFAULT,'$examname','$classname','','$date')";   
         if (!mysqli_query($conn, $sql)) {
             echo("Error description: " . mysqli_error($conn));
                 }else{

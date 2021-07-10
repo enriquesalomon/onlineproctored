@@ -1,8 +1,9 @@
 <style>
 .main-header {
 background-color: #304861;
-color: #1f2d3d;
+color: #1f2d3d;  
 }
+
 </style>
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand ">

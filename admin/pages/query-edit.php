@@ -2,10 +2,10 @@
 @ob_start();
 session_start();
   include 'dbconnect.php'; 
+
   if (isset($_POST['editstudent'])) {
   
-    $id= mysqli_real_escape_string($conn, $_POST['id']);
-		$grade= mysqli_real_escape_string($conn, $_POST['grade']);
+    $id= mysqli_real_escape_string($conn, $_POST['idedit']);
         $firstname = mysqli_real_escape_string($conn, $_POST['firstname']);
         $middlename = mysqli_real_escape_string($conn, $_POST['middlename']);		
         $lastname = mysqli_real_escape_string($conn, $_POST['lastname']);
@@ -16,18 +16,18 @@ session_start();
         $opepassword = mysqli_real_escape_string($conn, $_POST['password']);
 		$date = date('Y-m-d H:i:s');
 
-        if(!empty($_POST["username"])) {
-            $check=mysqli_query($conn,"select * from student where opeusername='" . $_POST["username"] . "' AND id <> '$id' ");
-           $erow=mysqli_fetch_array($check);
-            if($erow>0) {
-                    // $_SESSION["username_taken"]="duplicate";
-                    //  
-                    $_SESSION["error"]="error";
-                    header('location:student.php');
-                      }      
-            }
-
-                if (!mysqli_query($conn, "UPDATE student set gradesection='$grade',firstname='$firstname',middlename='$middlename',lastname='$lastname',contact='$contactno',email='$email',address='$address',opeusername='$opeusername',opepassword='$opepassword' where id='$id'")) {
+    if(!empty($_POST["username"])) {
+      $check=mysqli_query($conn,"select * from student where opeusername='" .$opeusername . "' AND id <> '".$id ."' ");
+     $erow=mysqli_fetch_array($check);
+      if($erow>0) {
+        $_SESSION["error_remarks"]="Cannot be saved, username already taken";
+           
+              $_SESSION["error"]="error";
+              header('location:student.php');
+              exit();
+                }      
+      }
+                if (!mysqli_query($conn, "UPDATE student set firstname='$firstname',middlename='$middlename',lastname='$lastname',contact='$contactno',email='$email',address='$address',opeusername='$opeusername',opepassword='$opepassword' where id='$id'")) {
             echo("Error description: " . mysqli_error($conn));
                 }else{
                       $_SESSION["studentedited"]="edit";
@@ -71,18 +71,14 @@ session_start();
   if (isset($_POST['editexam'])) {
   
     $id= mysqli_real_escape_string($conn, $_POST['idedit']);
-    $dateexam= mysqli_real_escape_string($conn, $_POST['dateexam']);
-		$grade= mysqli_real_escape_string($conn, $_POST['grade']);
-        $examtimelimit = mysqli_real_escape_string($conn, $_POST['examtimelimit']);
-        $questiontimelimit = mysqli_real_escape_string($conn, $_POST['questiontimelimit']);		
-        $examtitle = mysqli_real_escape_string($conn, $_POST['examtitle']);
-        $examdescription = mysqli_real_escape_string($conn, $_POST['examdescription']);	
+    $classname= mysqli_real_escape_string($conn, $_POST['classname']);
+    $examname= mysqli_real_escape_string($conn, $_POST['examname']);
 
-        if(!empty($_POST["grade"])) {
-            $check=mysqli_query($conn,"select * from gradelevel where examdate='" . $_POST["dateexam"] . "' AND id <> '$id' ");
+        if(!empty($_POST["classname"])) {
+            $check=mysqli_query($conn,"select * from exam where examname='" . $_POST["examname"] . "' AND  classname='" . $_POST["classname"] . "'  AND id <> '$id' ");
            $erow=mysqli_fetch_array($check);
             if($erow>0) {
-              $_SESSION["error_remarks"]="Cannot be saved, found exam date duplication";
+              $_SESSION["error_remarks"]="Cannot be saved, found exam info duplication";
                  
                     $_SESSION["error"]="error";
                     header('location:exam.php');
@@ -91,7 +87,7 @@ session_start();
             }
                
 
-                if (!mysqli_query($conn, "UPDATE exam set examdate='$dateexam',grade='$grade',examtimelimit='$examtimelimit',questiontimelimit='$questiontimelimit',examtitle='$examtitle',examdescription='$examdescription' where id='$id'")) {
+                if (!mysqli_query($conn, "UPDATE exam set examname='$examname',classname='$classname' where id='$id'")) {
             echo("Error description: " . mysqli_error($conn));
                 }else{
                       $_SESSION["examedited"]="edit";
