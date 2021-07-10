@@ -5,7 +5,7 @@ if ( isset( $_SESSION['username'])) {
 $username=$_SESSION['username'];
 
 } else {
-    header('location: index.php');
+  header('location: ../index.php');
 }
 include('dbconnect.php');
 
@@ -267,13 +267,13 @@ include('../includes/pagetopbar.php');
       </div><!-- /.container-fluid -->
     </section>
     <?php
-if ( isset( $_SESSION['quizadded']) ) {
+if ( isset( $_SESSION['added']) ) {
 include('toast-add.php');
 }
-if ( isset( $_SESSION['quizedited']) ) {
+if ( isset( $_SESSION['edited']) ) {
   include('toast-edited.php');
   }
-if ( isset( $_SESSION['quizdeleted']) ) {
+if ( isset( $_SESSION['deleted']) ) {
 include('toast-deleted.php');
 }
 
@@ -281,9 +281,9 @@ if ( isset( $_SESSION['error']) ) {
   include('toast-error.php');
   }
 
-unset($_SESSION['quizadded']);
-unset($_SESSION['quizedited']);
-unset($_SESSION['quizdeleted']);
+unset($_SESSION['added']);
+unset($_SESSION['edited']);
+unset($_SESSION['deleted']);
 unset($_SESSION['error']);
 unset($_SESSION['error_remarks']);
 include 'modal-add-gradelevel.php';
@@ -305,26 +305,26 @@ include 'modal-add-gradelevel.php';
                   <thead>
                   <tr>
                     <th hidden>ID</th>
-                    <th>Grade</th>
-                    <th>Section</th>
+                    <th>Class Name</th>
+                    <th>Created On </th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
                 <?php
                 include('dbconnect.php');                           
-                $query=mysqli_query($conn," select *  from gradelevel");                                            
+                $query=mysqli_query($conn," select *  from class");                                            
                 while($getrow=mysqli_fetch_array($query)){
                 ?>
                 <?php 
                 $id=$getrow['id'];
-                $gradelevel=$getrow['gradelevel'];
-                $section=$getrow['section'];                     
+                $classname=$getrow['classname'];  
+                $createdon=$getrow['createdon'];                    
                 ?>             
                 <tr>
                 <td hidden><?php echo $id; ?></td>
-                <td><?php echo $gradelevel; ?></td>
-                <td><?php echo $section; ?></td>       
+                <td><?php echo $classname; ?></td>
+                <td><?php echo $createdon; ?></td>       
                 <td><?php 
                 echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
                 echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletegradelevel">Delete</button>';
@@ -438,8 +438,7 @@ $(document).ready(function(){
         }).get();
 
         $('#id').val(data[0]);      
-          $('#grade').val(data[1]);         
-          $('#section').val(data[2]);    
+          $('#classname').val(data[1]);    
    
 
   });
@@ -457,7 +456,7 @@ $(document).ready(function(){
         }).get();
 
         $('#iddelete').val(data[0]);  
-        $('#gradelevel').val(data[1] +' ' +data[2]);       
+        $('#classnameid').val(data[1] );       
        
   });
 });
@@ -485,10 +484,10 @@ $(document).ready(function(){
 <div style="height:10px;"></div>
 					<div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Grade & Section:</label>
+							<label class="control-label" style="position:relative; top:7px;">Class Name:</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" id="gradelevel" class="form-control" name="gradelevel" required readonly>
+							<input type="text" id="classnameid" class="form-control" name="classname" required readonly>
 						</div>
 					</div>
 					<div style="height:10px;"></div>
@@ -512,37 +511,20 @@ $(document).ready(function(){
             <div class="modal-content">
                 <div class="modal-header">
                     
-                <h4 class="modal-title" id="myModalLabel">Edit Grade Level</h4>
+                <h4 class="modal-title" id="myModalLabel">Edit Class Name</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
 				<div class="container-fluid">
 				<form method="POST" action="query-edit.php" enctype="multipart/form-data">			
-					
+				
 					<div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Grade Level:</label>
+							<label class="control-label" style="position:relative; top:7px;">Class Name:</label>
 						</div>
 						<div class="col-lg-8">
             <input type="hidden" class="form-control" id="id" name="id" required >
-                            <select name="grade" id="grade" class="form-control custom-select">
-                            <option disabled>Select one</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            </select>
-						</div>
-					</div>
-					<div style="height:10px;"></div>
-					<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Section:</label>
-						</div>
-						<div class="col-lg-8">
-							<input type="text" class="form-control" name="section" id="section" required>
+							<input type="text" class="form-control" name="classname" id="classname" required>
 						</div>
 					</div>				
 					

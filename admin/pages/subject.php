@@ -5,7 +5,7 @@ if ( isset( $_SESSION['username'])) {
 $username=$_SESSION['username'];
 
 } else {
-    header('location: index.php');
+  header('location: ../index.php');
 }
 include('dbconnect.php');
 
@@ -268,13 +268,13 @@ include('../includes/pagetopbar.php');
       </div><!-- /.container-fluid -->
     </section>
     <?php
-if ( isset( $_SESSION['quizadded']) ) {
+if ( isset( $_SESSION['subjectadded']) ) {
 include('toast-add.php');
 }
-if ( isset( $_SESSION['quizedited']) ) {
+if ( isset( $_SESSION['edited']) ) {
   include('toast-edited.php');
   }
-if ( isset( $_SESSION['quizdeleted']) ) {
+if ( isset( $_SESSION['deleted']) ) {
 include('toast-deleted.php');
 }
 
@@ -282,18 +282,18 @@ if ( isset( $_SESSION['error']) ) {
   include('toast-error.php');
   }
 
-unset($_SESSION['quizadded']);
-unset($_SESSION['quizedited']);
-unset($_SESSION['quizdeleted']);
+unset($_SESSION['subjectadded']);
+unset($_SESSION['edited']);
+unset($_SESSION['deleted']);
 unset($_SESSION['error']);
 unset($_SESSION['error_remarks']);
 
 ?> 
     <!-- Main content -->
-    <?php include 'modal-add-quiz.php'?>
+    <?php include 'modal-add-subject.php'?>
     <section class="content">
        <div class="container-fluid">
-       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-quiz">Add Subject</button>
+       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-subject">Add Subject</button>
 
         <div class="row">
           <div class="col-12">
@@ -306,52 +306,31 @@ unset($_SESSION['error_remarks']);
                   <thead>
                   <tr>
                   <th>Id</th>
-                  <th>Quiz Date</th>
-                  <th hidden>IDGradeSection</th>
-                    <th>Grade & Section</th>
-                    <th>Time Limit</th>
-                    <th>Question Limit(secs)</th>
-                    <th>Quiz Title</th>
-                    <th>Quiz Description</th>
-                    <th>Date Added</th>
+                  <th>Subject Name</th>                 
+                    <th>Created On</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
                 <?php
                 include('dbconnect.php');                           
-                $query=mysqli_query($conn," select *  from quiz");                                            
+                $query=mysqli_query($conn," select *  from subjects");                                            
                 while($getrow=mysqli_fetch_array($query)){
                 ?>
                 <?php 
                 $id=$getrow['id'];  
-                $quizdate=$getrow['quizdate'];  
-                $gradesectionid=$getrow['grade'];             
-                  
-
-                $quiztimelimit=$getrow['quiztimelimit'];     
-                $questiontimelimit=$getrow['questiontimelimit'];
-                $quiztitle=$getrow['quiztitle'];   
-                $quizdescription=$getrow['quizdescription']; 
-                $dateadded=$getrow['dateaddedd'];  
-
-                $getrow1=mysqli_query($conn,"SELECT * FROM gradelevel where id='$gradesectionid'");
-                $getrow1=mysqli_fetch_array($getrow1);
-                 $gradesection=$getrow1['gradelevel'].' '.$getrow1['section'];
+                $subjectname=$getrow['subjectname'];  
+                $createdon=$getrow['createdon'];           
+                $status=$getrow['status'];   
                 
                 ?>             
                 <tr>
                 <td><?php echo $id; ?></td>
-                <td><?php echo $quizdate; ?></td>
-                <td hidden><?php echo $gradesectionid; ?></td> 
-                <td><?php echo $gradesection; ?></td>                
-                <td><?php echo $quiztimelimit; ?></td>   
-                <td><?php echo $questiontimelimit; ?></td>
-                <td><?php echo $quiztitle; ?></td>
-                <td><?php echo $quizdescription; ?></td>  
-                <td><?php echo $dateadded; ?></td>       
-                <td><?php 
-                 echo ' <button type="button" class="btn btn-block bg-gradient-success btn-xs questbtn">Questionnaire</button>';                  
+                <td><?php echo $subjectname; ?></td>
+                <td><?php echo $createdon; ?></td>                
+                <td><?php echo $status; ?></td>  
+                <td><?php               
                   echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
                    echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletequiz">Delete</button>';
                   
@@ -475,12 +454,8 @@ $(document).ready(function(){
         }).get();
 
         $('#id').val(data[0]);     
-        $('#datequiz1').val(data[1]);   
-        $('#gradeedit').val(data[2]);         
-        $('#timelimit').val(data[4]);    
-        $('#questionlimit').val(data[5]);      
-        $('#quiztitle').val(data[6]);         
-        $('#quizdescription').val(data[7]);     
+        $('#subjectnameid').val(data[1]);   
+        
    
 
   });
@@ -498,7 +473,7 @@ $(document).ready(function(){
         }).get();
 
         $('#iddelete').val(data[0]);  
-        $('#exam').val(data[1] +' ' +data[6]);       
+        $('#subjectnameiddelete').val(data[1])  ;       
        
   });
 });
@@ -518,88 +493,23 @@ $(document).ready(function(){
                 <div class="modal-body">
 				<div class="container-fluid">
 				<form method="POST" action="query-edit.php" enctype="multipart/form-data">				
-				<div class="row">
-                                    <div class="col-lg-4">
-                                      <label class="control-label" style="position:relative; top:7px;">Date of Exam</label>
-                                    </div>
-                                <div class="col-lg-8">
-                                    <div class="input-group">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                    </div>
-                              
-                  
-                                <input id="datequiz1" class="form-control"  name="datequiz" placeholder="mm/dd/yyyy" type="calendar" readonly />
-                                </div>
-                               </div>
-                      </div>			
-					  <div style="height:10px;"></div>              
-   
-				<div class="row">
+        <input type="hidden" class="form-control" id="id" name="idedit" required >
+			
+					<div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Grade & Section:</label>
+							<label class="control-label" style="position:relative; top:7px;">Subject Name:</label>
 						</div>
 						<div class="col-lg-8">
-            <input type="hidden" class="form-control" id="id" name="idedit" required >
-                            <select name="grade" id="gradeedit" class="form-control custom-select" required>
-                            <option selected value="" disabled>Select Grade & Section</option>
-                          <?php
-                                  include('dbconnect.php'); 
-                          $query = mysqli_query($conn,"SELECT * FROM gradelevel");
+							<input type="text" class="form-control" id="subjectnameid" name="subject"required>
+						</div>
+					</div>
 
-                          while ($result = mysqli_fetch_array($query)) {
-                          echo "<option value=" .$result['id']. ">" .$result['gradelevel'].' '.$result['section']."</option>";
-                          }
-                          ?>
-                          </select>
-						</div>
-					</div>
-					
-					<div style="height:10px;"></div>
-					<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Quiz Time Limit:</label>
-						</div>
-						<div class="col-lg-8">
-							<input type="text" class="form-control" id="timelimit" name="quiztimelimit"required>
-						</div>
-					</div>
-					<div style="height:10px;"></div>
-					<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Question Limit to display:</label>
-						</div>
-							<div style="height:10px;"></div>
-						<div class="col-lg-8">
-							<input type="text" class="form-control" id="questionlimit" name="questiontimelimit"required>
-						</div>
-					</div>
-						<div style="height:10px;"></div>
-					<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Quiz Title:</label>
-						</div>
-						<div class="col-lg-8">
-							<input type="text" class="form-control" id="quiztitle" name="quiztitle" required>
-                           
-						</div>
-					</div>
-								<div style="height:10px;"></div>
-					<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Quiz Description:</label>
-						</div>
-						<div class="col-lg-8">
-                        <textarea id="quizdescription" class="form-control" rows="4" name="examdescription"></textarea>
-         
-						</div>
-					</div>
 									
                 </div> 
 				</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-                    <button type="submit"name="editquiz" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
+                    <button type="submit"name="editsubject" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
                     	
 				</form>
                 </div>
@@ -623,15 +533,15 @@ $(document).ready(function(){
 </div>
 <form action="query-delete.php" method="POST">
 <div class="modal-body">
- <center><h6>Are you sure you want to delete Quiz Schedule?</h6> </center>
+ <center><h6>Are you sure you want to delete this Subject?</h6> </center>
 <input type="hidden" name="iddelete" id="iddelete">
 <div style="height:10px;"></div>
 					<div class="row">
-						<div class="col-lg-2">
-							<label class="control-label" style="position:relative; top:7px;">Exam:</label>
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Subject Name:</label>
 						</div>
-						<div class="col-lg-10">
-							<input type="text" id="exam" class="form-control" name="" required readonly>
+						<div class="col-lg-8">
+							<input type="text" id="subjectnameiddelete" class="form-control" name="subjectname" required readonly>
 						</div>
 					</div>
 					<div style="height:10px;"></div>
@@ -640,7 +550,7 @@ $(document).ready(function(){
 
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-<button type="submit" name="deletequiz" class="btn btn-primary">Yes</button>
+<button type="submit" name="deletesubject" class="btn btn-primary">Yes</button>
 </div>       
 </form>
 

@@ -21,14 +21,17 @@ session_start();
 if (isset($_POST['deletegradelevel'])) {
   
   $id= mysqli_real_escape_string($conn, $_POST['iddelete']);
+  
+  $classname= mysqli_real_escape_string($conn, $_POST['classname']);
+  
 
       if(!empty($_POST["iddelete"])) { 
         
           // check if has 1-1 relationship to other table
-          $check=mysqli_query($conn,"select * from student where gradesection='" . $id . "'");
+          $check=mysqli_query($conn,"select * from subjectclass where classname='" . $classname . "'");
           $erow=mysqli_fetch_array($check);
            if($erow>0) {
-                    $_SESSION["error_remarks"]="Cannot be deleted, found existing record to student records";
+                    $_SESSION["error_remarks"]="Cannot be deleted, found existing record to Subject Class";
                    //  
                    $_SESSION["error"]="error";
                    header('location:classes.php');
@@ -36,10 +39,10 @@ if (isset($_POST['deletegradelevel'])) {
                      }      
            
 
-              if (!mysqli_query($conn, "DELETE from gradelevel where id='$id'")) {
+              if (!mysqli_query($conn, "DELETE from class where id='$id'")) {
           echo("Error description: " . mysqli_error($conn));
               }else{
-                    $_SESSION["gradeleveldeleted"]="delete";
+                    $_SESSION["deleted"]="delete";
                     header('location:classes.php');
                     
               }
@@ -103,6 +106,39 @@ if (isset($_POST['deletequiz'])) {
               }else{
                     $_SESSION["quizdeleted"]="delete";
                     header('location:quiz.php');
+                    
+              }
+
+}
+}
+
+
+
+if (isset($_POST['deletesubject'])) {
+  
+  $id= mysqli_real_escape_string($conn, $_POST['iddelete']);
+  $subjectname= mysqli_real_escape_string($conn, $_POST['subjectname']);
+  
+
+      if(!empty($_POST["iddelete"])) { 
+        
+          // check if has 1-1 relationship to other table
+          $check=mysqli_query($conn,"select * from subjectclass where subjectname='$subjectname' ");
+          $erow=mysqli_fetch_array($check);
+           if($erow>0) {
+                    $_SESSION["error_remarks"]="Cannot be deleted, found existing record to Subject Class";
+                   //  
+                   $_SESSION["error"]="error";
+                   header('location:subject.php');
+                   exit();
+                     }      
+         
+
+              if (!mysqli_query($conn, "DELETE from subjectclass where id='$id'")) {
+          echo("Error description: " . mysqli_error($conn));
+              }else{
+                    $_SESSION["deleted"]="delete";
+                    header('location:subject.php');
                     
               }
 

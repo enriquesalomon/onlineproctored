@@ -5,7 +5,7 @@ if ( isset( $_SESSION['username'])) {
 $username=$_SESSION['username'];
 
 } else {
-    header('location: index.php');
+  header('location: ../index.php');
 }
 include('dbconnect.php');
 
@@ -313,14 +313,12 @@ unset($_SESSION['error_remarks']);
                     <th hidden>Mname</th>
                     <th hidden>Lname</th>
                     <th>Fullname</th>
-                    <th hidden>IDGradeSection</th>
-                    <th>Grade & Section</th>
                     <th>Contact#</th>
                     <th>Email</th>
                     <th>Address</th>
                     <th>OPE Username</th>
                     <th>OPE Password</th>
-                    <th>Date Added</th>
+                    <th>Created On</th>
                     <th>Action</th> 
                   </tr>
                   </thead>
@@ -336,8 +334,7 @@ unset($_SESSION['error_remarks']);
                 $mname=$getrow['middlename'];
                 $lname=$getrow['lastname'];
 
-                $fullname=$getrow['firstname'] .' '.$getrow['middlename'] .' '.$getrow['lastname'];
-                $gradesectionid=$getrow['gradesection'];             
+                $fullname=$getrow['firstname'] .' '.$getrow['middlename'] .' '.$getrow['lastname'];            
 
                 $contact=$getrow['contact'];     
                 $email=$getrow['email'];
@@ -345,19 +342,13 @@ unset($_SESSION['error_remarks']);
                 $opeusername=$getrow['opeusername'];
                 $opepassword=$getrow['opepassword'];   
                 $dateadded=$getrow['dateaddedd'];   
-                
-                $getrow1=mysqli_query($conn,"SELECT * FROM gradelevel where id='$gradesectionid'");
-                $getrow1=mysqli_fetch_array($getrow1);
-                 $gradesection=$getrow1['gradelevel'].' '.$getrow1['section'];
                 ?>             
                 <tr>
                 <td hidden><?php echo $id; ?></td>
                 <td hidden ><?php echo $fname; ?></td>
                 <td hidden><?php echo $mname; ?></td>
                 <td hidden><?php echo $lname; ?></td>
-                <td><?php echo $fullname; ?></td>
-                <td hidden><?php echo $gradesectionid; ?></td>
-                <td><?php echo $gradesection; ?></td>                
+                <td><?php echo $fullname; ?></td>          
                 <td><?php echo $contact; ?></td>   
                 <td><?php echo $email; ?></td>
                 <td><?php echo $address; ?></td>
@@ -490,12 +481,11 @@ $(document).ready(function(){
          
           $('#mname').val(data[2]);
           $('#lname').val(data[3]);
-          $('#gradeedit').val(data[5]);
-          $('#contact').val(data[7]);
-          $('#email').val(data[8]);
-          $('#addressedit').val(data[9]);
-          $('#username').val(data[10]);
-          $('#password').val(data[11]);
+          $('#contact').val(data[5]);
+          $('#email').val(data[6]);
+          $('#addressedit').val(data[7]);
+          $('#username').val(data[8]);
+          $('#password').val(data[9]);
 
        
 
@@ -579,28 +569,7 @@ $(document).ready(function(){
                 <div class="modal-body">
 				<div class="container-fluid">
 				<form method="POST" action="query-edit.php" enctype="multipart/form-data">				
-				<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Grade & Section:</label>
-						</div>
-						<div class="col-lg-8">
-            <input type="hidden" class="form-control" id="id" name="id" required >
-                            <select name="grade" id="gradeedit" class="form-control custom-select" required>
-                            <option selected value="" disabled>Select Grade & Section</option>
-                          <?php
-                                  include('dbconnect.php'); 
-                          $query = mysqli_query($conn,"SELECT * FROM gradelevel");
-
-                          while ($result = mysqli_fetch_array($query)) {
-                          echo "<option value=" .$result['id']. ">" .$result['gradelevel'].' '.$result['section']."</option>";
-                          }
-                          ?>
-                          </select>
-                         
-						</div>
-					</div>
-       
-					<div style="height:10px;"></div>
+				
 					<div class="row">
 						<div class="col-lg-4">
 							<label class="control-label" style="position:relative; top:7px;">Firstname:</label>

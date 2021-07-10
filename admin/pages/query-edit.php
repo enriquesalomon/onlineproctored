@@ -41,25 +41,25 @@ session_start();
   if (isset($_POST['editgradevel'])) {
   
     $id= mysqli_real_escape_string($conn, $_POST['id']);
-		$grade= mysqli_real_escape_string($conn, $_POST['grade']);    
-    $section= mysqli_real_escape_string($conn, $_POST['section']);  
+		$classname= mysqli_real_escape_string($conn, $_POST['classname']);    
 
-        if(!empty($_POST["grade"])) {
-            $check=mysqli_query($conn,"select * from gradelevel where gradelevel='" . $_POST["grade"] . "' AND section='" . $_POST["section"] . "' AND id <> '$id' ");
+        if(!empty($_POST["classname"])) {
+            $check=mysqli_query($conn,"select * from class where classname='".$classname."' AND id <> '$id' ");
            $erow=mysqli_fetch_array($check);
             if($erow>0) {
-                    // $_SESSION["username_taken"]="duplicate";
+              $_SESSION["error_remarks"]="Cannot be saved, found class name duplication";
                     //  
                     $_SESSION["error"]="error";
                     header('location:classes.php');
+                    exit();
                       }      
             }
                
 
-                if (!mysqli_query($conn, "UPDATE gradelevel set gradelevel='$grade',section='$section' where id='$id'")) {
+                if (!mysqli_query($conn, "UPDATE class set classname='$classname' where id='$id'")) {
             echo("Error description: " . mysqli_error($conn));
                 }else{
-                      $_SESSION["gradeleveledited"]="edit";
+                      $_SESSION["edited"]="edit";
                       header('location:classes.php');
                       
                 }
@@ -132,6 +132,36 @@ session_start();
                 }else{
                       $_SESSION["quizedited"]="edit";
                       header('location:quiz.php');
+                      
+                }
+
+  }
+
+
+  
+
+  if (isset($_POST['editsubject'])) {
+  
+    $id= mysqli_real_escape_string($conn, $_POST['idedit']);
+		$subject= mysqli_real_escape_string($conn, $_POST['subject']);    
+
+        if(!empty($_POST["subject"])) {
+            $check=mysqli_query($conn,"select * from subjects where subjectname='" . $_POST["subject"] . "'  AND id <> '$id' ");
+           $erow=mysqli_fetch_array($check);
+            if($erow>0) {
+                    // $_SESSION["username_taken"]="duplicate";
+                    //  
+                    $_SESSION["error"]="error";
+                    header('location:subject.php');
+                      }      
+            }
+               
+
+                if (!mysqli_query($conn, "UPDATE subjects set subjectname='$subject' where id='$id'")) {
+            echo("Error description: " . mysqli_error($conn));
+                }else{
+                      $_SESSION["edited"]="edit";
+                      header('location:subject.php');
                       
                 }
 

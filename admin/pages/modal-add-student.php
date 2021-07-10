@@ -10,26 +10,7 @@
                 <div class="modal-body">
 				<div class="container-fluid">
 				<form method="POST" action="student.php"enctype="multipart/form-data">				
-				<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Grade & Section:</label>
-						</div>
-						<div class="col-lg-8">
-                            <select name="grade" id="grade" class="form-control custom-select" required>
-                            <option selected value="" disabled>Select Grade & Section</option>
-                          <?php
-                                  include('dbconnect.php'); 
-                          $query = mysqli_query($conn,"SELECT * FROM gradelevel");
-
-                          while ($result = mysqli_fetch_array($query)) {
-                          echo "<option value=" .$result['id']. ">" .$result['gradelevel'].' '.$result['section']."</option>";
-                          }
-                          ?>
-                          </select>
-						</div>
-					</div>
-					
-					<div style="height:10px;"></div>
+				
 					<div class="row">
 						<div class="col-lg-4">
 							<label class="control-label" style="position:relative; top:7px;">Firstname:</label>
@@ -124,10 +105,6 @@
   if (isset($_POST['save'])) {
  
     include 'dbconnect.php';
-
- 
-  	// Get image name
-		$grade= mysqli_real_escape_string($conn, $_POST['grade']);
         $firstname = mysqli_real_escape_string($conn, $_POST['firstname']);
         $middlename = mysqli_real_escape_string($conn, $_POST['middlename']);		
         $lastname = mysqli_real_escape_string($conn, $_POST['lastname']);
@@ -142,13 +119,14 @@
             $check=mysqli_query($conn,"select * from student where opeusername='" . $_POST["username"] . "'");
            $erow=mysqli_fetch_array($check);
             if($erow>0) {
-                    // $_SESSION["username_taken"]="duplicate";
+				$_SESSION["error_remarks"]="Cannot be saved, found OPE Username already taken.";
                     //  
                     $_SESSION["error"]="error";
-                    header('location:gradelevel.php');
+                    header('location:student.php');
+					exit();
                       }      
             }
-        $sql = "INSERT INTO student VALUES (DEFAULT,'$grade','$firstname','$middlename','$lastname','$contactno','$email','$address','$opeusername','$opepassword','$date')";   
+        $sql = "INSERT INTO student VALUES (DEFAULT,'$firstname','$middlename','$lastname','$contactno','$email','$address','$opeusername','$opepassword','$date')";   
         if (!mysqli_query($conn, $sql)) {
             echo("Error description: " . mysqli_error($conn));
                 }else{
