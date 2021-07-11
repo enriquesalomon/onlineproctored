@@ -205,7 +205,7 @@ include('../includes/pagetopbar.php');
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-folder-open"></i>
               <p>
-                Exam
+              Assessment
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -338,9 +338,9 @@ unset($_SESSION['error_remarks']);
                 $rightmark=$getrow['rightmark'];  
                 $wrongmark=$getrow['wrongmark']; 
 
-                $getrow1=mysqli_query($conn,"SELECT * FROM exam where id='$examid'");
+                $getrow1=mysqli_query($conn,"SELECT * FROM examcategory where id='$examid'");
                 $getrow1=mysqli_fetch_array($getrow1);
-                 $examname=$getrow1['examname'];
+                 $examname=$getrow1['examcategoryname'];
                  $getrow2=mysqli_query($conn,"SELECT * FROM subjects where id='$subjectid'");
                  $getrow2=mysqli_fetch_array($getrow2);
                   $subjectname=$getrow2['subjectname'];

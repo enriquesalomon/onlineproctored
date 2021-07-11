@@ -205,7 +205,7 @@ include('../includes/pagetopbar.php');
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-folder-open"></i>
               <p>
-                Exam
+              Assessment
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -216,12 +216,12 @@ include('../includes/pagetopbar.php');
                   <p>Exam</p>
                 </a>
               </li>
-              <li class="nav-item">
+             <!-- <li class="nav-item">
                 <a href="./examsubject.php" class="nav-link">
                 <i class="far fas-file nav-icon"></i>
                   <p>Exam Subject</p>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a href="./question.php" class="nav-link">
                   <i class="far fas-file nav-icon"></i>
@@ -312,6 +312,7 @@ unset($_SESSION['error_remarks']);
                   <th hidden>Id</th>
                   <th>Exam Name</th>
                     <th>Class Name</th>
+                    <th>School Year</th>
                       <th>Result Date & Time</th>
                     <th>Created On</th>
                     <th>Action</th>
@@ -326,8 +327,9 @@ unset($_SESSION['error_remarks']);
                 ?>
                 <?php 
                 $id=$getrow['id'];   
-                $examname=$getrow['examname'];             
-                $classnameid=$getrow['classname'];             
+                $examnameid=$getrow['examcategoryid'];             
+                $classnameid=$getrow['classnameid'];    
+                $schoolyear=$getrow['sy'];           
                 $resultdatetime=$getrow['resultdatetime'];
                 if ($resultdatetime ==''){
                   $resultdatetime= "Not Publish";
@@ -337,21 +339,31 @@ unset($_SESSION['error_remarks']);
                 $getrow1=mysqli_query($conn,"SELECT * FROM class where id='$classnameid'");
                 $getrow1=mysqli_fetch_array($getrow1);
                  $classname=$getrow1['classname'];
+
+                 
+                $getrow1=mysqli_query($conn,"SELECT * FROM examcategory where id='$examnameid'");
+                $getrow1=mysqli_fetch_array($getrow1);
+                 $examcat=$getrow1['examcategoryname'];
                 
                 ?>             
                 <tr>
                 <td hidden><?php echo $id; ?></td>
-                <td><?php echo $examname; ?></td>
-                <td ><?php echo $classname; ?></td>               
+                <td><?php echo $examcat; ?></td>
+                <td ><?php echo $classname; ?></td>   
+                <td ><?php echo $schoolyear; ?></td>               
                 <td><?php echo $resultdatetime; ?></td>   
                 <td><?php echo $createdon; ?></td>    
                 <td><?php 
+
                      echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
                     echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletegradelevel">Delete</button>';
+                    echo '<a href="franchisee-teller-account-overview.php?tellerid=<?php echo  $tellerid; ?>&fid=<?php echo  $fid; ?>" class="btn btn-block bg-gradient-success btn-xs ">
+                    <i class="fas fa-arrow-circle-right"></i> Manage Exam Subjects</a>';
                    
                    ?>
                </td>   
-               <td hidden><?php echo $classnameid; ?></td>                 
+               <td hidden><?php echo $classnameid; ?></td>    
+               <td hidden><?php echo $examnameid; ?></td>               
                 </tr> 
 <?php
 }                      
@@ -465,8 +477,9 @@ $(document).ready(function(){
         }).get();
 
         $('#id').val(data[0]);     
-        $('#examnameid').val(data[1]);   
-        $('#classnameid').val(data[6]);         
+        $('#examnameid').val(data[8]);   
+        $('#classnameid').val(data[7]);   
+        $('#schoolyearid').val(data[3]);       
        
    
 
@@ -487,6 +500,7 @@ $(document).ready(function(){
         $('#iddelete').val(data[0]);  
         $('#examnamedelete').val(data[1]); 
         $('#classnamedelete').val(data[2]); 
+        $('#schoolyeardelete').val(data[3]); 
               
        
   });
@@ -511,19 +525,28 @@ $(document).ready(function(){
 				<div class="container-fluid">
 				<form method="POST" action="query-edit.php" enctype="multipart/form-data">
         <input type="hidden" class="form-control" id="id" name="idedit" required >
-				  <div class="row">
+        <div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Exam Name:</label>
+							<label class="control-label" style="position:relative; top:7px;">Exam Name</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" id="examnameid" name="examname"required>
-                           
+                            <select name="examname" id="examnameid" class="form-control custom-select" required>
+                            <option selected value="" disabled>Select Class</option>
+                          <?php
+                                  include('dbconnect.php'); 
+                          $query = mysqli_query($conn,"SELECT * FROM examcategory");
+
+                          while ($result = mysqli_fetch_array($query)) {
+                          echo "<option value=" .$result['id']. ">" .$result['examcategoryname']."</option>";
+                          }
+                          ?>
+                          </select>
 						</div>
 					</div>
 								<div style="height:10px;"></div>
 				<div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Class:</label>
+							<label class="control-label" style="position:relative; top:7px;">Class</label>
 						</div>
 						<div class="col-lg-8">
                             <select name="classname" id="classnameid" class="form-control custom-select" required>
@@ -539,9 +562,24 @@ $(document).ready(function(){
                           </select>
 						</div>
 					</div>
-
+          <div style="height:10px;"></div>
+                <div class="row">
+                <div class="col-lg-4">
+                <label class="control-label" style="position:relative; top:7px;">School Year</label>
+                </div>
+                <div class="col-lg-8">
+                <select name="schoolyear" id="schoolyearid" class="form-control custom-select" required>
+                <option selected value="" disabled>Select</option> 
+                 <option value="2020-2021">2020-2021</option>"     
+                 <option value="2021-2022">2021-2022</option>"     
+                 <option value="2022-2023">2022-2023</option>" 
+                 <option value="2023-2024">2023-2024</option>"
+                 <option value="2024-2025">2024-2025</option>"   
+                </select>
+                </div>
+                </div>	
+									
         
-
 									
                 </div> 
 				</div>
@@ -578,7 +616,7 @@ $(document).ready(function(){
 
 					<div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Exam Name:</label>
+							<label class="control-label" style="position:relative; top:7px;">Exam Name</label>
 						</div>
 						<div class="col-lg-8">
             <input type="hidden" name="iddelete" id="iddelete">
@@ -588,12 +626,23 @@ $(document).ready(function(){
 					<div style="height:10px;"></div>
           <div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Class Name:</label>
+							<label class="control-label" style="position:relative; top:7px;">Class Name</label>
 						</div>
 						<div class="col-lg-8">
 							<input type="text" id="classnamedelete" class="form-control" name="" required readonly>
 						</div>
 					</div>
+          <div style="height:10px;"></div>
+          <div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">School Year</label>
+						</div>
+						<div class="col-lg-8">
+							<input type="text" id="schoolyeardelete" class="form-control" name="" required readonly>
+						</div>
+					</div>
+
+          
 </div>
 
 

@@ -203,7 +203,7 @@ include('../includes/pagetopbar.php');
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-folder-open"></i>
               <p>
-                Exam
+              Assessment
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
