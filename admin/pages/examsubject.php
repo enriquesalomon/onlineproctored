@@ -317,8 +317,8 @@ unset($_SESSION['error_remarks']);
                       <th>Right Answer Mark</th>
                       <th>Wrong Answer Mark</th>
                     <th>Action</th>
-                    <th >examid</th>
-                    <th >subjectid </th>
+                    <th hidden>examid</th>
+                    <th hidden>subjectid </th>
                   </tr>
                   </thead>
                   <tbody>
@@ -343,7 +343,7 @@ unset($_SESSION['error_remarks']);
                  $examname=$getrow1['examname'];
                  $getrow2=mysqli_query($conn,"SELECT * FROM subjects where id='$subjectid'");
                  $getrow2=mysqli_fetch_array($getrow2);
-                  $examname=$getrow2['subjectname'];
+                  $subjectname=$getrow2['subjectname'];
                 
                 ?>             
                 <tr>
@@ -477,8 +477,12 @@ $(document).ready(function(){
         }).get();
 
         $('#id').val(data[0]);     
-        $('#examnameid').val(data[1]);   
-        $('#classnameid').val(data[6]);         
+        $('#examnameedit').val(data[8]);   
+        $('#subjectnameedit').val(data[9]);
+        $('#examdatetimeedit').val(data[3]);
+        $('#totalquestionedit').val(data[4]);   
+        $('#rightmarkedit').val(data[5]);    
+        $('#wrongmarkedit').val(data[6]);   
        
    
 
@@ -516,50 +520,112 @@ $(document).ready(function(){
             <div class="modal-content">
                 <div class="modal-header">
                     
-                    <center><h4 class="modal-title" id="myModalLabel">Edit Exam</h4></center>
+                    <center><h4 class="modal-title" id="myModalLabel">Edit Exam Subject</h4></center>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
 				<div class="container-fluid">
 				<form method="POST" action="query-edit.php" enctype="multipart/form-data">
         <input type="hidden" class="form-control" id="id" name="idedit" required >
-				  <div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Exam Name:</label>
-						</div>
-						<div class="col-lg-8">
-							<input type="text" class="form-control" id="examnameid" name="examname"required>
-                           
-						</div>
-					</div>
-								<div style="height:10px;"></div>
-				<div class="row">
-						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Class:</label>
-						</div>
-						<div class="col-lg-8">
-                            <select name="classname" id="classnameid" class="form-control custom-select" required>
-                            <option selected value="" disabled>Select Class</option>
-                          <?php
-                                  include('dbconnect.php'); 
-                          $query = mysqli_query($conn,"SELECT * FROM class");
+        <div class="row">
+                <div class="col-lg-4">
+                <label class="control-label" style="position:relative; top:7px;">Exam Name:</label>
+                </div>
+                <div class="col-lg-8">
+                <select name="examname" id="examnameedit" class="form-control custom-select" required>
+                <option selected value="" disabled>Select</option>
+                <?php
+                  include('dbconnect.php'); 
+                $query = mysqli_query($conn,"SELECT * FROM exam");
 
-                          while ($result = mysqli_fetch_array($query)) {
-                          echo "<option value=" .$result['id']. ">" .$result['classname']."</option>";
-                          }
-                          ?>
-                          </select>
-						</div>
-					</div>
+                while ($result = mysqli_fetch_array($query)) {
+                echo "<option value="  .$result['id']. ">" .$result['examname']."</option>";
+                }
+                ?>
+                </select>
+                </div>
+                </div>
 
-        
+                <div style="height:10px;"></div>
+                <div class="row">
+                <div class="col-lg-4">
+                <label class="control-label" style="position:relative; top:7px;">Subject Name:</label>
+                </div>
+                <div class="col-lg-8">
+                <select name="subjectname" id="subjectnameedit" class="form-control custom-select" required>
+                <option selected value="" disabled>Select</option>
+                <?php
+                  include('dbconnect.php'); 
+                $query = mysqli_query($conn,"SELECT * FROM subjects");
 
+                while ($result = mysqli_fetch_array($query)) {
+                echo "<option value="  .$result['id']. ">" .$result['subjectname']."</option>";
+                }
+                ?>
+                </select>
+                </div>
+                </div>
+
+                <div style="height:10px;"></div>
+                <div class="row">
+                <div class="col-lg-4">
+                <label class="control-label" style="position:relative; top:7px;">Exam DateTime:</label>
+                </div>
+                <div class="col-lg-8">
+                <input type="text" class="form-control" id="examdatetimeedit" name="examdatetime"required>
+
+                </div>
+                </div>
+                          <div style="height:10px;"></div>
+                <div class="row">
+                <div class="col-lg-4">
+                <label class="control-label" style="position:relative; top:7px;">Total Question:</label>
+                </div>
+                <div class="col-lg-8">
+                <input type="text" class="form-control" id="totalquestionedit" name="totalquestion"required>
+
+                </div>
+                </div>
+                      <div style="height:10px;"></div>
+                <div class="row">
+                <div class="col-lg-4">
+                <label class="control-label" style="position:relative; top:7px;">Right Ans(Mark +):</label>
+                </div>
+                <div class="col-lg-8">
+                <select name="rightmark" id="rightmarkedit" class="form-control custom-select" required>
+                <option selected value="" disabled>Select points</option> 
+                <option value="1">1</option>"     
+                <option value="2">2</option>"     
+                <option value="3">3</option>" 
+                <option value="4">4</option>"
+                <option value="5">5</option>"          
+                </select>
+                </div>
+                </div>
+                         <div style="height:10px;"></div>
+                <div class="row">
+                <div class="col-lg-4">
+                <label class="control-label" style="position:relative; top:7px;">Wrong Ans(Mark -):</label>
+                </div>
+                <div class="col-lg-8">
+                <select name="wrongmark" id="wrongmarkedit" class="form-control custom-select" required>
+                <option selected value="" disabled>Select points</option> 
+                 <option value="1">1</option>"     
+                 <option value="2">2</option>"     
+                 <option value="3">3</option>" 
+                 <option value="4">4</option>"
+                 <option value="5">5</option>"   
+                </select>
+                </div>
+                </div>	
+					
+								
 									
                 </div> 
 				</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-                    <button type="submit"name="editexam" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
+                    <button type="submit"name="editexamsubject" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
                     	
 				</form>
                 </div>

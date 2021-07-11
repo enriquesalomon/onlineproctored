@@ -27,27 +27,47 @@ $date = date('Y-m-d H:i:s');
                 <label class="control-label" style="position:relative; top:7px;">Exam Name:</label>
                 </div>
                 <div class="col-lg-8">
-                <input type="text" class="form-control" name="examname"required>
+                <select name="examname" id="" class="form-control custom-select" required>
+                <option selected value="" disabled>Select</option>
+                <?php
+                  include('dbconnect.php'); 
+                $query = mysqli_query($conn,"SELECT * FROM exam");
 
+                while ($result = mysqli_fetch_array($query)) {
+                echo "<option value="  .$result['id']. ">" .$result['examname']."</option>";
+                }
+                ?>
+                </select>
                 </div>
                 </div>
-                        <div style="height:10px;"></div>
+
+                <div style="height:10px;"></div>
                 <div class="row">
                 <div class="col-lg-4">
                 <label class="control-label" style="position:relative; top:7px;">Subject Name:</label>
                 </div>
                 <div class="col-lg-8">
-                <input type="text" class="form-control" name="examname"required>
+                <select name="subjectname" id="" class="form-control custom-select" required>
+                <option selected value="" disabled>Select</option>
+                <?php
+                  include('dbconnect.php'); 
+                $query = mysqli_query($conn,"SELECT * FROM subjects");
 
+                while ($result = mysqli_fetch_array($query)) {
+                echo "<option value="  .$result['id']. ">" .$result['subjectname']."</option>";
+                }
+                ?>
+                </select>
                 </div>
                 </div>
-                        <div style="height:10px;"></div>
+
+                <div style="height:10px;"></div>
                 <div class="row">
                 <div class="col-lg-4">
                 <label class="control-label" style="position:relative; top:7px;">Exam DateTime:</label>
                 </div>
                 <div class="col-lg-8">
-                <input type="text" class="form-control" name="examname"required>
+                <input type="text" class="form-control" name="examdatetime"required>
 
                 </div>
                 </div>
@@ -57,7 +77,7 @@ $date = date('Y-m-d H:i:s');
                 <label class="control-label" style="position:relative; top:7px;">Total Question:</label>
                 </div>
                 <div class="col-lg-8">
-                <input type="text" class="form-control" name="examname"required>
+                <input type="text" class="form-control" name="totalquestion"required>
 
                 </div>
                 </div>
@@ -67,7 +87,7 @@ $date = date('Y-m-d H:i:s');
                 <label class="control-label" style="position:relative; top:7px;">Right Ans(Mark +):</label>
                 </div>
                 <div class="col-lg-8">
-                <select name="classname" id="" class="form-control custom-select" required>
+                <select name="rightmark" id="" class="form-control custom-select" required>
                 <option selected value="" disabled>Select points</option> 
                 <option value="1">1</option>"     
                 <option value="2">2</option>"     
@@ -83,7 +103,7 @@ $date = date('Y-m-d H:i:s');
                 <label class="control-label" style="position:relative; top:7px;">Wrong Ans(Mark -):</label>
                 </div>
                 <div class="col-lg-8">
-                <select name="classname" id="" class="form-control custom-select" required>
+                <select name="wrongmark" id="" class="form-control custom-select" required>
                 <option selected value="" disabled>Select points</option> 
                  <option value="1">1</option>"     
                  <option value="2">2</option>"     
@@ -125,28 +145,40 @@ $('#dateexam2').datepicker();
 
  
   	// Get image name
-	  $examname= mysqli_real_escape_string($conn, $_POST['examname']);
-		$classname= mysqli_real_escape_string($conn, $_POST['classname']);       
+	  $examnameid= mysqli_real_escape_string($conn, $_POST['examname']);
+		$subjectnameid= mysqli_real_escape_string($conn, $_POST['subjectname']);    
+    $examdatetime= mysqli_real_escape_string($conn, $_POST['examdatetime']);
+		$totalquestion= mysqli_real_escape_string($conn, $_POST['totalquestion']); 
+    $rightmark= mysqli_real_escape_string($conn, $_POST['rightmark']);
+		$wrongmark= mysqli_real_escape_string($conn, $_POST['wrongmark']);    
 		$date = date('Y-m-d H:i:s');
 
-    if(!empty($_POST["classname"])) {
-      $check=mysqli_query($conn,"select * from exam where examname='" . $_POST["examname"] . "' AND  classname='" . $_POST["classname"] . "'");
+    $getrow1=mysqli_query($conn,"SELECT * FROM exam where id='$examnameid'");
+    $getrow1=mysqli_fetch_array($getrow1);
+     $examname=$getrow1['examname'];
+
+     $getrow2=mysqli_query($conn,"SELECT * FROM subjects where id='$subjectnameid'");
+     $getrow2=mysqli_fetch_array($getrow2);
+      $subjectname=$getrow2['subjectname'];
+
+    if(!empty($_POST["examname"])) {
+      $check=mysqli_query($conn,"select * from examsubject where examname='".$examname."' AND  subjectname='".$subjectname."'  AND  examdatetime='".$examdatetime."'");
      $erow=mysqli_fetch_array($check);
       if($erow>0) {
         $_SESSION["error_remarks"]="Cannot be saved, found exam info duplication";
            
               $_SESSION["error"]="error";
-              header('location:exam.php');
+              header('location:examsubject.php');
               exit();
                 }      
       }
      
-        $sql = "INSERT INTO exam VALUES (DEFAULT,'$examname','$classname','','$date')";   
+        $sql = "INSERT INTO examsubject VALUES (DEFAULT,'$examnameid','$subjectnameid','$examname','$subjectname','$examdatetime','$totalquestion','$rightmark','$wrongmark','$date')";   
         if (!mysqli_query($conn, $sql)) {
             echo("Error description: " . mysqli_error($conn));
                 }else{
                       $_SESSION["examadded"]="add";
-                      header('location:exam.php');
+                      header('location:examsubject.php');
                       
                 }
 
