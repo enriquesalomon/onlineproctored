@@ -297,7 +297,7 @@ unset($_SESSION['error_remarks']);
  <?php include 'modal-add-exam.php'?>
  <section class="content">
        <div class="container-fluid">
-       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-exam">Add Exam</button>
+       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-exam">New</button>
 
         <div class="row">
           <div class="col-12">
@@ -346,8 +346,7 @@ unset($_SESSION['error_remarks']);
                 <td><?php echo $resultdatetime; ?></td>   
                 <td><?php echo $createdon; ?></td>    
                 <td><?php 
-                     echo ' <button type="button" class="btn btn-block bg-gradient-success btn-xs questbtn">Questionnaire</button>';
-                    echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
+                     echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
                     echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletegradelevel">Delete</button>';
                    
                    ?>

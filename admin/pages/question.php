@@ -217,13 +217,13 @@ include('../includes/pagetopbar.php');
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./examsubject.php" class="nav-link active">
+                <a href="./examsubject.php" class="nav-link ">
                 <i class="far fas-file nav-icon"></i>
                   <p>Exam Subject</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./question.php" class="nav-link">
+                <a href="./question.php" class="nav-link active">
                   <i class="far fas-file nav-icon"></i>
                   <p>Question</p>
                 </a>
@@ -294,10 +294,10 @@ unset($_SESSION['error_remarks']);
 ?> 
  <!-- Main content -->
     
- <?php include 'modal-add-examsubject.php'?>
+ <?php include 'modal-add-question.php'?>
  <section class="content">
        <div class="container-fluid">
-       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-exam">Add Exam</button>
+       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-exam">New</button>
 
         <div class="row">
           <div class="col-12">
@@ -311,11 +311,13 @@ unset($_SESSION['error_remarks']);
                   <tr>
                   <th hidden>Id</th>
                   <th>Exam Name</th>
-                    <th>Subject</th>
-                      <th>Exam Datetime</th>
-                      <th>Total Question</th>
-                      <th>Right Answer Mark</th>
-                      <th>Wrong Answer Mark</th>
+                    <th>Subject Name</th>
+                      <th>Question</th>
+                      <th>Option 1</th>
+                      <th>Option 2</th>
+                      <th>Option 3</th>
+                      <th>Option 4</th>
+                      <th>Answer</th>
                     <th>Action</th>
                     <th hidden>examid</th>
                     <th hidden>subjectid </th>
@@ -324,7 +326,7 @@ unset($_SESSION['error_remarks']);
                   <tbody>
                 <?php
                 include('dbconnect.php');                           
-                $query=mysqli_query($conn," select *  from examsubject");                                            
+                $query=mysqli_query($conn," select *  from question");                                            
                 while($getrow=mysqli_fetch_array($query)){
                 ?>
                 <?php 
@@ -333,10 +335,12 @@ unset($_SESSION['error_remarks']);
                 $examid=$getrow['examid'];             
                 $subjectid=$getrow['subjectid'];            
                
-                $examdatetime=$getrow['examdatetime']; 
-                $totalquestion=$getrow['totalquestion']; 
-                $rightmark=$getrow['rightmark'];  
-                $wrongmark=$getrow['wrongmark']; 
+                $question=$getrow['question']; 
+                $option1=$getrow['option1']; 
+                $option2=$getrow['option2'];  
+                $option3=$getrow['option3'];
+                $option4=$getrow['option4'];
+                $answer=$getrow['answer']; 
 
                 $getrow1=mysqli_query($conn,"SELECT * FROM exam where id='$examid'");
                 $getrow1=mysqli_fetch_array($getrow1);
@@ -350,13 +354,14 @@ unset($_SESSION['error_remarks']);
                 <td hidden><?php echo $id; ?></td>
                 <td><?php echo $examname; ?></td>
                 <td ><?php echo $subjectname; ?></td>               
-                <td><?php echo $examdatetime; ?></td>   
-                <td><?php echo $totalquestion; ?></td> 
-                <td><?php echo $rightmark; ?></td>
-                <td><?php echo $wrongmark; ?></td>   
+                <td><?php echo $question; ?></td>   
+                <td><?php echo $option1; ?></td> 
+                <td><?php echo $option2; ?></td>
+                <td><?php echo $option3; ?></td> 
+                <td><?php echo $option4; ?></td>
+                <td><?php echo $answer; ?></td>   
                 <td><?php 
-                     echo ' <button type="button" class="btn btn-block bg-gradient-success btn-xs questbtn">Questionnaire</button>';
-                    echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
+                       echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
                     echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletegradelevel">Delete</button>';
                    
                    ?>
@@ -530,10 +535,10 @@ $(document).ready(function(){
         <input type="hidden" class="form-control" id="id" name="idedit" required >
         <div class="row">
                 <div class="col-lg-4">
-                <label class="control-label" style="position:relative; top:7px;">Exam Name:</label>
+                <label class="control-label" style="position:relative; top:7px;">Exam Name</label>
                 </div>
                 <div class="col-lg-8">
-                <select name="examname" id="examnameedit" class="form-control custom-select" required>
+                <select name="examname" id="" class="form-control custom-select" required>
                 <option selected value="" disabled>Select</option>
                 <?php
                   include('dbconnect.php'); 
@@ -550,10 +555,10 @@ $(document).ready(function(){
                 <div style="height:10px;"></div>
                 <div class="row">
                 <div class="col-lg-4">
-                <label class="control-label" style="position:relative; top:7px;">Subject Name:</label>
+                <label class="control-label" style="position:relative; top:7px;">Subject Name</label>
                 </div>
                 <div class="col-lg-8">
-                <select name="subjectname" id="subjectnameedit" class="form-control custom-select" required>
+                <select name="subjectname" id="" class="form-control custom-select" required>
                 <option selected value="" disabled>Select</option>
                 <?php
                   include('dbconnect.php'); 
@@ -570,55 +575,69 @@ $(document).ready(function(){
                 <div style="height:10px;"></div>
                 <div class="row">
                 <div class="col-lg-4">
-                <label class="control-label" style="position:relative; top:7px;">Exam DateTime:</label>
+                <label class="control-label" style="position:relative; top:7px;">Question Title</label>
                 </div>
                 <div class="col-lg-8">
-                <input type="text" class="form-control" id="examdatetimeedit" name="examdatetime"required>
+                <input type="text" class="form-control" name="questiontitle"required>
 
                 </div>
                 </div>
                           <div style="height:10px;"></div>
                 <div class="row">
                 <div class="col-lg-4">
-                <label class="control-label" style="position:relative; top:7px;">Total Question:</label>
+                <label class="control-label" style="position:relative; top:7px;">Option 1</label>
                 </div>
                 <div class="col-lg-8">
-                <input type="text" class="form-control" id="totalquestionedit" name="totalquestion"required>
+                <input type="text" class="form-control" name="option1"required>
 
                 </div>
                 </div>
-                      <div style="height:10px;"></div>
+                <div style="height:10px;"></div>
                 <div class="row">
                 <div class="col-lg-4">
-                <label class="control-label" style="position:relative; top:7px;">Right Ans(Mark +):</label>
+                <label class="control-label" style="position:relative; top:7px;">Option 2</label>
                 </div>
                 <div class="col-lg-8">
-                <select name="rightmark" id="rightmarkedit" class="form-control custom-select" required>
-                <option selected value="" disabled>Select points</option> 
-                <option value="1">1</option>"     
-                <option value="2">2</option>"     
-                <option value="3">3</option>" 
-                <option value="4">4</option>"
-                <option value="5">5</option>"          
+                <input type="text" class="form-control" name="option2"required>
+
+                </div>
+                </div>
+                <div style="height:10px;"></div>
+                <div class="row">
+                <div class="col-lg-4">
+                <label class="control-label" style="position:relative; top:7px;">Option 3</label>
+                </div>
+                <div class="col-lg-8">
+                <input type="text" class="form-control" name="option3"required>
+
+                </div>
+                </div>
+                <div style="height:10px;"></div>
+                <div class="row">
+                <div class="col-lg-4">
+                <label class="control-label" style="position:relative; top:7px;">Option 4</label>
+                </div>
+                <div class="col-lg-8">
+                <input type="text" class="form-control" name="option4"required>
+
+                </div>
+                </div>
+                <div style="height:10px;"></div>
+                <div class="row">
+                <div class="col-lg-4">
+                <label class="control-label" style="position:relative; top:7px;">Answer</label>
+                </div>
+                <div class="col-lg-8">
+                <select name="answer" id="" class="form-control custom-select" required>
+                <option selected value="" disabled>Select</option> 
+                <option value="1">Option 1</option>"     
+                <option value="2">Option 2</option>"     
+                <option value="3">Option 3</option>" 
+                <option value="4">Option 4</option>"          
                 </select>
                 </div>
                 </div>
-                         <div style="height:10px;"></div>
-                <div class="row">
-                <div class="col-lg-4">
-                <label class="control-label" style="position:relative; top:7px;">Wrong Ans(Mark -):</label>
-                </div>
-                <div class="col-lg-8">
-                <select name="wrongmark" id="wrongmarkedit" class="form-control custom-select" required>
-                <option selected value="" disabled>Select points</option> 
-                 <option value="1">1</option>"     
-                 <option value="2">2</option>"     
-                 <option value="3">3</option>" 
-                 <option value="4">4</option>"
-                 <option value="5">5</option>"   
-                </select>
-                </div>
-                </div>	
+                   
 					
 								
 									

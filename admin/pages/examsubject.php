@@ -297,7 +297,7 @@ unset($_SESSION['error_remarks']);
  <?php include 'modal-add-examsubject.php'?>
  <section class="content">
        <div class="container-fluid">
-       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-exam">Add Exam</button>
+       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-exam">New</button>
 
         <div class="row">
           <div class="col-12">
@@ -355,8 +355,7 @@ unset($_SESSION['error_remarks']);
                 <td><?php echo $rightmark; ?></td>
                 <td><?php echo $wrongmark; ?></td>   
                 <td><?php 
-                     echo ' <button type="button" class="btn btn-block bg-gradient-success btn-xs questbtn">Questionnaire</button>';
-                    echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
+                      echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
                     echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletegradelevel">Delete</button>';
                    
                    ?>
@@ -521,7 +520,7 @@ $(document).ready(function(){
             <div class="modal-content">
                 <div class="modal-header">
                     
-                    <center><h4 class="modal-title" id="myModalLabel">Edit Exam Subject</h4></center>
+                    <center><h4 class="modal-title" id="myModalLabel">Edit Exam Subject Data</h4></center>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">

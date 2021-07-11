@@ -15,7 +15,7 @@ $date = date('Y-m-d H:i:s');
             <div class="modal-content">
                 <div class="modal-header">
                     
-                    <center><h4 class="modal-title" id="myModalLabel">Add New Exam Subject Data</h4></center>
+                    <center><h4 class="modal-title" id="myModalLabel">Add New Exam Subject Question Data</h4></center>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -24,7 +24,7 @@ $date = date('Y-m-d H:i:s');
 			
                 <div class="row">
                 <div class="col-lg-4">
-                <label class="control-label" style="position:relative; top:7px;">Exam Name:</label>
+                <label class="control-label" style="position:relative; top:7px;">Exam Name</label>
                 </div>
                 <div class="col-lg-8">
                 <select name="examname" id="" class="form-control custom-select" required>
@@ -44,7 +44,7 @@ $date = date('Y-m-d H:i:s');
                 <div style="height:10px;"></div>
                 <div class="row">
                 <div class="col-lg-4">
-                <label class="control-label" style="position:relative; top:7px;">Subject Name:</label>
+                <label class="control-label" style="position:relative; top:7px;">Subject Name</label>
                 </div>
                 <div class="col-lg-8">
                 <select name="subjectname" id="" class="form-control custom-select" required>
@@ -64,55 +64,69 @@ $date = date('Y-m-d H:i:s');
                 <div style="height:10px;"></div>
                 <div class="row">
                 <div class="col-lg-4">
-                <label class="control-label" style="position:relative; top:7px;">Exam DateTime:</label>
+                <label class="control-label" style="position:relative; top:7px;">Question Title</label>
                 </div>
                 <div class="col-lg-8">
-                <input type="text" class="form-control" name="examdatetime"required>
+                <input type="text" class="form-control" name="questiontitle"required>
 
                 </div>
                 </div>
                           <div style="height:10px;"></div>
                 <div class="row">
                 <div class="col-lg-4">
-                <label class="control-label" style="position:relative; top:7px;">Total Question:</label>
+                <label class="control-label" style="position:relative; top:7px;">Option 1</label>
                 </div>
                 <div class="col-lg-8">
-                <input type="text" class="form-control" name="totalquestion"required>
+                <input type="text" class="form-control" name="option1"required>
 
                 </div>
                 </div>
-                      <div style="height:10px;"></div>
+                <div style="height:10px;"></div>
                 <div class="row">
                 <div class="col-lg-4">
-                <label class="control-label" style="position:relative; top:7px;">Right Ans(Mark +):</label>
+                <label class="control-label" style="position:relative; top:7px;">Option 2</label>
                 </div>
                 <div class="col-lg-8">
-                <select name="rightmark" id="" class="form-control custom-select" required>
-                <option selected value="" disabled>Select points</option> 
-                <option value="1">1</option>"     
-                <option value="2">2</option>"     
-                <option value="3">3</option>" 
-                <option value="4">4</option>"
-                <option value="5">5</option>"          
+                <input type="text" class="form-control" name="option2"required>
+
+                </div>
+                </div>
+                <div style="height:10px;"></div>
+                <div class="row">
+                <div class="col-lg-4">
+                <label class="control-label" style="position:relative; top:7px;">Option 3</label>
+                </div>
+                <div class="col-lg-8">
+                <input type="text" class="form-control" name="option3"required>
+
+                </div>
+                </div>
+                <div style="height:10px;"></div>
+                <div class="row">
+                <div class="col-lg-4">
+                <label class="control-label" style="position:relative; top:7px;">Option 4</label>
+                </div>
+                <div class="col-lg-8">
+                <input type="text" class="form-control" name="option4"required>
+
+                </div>
+                </div>
+                <div style="height:10px;"></div>
+                <div class="row">
+                <div class="col-lg-4">
+                <label class="control-label" style="position:relative; top:7px;">Answer</label>
+                </div>
+                <div class="col-lg-8">
+                <select name="answer" id="" class="form-control custom-select" required>
+                <option selected value="" disabled>Select</option> 
+                <option value="1">Option 1</option>"     
+                <option value="2">Option 2</option>"     
+                <option value="3">Option 3</option>" 
+                <option value="4">Option 4</option>"          
                 </select>
                 </div>
                 </div>
-                         <div style="height:10px;"></div>
-                <div class="row">
-                <div class="col-lg-4">
-                <label class="control-label" style="position:relative; top:7px;">Wrong Ans(Mark -):</label>
-                </div>
-                <div class="col-lg-8">
-                <select name="wrongmark" id="" class="form-control custom-select" required>
-                <option selected value="" disabled>Select points</option> 
-                 <option value="1">1</option>"     
-                 <option value="2">2</option>"     
-                 <option value="3">3</option>" 
-                 <option value="4">4</option>"
-                 <option value="5">5</option>"   
-                </select>
-                </div>
-                </div>	
+                   
 					
 								
 									
@@ -147,10 +161,12 @@ $('#dateexam2').datepicker();
   	// Get image name
 	  $examnameid= mysqli_real_escape_string($conn, $_POST['examname']);
 		$subjectnameid= mysqli_real_escape_string($conn, $_POST['subjectname']);    
-    $examdatetime= mysqli_real_escape_string($conn, $_POST['examdatetime']);
-		$totalquestion= mysqli_real_escape_string($conn, $_POST['totalquestion']); 
-    $rightmark= mysqli_real_escape_string($conn, $_POST['rightmark']);
-		$wrongmark= mysqli_real_escape_string($conn, $_POST['wrongmark']);    
+    $question= mysqli_real_escape_string($conn, $_POST['question']);
+		$option1= mysqli_real_escape_string($conn, $_POST['option1']); 
+    $option2= mysqli_real_escape_string($conn, $_POST['option2']);
+		$option3= mysqli_real_escape_string($conn, $_POST['option3']);   
+        $option4= mysqli_real_escape_string($conn, $_POST['option4']);
+		$answer= mysqli_real_escape_string($conn, $_POST['answer']);    
 		$date = date('Y-m-d H:i:s');
 
     $getrow1=mysqli_query($conn,"SELECT * FROM exam where id='$examnameid'");
@@ -161,24 +177,24 @@ $('#dateexam2').datepicker();
      $getrow2=mysqli_fetch_array($getrow2);
       $subjectname=$getrow2['subjectname'];
 
-    if(!empty($_POST["examname"])) {
-      $check=mysqli_query($conn,"select * from examsubject where examname='".$examname."' AND  subjectname='".$subjectname."'  AND  examdatetime='".$examdatetime."'");
+    if(!empty($_POST["answer"])) {
+      $check=mysqli_query($conn,"select * from question where examid='".$examnameid."' AND  subjectid='".$subjectnameid."'  AND  question='".$question."'");
      $erow=mysqli_fetch_array($check);
       if($erow>0) {
         $_SESSION["error_remarks"]="Cannot be saved, found exam info duplication";
            
               $_SESSION["error"]="error";
-              header('location:examsubject.php');
+              header('location:question.php');
               exit();
                 }      
       }
      
-        $sql = "INSERT INTO examsubject VALUES (DEFAULT,'$examnameid','$subjectnameid','$examname','$subjectname','$examdatetime','$totalquestion','$rightmark','$wrongmark','$date')";   
+        $sql = "INSERT INTO question VALUES (DEFAULT,'$examnameid','$examname','$subjectnameid','$subjectname','$question','$option1','$option2','$option3','$option4','$answer','$date')";   
         if (!mysqli_query($conn, $sql)) {
             echo("Error description: " . mysqli_error($conn));
                 }else{
                       $_SESSION["added"]="add";
-                      header('location:examsubject.php');
+                      header('location:question.php');
                       
                 }
 
