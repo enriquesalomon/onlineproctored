@@ -485,7 +485,7 @@ $(document).ready(function(){
 <div style="height:10px;"></div>
 					<div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Class Name:</label>
+							<label class="control-label" style="position:relative; top:7px;">Class Name</label>
 						</div>
 						<div class="col-lg-8">
 							<input type="text" id="classnameid" class="form-control" name="classname" required readonly>
@@ -521,7 +521,7 @@ $(document).ready(function(){
 				
 					<div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Class Name:</label>
+							<label class="control-label" style="position:relative; top:7px;">Class Name</label>
 						</div>
 						<div class="col-lg-8">
             <input type="hidden" class="form-control" id="id" name="id" required >

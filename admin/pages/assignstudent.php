@@ -312,6 +312,7 @@ unset($_SESSION['error_remarks']);
                   <th>Class Name</th>                 
                     <th>Created On</th>                                
                   <th>Status</th> 
+                  <th>SY</th> 
                     <th>Action</th>
                     <th hidden>classid</th>
                     <th hidden>studentid</th>
@@ -330,7 +331,8 @@ unset($_SESSION['error_remarks']);
                 $studentname=$getrow['studentname']; 
                 $classname=$getrow['classname'];
                 $createdon=$getrow['createdon']; 
-                $status=$getrow['status']; 
+                $status=$getrow['status'];
+                $schoolyear=$getrow['sy'];  
                 $classid=$getrow['classid'];   
                 
                 ?>             
@@ -341,6 +343,7 @@ unset($_SESSION['error_remarks']);
                 <td><?php echo $classname; ?></td>
                 <td><?php echo $createdon; ?></td>  
                 <td><?php echo $status; ?></td>
+                <td><?php echo $schoolyear; ?></td>
                 <td><?php               
                   echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
                    echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletequiz">Delete</button>';
@@ -466,9 +469,10 @@ $(document).ready(function(){
           return $(this).text();
         }).get();
 
-        $('#id').val(data[0]);     
-        $('#classidedit').val(data[7]);  
-        $('#studentidedit').val(data[8]);  
+        $('#id').val(data[0]);
+        $('#schoolyearidedit').val(data[6]); 
+        $('#classidedit').val(data[8]);  
+        $('#studentidedit').val(data[9]);  
         $('#controlnoidedit').val(data[1]);  
          
         
@@ -492,6 +496,7 @@ $(document).ready(function(){
         $('#classnameiddelete').val(data[3])  ;  
         $('#studentnameiddelete').val(data[2])  ;  
         $('#controlnoiddelete').val(data[1])  ;  
+        $('#schoolyeariddelete').val(data[6])  ;  
              
        
   });
@@ -516,7 +521,7 @@ $(document).ready(function(){
 			
         <div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Class Name:</label>
+							<label class="control-label" style="position:relative; top:7px;">Class Name</label>
 						</div>
 						<div class="col-lg-8">
                             <select name="classnameedit" id="classidedit"  class="form-control custom-select" required>
@@ -536,7 +541,7 @@ $(document).ready(function(){
           <div style="height:10px;"></div>
                     <div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Student Name:</label>
+							<label class="control-label" style="position:relative; top:7px;">Student Name</label>
 						</div>
 						<div class="col-lg-8">
                             <select name="studentnameedit" id="studentidedit" class="form-control custom-select" required>
@@ -556,19 +561,32 @@ $(document).ready(function(){
 					<div style="height:10px;"></div>
                     <div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Control No:</label>
+							<label class="control-label" style="position:relative; top:7px;">Control No</label>
 						</div>
 						<div class="col-lg-8">
 							<input type="text" class="form-control" id="controlnoidedit" name="controlnoedit" required>
 						</div>
 					</div>				
-
+          <div style="height:10px;"></div>
+                <div class="row">
+                <div class="col-lg-4">
+                <label class="control-label" style="position:relative; top:7px;">School Year</label>
+                </div>
+                <div class="col-lg-8">
+                <select name="schoolyearedit" id="schoolyearidedit" class="form-control custom-select" required>
+                <option selected value="" disabled>Select</option> 
+                 <option value="2020-2021">2020-2021</option>"     
+                 <option value="2021-2022">2021-2022</option>"     
+                 <option value="2022-2023">2022-2023</option>" 
+                 <option value="2023-2024">2023-2024</option>"
+                 <option value="2024-2025">2024-2025</option>"   
+                </select>
+                </div>
+                </div>	
 					
-					<div style="height:10px;"></div>
-
-									
-                </div> 
-				</div>
+					<div style="height:10px;"></div>									
+      </div> 
+      </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
                     <button type="submit"name="editassignstudent" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>

@@ -14,7 +14,7 @@
 				
 					<div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Class Name:</label>
+							<label class="control-label" style="position:relative; top:7px;">Class Name</label>
 						</div>
 						<div class="col-lg-8">
 							<input type="text" class="form-control" name="classname"required>

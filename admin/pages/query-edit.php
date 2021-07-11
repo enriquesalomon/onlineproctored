@@ -207,7 +207,8 @@ session_start();
     $id= mysqli_real_escape_string($conn, $_POST['idedit']);
 		$classnameid= mysqli_real_escape_string($conn, $_POST['classnameedit']);  
     $studentnameid= mysqli_real_escape_string($conn, $_POST['studentnameedit']);  
-     $controlno= mysqli_real_escape_string($conn, $_POST['controlnoedit']);  
+     $controlno= mysqli_real_escape_string($conn, $_POST['controlnoedit']);
+     $schoolyear= mysqli_real_escape_string($conn, $_POST['schoolyearedit']);  
 
     $getrow1=mysqli_query($conn,"SELECT * FROM class where id='$classnameid'");
     $getrow1=mysqli_fetch_array($getrow1);
@@ -218,7 +219,7 @@ session_start();
       $studentname=$getrow2['firstname'].' '.$getrow2['middlename'].' '.$getrow2['lastname']  ;
 
     if(!empty($_POST["classname"])) {
-        $check=mysqli_query($conn,"select * from studentclass where controlno='".$controlno."' and studentid='".$studentnameid."' and classid='".$classnameid."' WHERE id <> '".$id."'");
+        $check=mysqli_query($conn,"select * from studentclass where sy='".$schoolyear."' and studentid='".$studentnameid."' and classid='".$classnameid."' WHERE id <> '".$id."'");
        $erow=mysqli_fetch_array($check);
         if($erow>0) {
             $_SESSION["error_remarks"]="Record duplication found!. Cannot be saved.";
@@ -230,7 +231,7 @@ session_start();
         }
 
 
-                if (!mysqli_query($conn, "UPDATE studentclass set controlno='$controlno',studentid='$studentnameid',studentname='$studentname',classid='$classnameid',classname='$classname' where id='$id'")) {
+                if (!mysqli_query($conn, "UPDATE studentclass set controlno='$controlno',studentid='$studentnameid',studentname='$studentname',classid='$classnameid',classname='$classname',sy='$schoolyear' where id='$id'")) {
             echo("Error description: " . mysqli_error($conn));
                 }else{
                       $_SESSION["edited"]="edit";

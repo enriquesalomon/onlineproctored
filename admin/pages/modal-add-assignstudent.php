@@ -12,7 +12,7 @@
 				<form method="POST"  enctype="multipart/form-data">				
                 <div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Class Name:</label>
+							<label class="control-label" style="position:relative; top:7px;">Class Name</label>
 						</div>
 						<div class="col-lg-8">
                             <select name="classname"  class="form-control custom-select" required>
@@ -32,7 +32,7 @@
 					<div style="height:10px;"></div>
                     <div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Student Name:</label>
+							<label class="control-label" style="position:relative; top:7px;">Student Name</label>
 						</div>
 						<div class="col-lg-8">
                             <select name="studentname" id="" class="form-control custom-select" required>
@@ -52,15 +52,29 @@
 					<div style="height:10px;"></div>
                     <div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Control No:</label>
+							<label class="control-label" style="position:relative; top:7px;">Control No</label>
 						</div>
 						<div class="col-lg-8">
 							<input type="text" class="form-control" name="controlno" required>
 						</div>
 					</div>				
-
+                    <div style="height:10px;"></div>
+                <div class="row">
+                <div class="col-lg-4">
+                <label class="control-label" style="position:relative; top:7px;">School Year</label>
+                </div>
+                <div class="col-lg-8">
+                <select name="schoolyear" class="form-control custom-select" required>
+                <option selected value="" disabled>Select</option> 
+                 <option value="2020-2021">2020-2021</option>"     
+                 <option value="2021-2022">2021-2022</option>"     
+                 <option value="2022-2023">2022-2023</option>" 
+                 <option value="2023-2024">2023-2024</option>"
+                 <option value="2024-2025">2024-2025</option>"   
+                </select>
+                </div>
+                </div>	
 					
-					<div style="height:10px;"></div>			
 					
                 </div> 
 				</div>
@@ -89,6 +103,7 @@
         $studentnameid = mysqli_real_escape_string($conn, $_POST['studentname']);
         $classnameid = mysqli_real_escape_string($conn, $_POST['classname']);
         $controlno = mysqli_real_escape_string($conn, $_POST['controlno']);
+        $schoolyear = mysqli_real_escape_string($conn, $_POST['schoolyear']);
 
         $getrow1=mysqli_query($conn,"SELECT * FROM student where id='$studentnameid'");
         $getrow1=mysqli_fetch_array($getrow1);
@@ -100,7 +115,7 @@
          
 
         if(!empty($_POST["studentname"])) {
-            $check=mysqli_query($conn,"select * from studentclass where classname='".$classname."' and studentname='".$studentname."' and controlno='".$controlno."' and status='Active' ");
+            $check=mysqli_query($conn,"select * from studentclass where classname='".$classname."' and studentname='".$studentname."' and sy='".$schoolyear."' and status='Active' ");
            $erow=mysqli_fetch_array($check);
             if($erow>0) {
                 $_SESSION["error_remarks"]="Record duplication found!. Cannot be saved.";
@@ -111,7 +126,7 @@
                       }      
             }
 
-        $sql = "INSERT INTO studentclass VALUES (DEFAULT,'$controlno','$studentnameid','$studentname','$classnameid','$classname','$date','Active')";   
+        $sql = "INSERT INTO studentclass VALUES (DEFAULT,'$controlno','$studentnameid','$studentname','$classnameid','$classname','$schoolyear','$date','Active')";   
         if (!mysqli_query($conn, $sql)) {
             echo("Error description: " . mysqli_error($conn));
                 }else{

@@ -13,7 +13,7 @@
 
 					<div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Subject Name:</label>
+							<label class="control-label" style="position:relative; top:7px;">Subject Name</label>
 						</div>
 						<div class="col-lg-8">
 							<input type="text" class="form-control" name="subject" required>
