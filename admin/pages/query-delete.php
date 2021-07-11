@@ -206,4 +206,34 @@ if (isset($_POST['deleteassignstudent'])) {
 
 }
 }
+
+if (isset($_POST['deleteexamsubjects'])) {
+  
+  $id= mysqli_real_escape_string($conn, $_POST['iddelete']);
+  
+
+      if(!empty($_POST["iddelete"])) { 
+        
+          // check if has 1-1 relationship to other table
+        //  $check=mysqli_query($conn,"select * from subjectclass where subjectname='$subjectname' ");
+        //  $erow=mysqli_fetch_array($check);
+        // If   if($erow>0) {
+          //          $_SESSION["error_remarks"]="Cannot be deleted, found existing record to Subject Class";
+                   //  
+            //       $_SESSION["error"]="error";
+             //      header('location:subject.php');
+             //      exit();
+             //        }      
+         
+
+              if (!mysqli_query($conn, "DELETE from examsubject where id='$id'")) {
+          echo("Error description: " . mysqli_error($conn));
+              }else{
+                    $_SESSION["deleted"]="delete";
+                    header('location:examsubject.php');
+                    
+              }
+
+}
+}
 ?>

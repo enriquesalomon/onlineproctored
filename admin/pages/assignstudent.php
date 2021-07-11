@@ -18,8 +18,7 @@ include('dbconnect.php');
   <title>Online Proctored Web App | Admin</title>
 
   <style>
-
-.main-sidebar { background-color: rgb(165,42,42) !important }
+    .main-sidebar { background-color: rgb(165,42,42) !important }
 
 /**
 .main-sidebar { background-color: rgb(67 144 85) !important }
@@ -217,7 +216,7 @@ include('../includes/pagetopbar.php');
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./quiz.php" class="nav-link">
+                <a href="./examsubject.php" class="nav-link">
                 <i class="far fas-file nav-icon"></i>
                   <p>Exam Subject</p>
                 </a>

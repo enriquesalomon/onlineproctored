@@ -217,7 +217,7 @@ include('../includes/pagetopbar.php');
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./quiz.php" class="nav-link">
+                <a href="./examsubject.php" class="nav-link">
                 <i class="far fas-file nav-icon"></i>
                   <p>Exam Subject</p>
                 </a>

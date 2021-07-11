@@ -269,13 +269,13 @@ include('../includes/pagetopbar.php');
       </div><!-- /.container-fluid -->
     </section>
     <?php
-if ( isset( $_SESSION['examadded']) ) {
+if ( isset( $_SESSION['added']) ) {
 include('toast-add.php');
 }
-if ( isset( $_SESSION['examedited']) ) {
+if ( isset( $_SESSION['edited']) ) {
   include('toast-edited.php');
   }
-if ( isset( $_SESSION['examdeleted']) ) {
+if ( isset( $_SESSION['deleted']) ) {
 include('toast-deleted.php');
 }
 
@@ -284,9 +284,9 @@ if ( isset( $_SESSION['error']) ) {
   include('toast-error.php');
   }
 
-unset($_SESSION['examadded']);
-unset($_SESSION['examedited']);
-unset($_SESSION['examdeleted']);
+unset($_SESSION['added']);
+unset($_SESSION['edited']);
+unset($_SESSION['deleted']);
 unset($_SESSION['error']);
 unset($_SESSION['error_remarks']);
 
@@ -502,7 +502,8 @@ $(document).ready(function(){
 
         $('#iddelete').val(data[0]);  
         $('#examnamedelete').val(data[1]); 
-        $('#classnamedelete').val(data[2]); 
+        $('#subjectnamedelete').val(data[2]); 
+        $('#examdatetimedelete').val(data[3]); 
               
        
   });
@@ -652,8 +653,8 @@ $(document).ready(function(){
 </div>
 <form action="query-delete.php" method="POST">
 <div class="modal-body">
- <center><h6>Are you sure you want to delete this Exam ?</h6> </center>
-
+ <center><h6>Are you sure you want to delete this Exam Subject ?</h6> </center>
+ 
 					<div class="row">
 						<div class="col-lg-4">
 							<label class="control-label" style="position:relative; top:7px;">Exam Name:</label>
@@ -666,10 +667,19 @@ $(document).ready(function(){
 					<div style="height:10px;"></div>
           <div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Class Name:</label>
+							<label class="control-label" style="position:relative; top:7px;">Subject Name:</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" id="classnamedelete" class="form-control" name="" required readonly>
+							<input type="text" id="subjectnamedelete" class="form-control" name="" required readonly>
+						</div>
+					</div>
+          <div style="height:10px;"></div>
+          <div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Exam Datetime:</label>
+						</div>
+						<div class="col-lg-8">
+							<input type="text" id="examdatetimedelete" class="form-control" name="" required readonly>
 						</div>
 					</div>
 </div>
@@ -677,7 +687,7 @@ $(document).ready(function(){
 
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-<button type="submit" name="deleteexam" class="btn btn-primary">Yes</button>
+<button type="submit" name="deleteexamsubjects" class="btn btn-primary">Yes</button>
 </div>       
 </form>
 

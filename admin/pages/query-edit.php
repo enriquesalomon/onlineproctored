@@ -241,4 +241,45 @@ session_start();
   }
   
   
+  
+  if (isset($_POST['editexamsubject'])) {
+  
+    $id= mysqli_real_escape_string($conn, $_POST['idedit']);
+		$examnameid= mysqli_real_escape_string($conn, $_POST['examname']);  
+    $subjectnameid= mysqli_real_escape_string($conn, $_POST['subjectname']);  
+     $examdatetime= mysqli_real_escape_string($conn, $_POST['examdatetime']);  
+     $totalquestion= mysqli_real_escape_string($conn, $_POST['totalquestion']);  
+     $rightmark= mysqli_real_escape_string($conn, $_POST['rightmark']);  
+      $wrongmark= mysqli_real_escape_string($conn, $_POST['wrongmark']);  
+
+    $getrow1=mysqli_query($conn,"SELECT * FROM exam where id='$examnameid'");
+    $getrow1=mysqli_fetch_array($getrow1);
+     $examname=$getrow1['examname'];
+     
+     $getrow2=mysqli_query($conn,"SELECT * FROM subjects where id='$subjectnameid'");
+     $getrow2=mysqli_fetch_array($getrow2);
+      $subjectname=$getrow2['subjectname'];
+
+      if(!empty($_POST["examname"])) {
+        $check=mysqli_query($conn,"select * from examsubject where examname='".$examname."' AND  subjectname='".$subjectname."'  AND  examdatetime='".$examdatetime."' AND id <> '".$id."'");
+       $erow=mysqli_fetch_array($check);
+        if($erow>0) {
+          $_SESSION["error_remarks"]="Cannot be saved, found exam info duplication";
+             
+                $_SESSION["error"]="error";
+                header('location:examsubject.php');
+                exit();
+                  }      
+        }
+      
+                if (!mysqli_query($conn, "UPDATE examsubject set examid='$examnameid',subjectid='$subjectnameid',examname='$examname',subjectname='$subjectname',examdatetime='$examdatetime',totalquestion='$totalquestion',rightmark='$rightmark',wrongmark='$wrongmark' where id='$id'")) {
+            echo("Error description: " . mysqli_error($conn));
+                }else{
+                      $_SESSION["edited"]="edit";
+                      header('location:examsubject.php');
+                      
+                }
+
+  }
+  
 ?>

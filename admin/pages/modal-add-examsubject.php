@@ -177,7 +177,7 @@ $('#dateexam2').datepicker();
         if (!mysqli_query($conn, $sql)) {
             echo("Error description: " . mysqli_error($conn));
                 }else{
-                      $_SESSION["examadded"]="add";
+                      $_SESSION["added"]="add";
                       header('location:examsubject.php');
                       
                 }
