@@ -118,14 +118,32 @@ $date = date('Y-m-d H:i:s');
 		$subjectnameid= mysqli_real_escape_string($conn, $_POST['subjectnameid']);
         $totalquestion = mysqli_real_escape_string($conn, $_POST['totalquestion']);
         $eid = $_GET['id'];
+        $classnameid = $_GET['classnameid'];
+        $sy = $_GET['sy'];
+        $examnameid = $_GET['examnameid'];
+
 		$date = date('Y-m-d H:i:s');
+
+        if(!empty($_POST["examdatetime"])) {
+            $check=mysqli_query($conn,"select * from examsubject where examid='" .$eid. "' AND  subjectid='" .$subjectnameid. "' AND  examdatetime='" .$examdatetime. "'");
+           $erow=mysqli_fetch_array($check);
+            if($erow>0) {
+              $_SESSION["error_remarks"]="Cannot be saved, found exam subject info duplication";
+                 
+                    $_SESSION["error"]="error";
+                    header('location:examdetails.php?examnameid='.$examnameid.'&classnameid='.$classnameid.'&id='.$eid.'&sy='.$sy.'');
+                
+                    exit();
+                      }      
+            }
+           
      
         $sql = "INSERT INTO examsubject VALUES (DEFAULT,'$eid','$subjectnameid','$examdatetime','$totalquestion','$date')";   
         if (!mysqli_query($conn, $sql)) {
             echo("Error description: " . mysqli_error($conn));
                 }else{
                       $_SESSION["added"]="add";
-                      header('location:examdetails.php');
+                      header('location:examdetails.php?examnameid='.$examnameid.'&classnameid='.$classnameid.'&id='.$eid.'&sy='.$sy.'');
                       
                 }
 
