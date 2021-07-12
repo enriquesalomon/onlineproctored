@@ -215,12 +215,12 @@ include('../includes/pagetopbar.php');
                   <p>Exam</p>
                 </a>
               </li>
-              <li class="nav-item">
+                 <!-- <li class="nav-item">
                 <a href="./examsubject.php" class="nav-link">
                 <i class="far fas-file nav-icon"></i>
                   <p>Exam Subject</p>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a href="./question.php" class="nav-link">
                   <i class="far fas-file nav-icon"></i>
