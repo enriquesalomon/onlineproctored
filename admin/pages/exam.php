@@ -353,13 +353,10 @@ unset($_SESSION['error_remarks']);
                 <td ><?php echo $schoolyear; ?></td>               
                 <td><?php echo $resultdatetime; ?></td>   
                 <td><?php echo $createdon; ?></td>    
-                <td><?php 
-
-                     echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
-                    echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletegradelevel">Delete</button>';
-                    echo '<a href="franchisee-teller-account-overview.php?tellerid=<?php echo  $tellerid; ?>&fid=<?php echo  $fid; ?>" class="btn btn-block bg-gradient-success btn-xs ">
-                    <i class="fas fa-arrow-circle-right"></i> Manage Exam Subjects</a>';
-                   
+                <td ><?php                  
+                        echo ' <a class="btn btn-info btn-sm editbtn" href="#"><i class="fas fa-pencil-alt"></i>Edit</a>&nbsp';
+                        echo '<a class="btn btn-danger btn-sm deletebtn" href="#"><i class="fas fa-trash"></i>Delete</a>';
+                        echo '  <a class="btn btn-primary btn-sm" href="examdetails.php?tellerid=<?php echo  $tellerid; ?>&fid=<?php echo  $fid; ?>><i class="fas fa-folder"></i>Manage Exam Subjects</a>';
                    ?>
                </td>   
                <td hidden><?php echo $classnameid; ?></td>    
