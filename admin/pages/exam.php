@@ -328,7 +328,7 @@ unset($_SESSION['error_remarks']);
                 ?>
                 <?php 
                 $id=$getrow['id'];   
-                $examnameid=$getrow['examcategoryid'];             
+                $examcatid=$getrow['examcategoryid'];             
                 $classnameid=$getrow['classnameid'];    
                 $schoolyear=$getrow['sy'];           
                 $resultdatetime=$getrow['resultdatetime'];
@@ -342,7 +342,7 @@ unset($_SESSION['error_remarks']);
                  $classname=$getrow1['classname'];
 
                  
-                $getrow1=mysqli_query($conn,"SELECT * FROM examcategory where id='$examnameid'");
+                $getrow1=mysqli_query($conn,"SELECT * FROM examcategory where id='$examcatid'");
                 $getrow1=mysqli_fetch_array($getrow1);
                  $examcat=$getrow1['examcategoryname'];
                 
@@ -357,7 +357,7 @@ unset($_SESSION['error_remarks']);
                 <td ><?php                  
                         echo ' <a class="btn btn-info btn-sm editbtn" href="#"><i class="fas fa-pencil-alt"></i>Edit</a>&nbsp';
                         echo '<a class="btn btn-danger btn-sm deletebtn" href="#"><i class="fas fa-trash"></i>Delete</a>&nbsp';
-                           echo "<a href='examdetails.php?examnameid=".$examnameid."&classnameid=".$classnameid."&id=".$id."&sy=".$schoolyear."' class='btn btn-sm btn-success'> <i class='fas fa-folder'></i>Manage Exam Subjects</a>";
+                           echo "<a href='examdetails.php?examcategoryid=".$examcatid."&classnameid=".$classnameid."&id=".$id."&sy=".$schoolyear."' class='btn btn-sm btn-success'> <i class='fas fa-folder'></i>Manage Exam Subjects</a>";
                     ?>
                </td>   
                <td hidden><?php echo $classnameid; ?></td>    

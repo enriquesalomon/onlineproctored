@@ -327,14 +327,14 @@ unset($_SESSION['error_remarks']);
           <div class="col-12">
 
           <?php
-             $examnameid = $_GET['examnameid'];
+             $examcategoryid = $_GET['examcategoryid'];
              $classnameid = $_GET['classnameid'];
              $eid = $_GET['id'];
              $sy = $_GET['sy'];
              
               include('dbconnect.php');  
               
-                if(!empty($_GET["examnameid"]) && !empty($_GET["classnameid"]) && !empty($_GET["id"]) && !empty($_GET["sy"])) {
+                if(!empty($_GET["examcategoryid"]) && !empty($_GET["classnameid"]) && !empty($_GET["id"]) && !empty($_GET["sy"])) {
                     $check=mysqli_query($conn,"select * from exam where id='" .$eid . "'");
                     $erow=mysqli_fetch_array($check);
                     if($erow>0) {              
@@ -356,7 +356,7 @@ unset($_SESSION['error_remarks']);
                     header('location:exam.php');
                     exit();
                     }   
-                    $check=mysqli_query($conn,"select * from examcategory where id='" .$examnameid . "'");
+                    $check=mysqli_query($conn,"select * from examcategory where id='" .$examcategoryid . "'");
                     $erow=mysqli_fetch_array($check);
                     if($erow>0) {              
                     }else{
@@ -369,7 +369,7 @@ unset($_SESSION['error_remarks']);
                     header('location:exam.php');
                 }
 
-           $getrow1=mysqli_query($conn,"SELECT * FROM examcategory where id='$examnameid'");
+           $getrow1=mysqli_query($conn,"SELECT * FROM examcategory where id='$examcategoryid'");
            $getrow1=mysqli_fetch_array($getrow1);
             $examcat=$getrow1['examcategoryname'];
             $getrow1=mysqli_query($conn,"SELECT * FROM class where id='$classnameid'");
@@ -417,20 +417,41 @@ unset($_SESSION['error_remarks']);
                     </tr>
                     </thead>
                     <tbody>
+                    <?php
+                include('dbconnect.php');                           
+                $query=mysqli_query($conn," select *  from examsubject");                                            
+                while($getrow=mysqli_fetch_array($query)){
+                ?>
+                <?php 
+                $id=$getrow['id'];   
+                $examnameid=$getrow['examid'];             
+                $subjectid=$getrow['subjectid'];    
+                $examdatetime=$getrow['examdatetime'];      
+                $totalquestion=$getrow['totalquestion'];        
+               
+
+                $getrow1=mysqli_query($conn,"SELECT * FROM subjects where id='$subjectid'");
+                $getrow1=mysqli_fetch_array($getrow1);
+                 $subjectname=$getrow1['subjectname'];                
+                ?>  
                     <tr>
-                      <td>1</td>
-                      <td>English</td>
-                      <td>455-981-221</td>
-                      <td>50 </td>
-                      <td>50 </td>
+                      <td><?php echo $id; ?></td>
+                      <td><?php echo $subjectname; ?></td>
+                      <td><?php echo $examdatetime; ?></td>
+                      <td><?php echo $totalquestion; ?></td>
+                      <td>0</td>
                       <td ><?php                  
                         echo ' <a class="btn btn-info btn-sm editbtn" href="#"><i class="fas fa-pencil-alt"></i>Edit</a>&nbsp';
                         echo '<a class="btn btn-danger btn-sm deletebtn" href="#"><i class="fas fa-trash"></i>Delete</a>';
                            //echo "<a href='examdetails.php?examnameid=".$examnameid."&classnameid=".$classnameid."&id=".$id."&sy=".$schoolyear."' class='btn btn-sm btn-success'> <i class='fas fa-folder'></i>Manage Exam Subjects</a>";
                     ?>
-               </td>   
+                     </td>   
+                     <td hidden><?php echo $subjectid; ?></td>                    
+
                     </tr>
-                   
+                    <?php
+}                      
+?>       
                     </tbody>
                   </table>
                 </div>
@@ -669,9 +690,9 @@ $(document).ready(function(){
         }).get();
 
         $('#id').val(data[0]);     
-        $('#examnameid').val(data[8]);   
-        $('#classnameid').val(data[7]);   
-        $('#schoolyearid').val(data[3]);       
+        $('#examdatetimeedit').val(data[2]);   
+        $('#subjectidedit').val(data[6]);   
+        $('#totalquestionedit').val(data[3]);       
        
    
 
@@ -715,17 +736,26 @@ $(document).ready(function(){
                     <center><h4 class="modal-title" id="myModalLabel">Edit Exam</h4></center>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body">  
 				<div class="container-fluid">
 				<form method="POST" action="query-edit.php" enctype="multipart/form-data">
         <input type="hidden" class="form-control" id="id" name="idedit" required >
+
+ 
+
+     <input type="hidden" class="form-control" name="eid" value="<?php echo$_GET['id']; ?>" required >
+     <input type="hidden" class="form-control" name="classnameid" value="<?php echo $_GET['classnameid']; ?>" required >
+     <input type="hidden" class="form-control" name="sy" value="<?php echo $_GET['sy']; ?>" required >
+     <input type="hidden" class="form-control" name="examcategoryid" value="<?php echo $_GET['examcategoryid']; ?>" required >
+
+
         <div class="row">
 						<div class="col-lg-4">
 							<label class="control-label" style="position:relative; top:7px;">Date and Time</label>
 						</div>
                         <div class="col-lg-8">
                             <div class="input-group date" id="reservationdatetimes" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetimes" required/>
+                                <input type="text" id="examdatetimeedit" name="examdatetime" class="form-control datetimepicker-input" data-target="#reservationdatetimes" required/>
                                 <div class="input-group-append" data-target="#reservationdatetimes" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -739,7 +769,7 @@ $(document).ready(function(){
 							<label class="control-label" style="position:relative; top:7px;">Subject</label>
 						</div>
 						<div class="col-lg-8">
-                            <select name="subjectname" class="form-control custom-select" required>
+                            <select name="subjectnameid" id="subjectidedit" class="form-control custom-select" required>
                             <option selected value="" disabled>Select Subject</option>
                           <?php
                                   include('dbconnect.php'); 
@@ -759,7 +789,7 @@ $(document).ready(function(){
 							<label class="control-label" style="position:relative; top:7px;">Total Question</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" name="examtitle" onkeypress='validate(event)' required>
+							<input type="text" class="form-control" name="totalquestion" id="totalquestionedit" onkeypress='validate(event)' required>
                            
 						</div>
 					</div>
@@ -770,7 +800,7 @@ $(document).ready(function(){
 				</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-                    <button type="submit"name="editexam" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
+                    <button type="submit"name="editexamsubject" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
                     	
 				</form>
                 </div>

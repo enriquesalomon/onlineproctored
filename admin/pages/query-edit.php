@@ -247,38 +247,34 @@ session_start();
   if (isset($_POST['editexamsubject'])) {
   
     $id= mysqli_real_escape_string($conn, $_POST['idedit']);
-		$examnameid= mysqli_real_escape_string($conn, $_POST['examname']);  
-    $subjectnameid= mysqli_real_escape_string($conn, $_POST['subjectname']);  
-     $examdatetime= mysqli_real_escape_string($conn, $_POST['examdatetime']);  
+		$examdatetime= mysqli_real_escape_string($conn, $_POST['examdatetime']);  
+    $subjectnameid= mysqli_real_escape_string($conn, $_POST['subjectnameid']);  
      $totalquestion= mysqli_real_escape_string($conn, $_POST['totalquestion']);  
-     $rightmark= mysqli_real_escape_string($conn, $_POST['rightmark']);  
-      $wrongmark= mysqli_real_escape_string($conn, $_POST['wrongmark']);  
 
-    $getrow1=mysqli_query($conn,"SELECT * FROM exam where id='$examnameid'");
-    $getrow1=mysqli_fetch_array($getrow1);
-     $examname=$getrow1['examname'];
-     
-     $getrow2=mysqli_query($conn,"SELECT * FROM subjects where id='$subjectnameid'");
-     $getrow2=mysqli_fetch_array($getrow2);
-      $subjectname=$getrow2['subjectname'];
+     $eid =  mysqli_real_escape_string($conn, $_POST['eid']);  
+     $classnameid =mysqli_real_escape_string($conn, $_POST['classnameid']);  
+     $sy = mysqli_real_escape_string($conn, $_POST['sy']);  
+     $examcategoryid = mysqli_real_escape_string($conn, $_POST['examcategoryid']);  
 
-      if(!empty($_POST["examname"])) {
-        $check=mysqli_query($conn,"select * from examsubject where examname='".$examname."' AND  subjectname='".$subjectname."'  AND  examdatetime='".$examdatetime."' AND id <> '".$id."'");
-       $erow=mysqli_fetch_array($check);
-        if($erow>0) {
-          $_SESSION["error_remarks"]="Cannot be saved, found exam info duplication";
-             
-                $_SESSION["error"]="error";
-                header('location:examsubject.php');
-                exit();
-                  }      
-        }
+     if(!empty($_POST["subjectnameid"])) {
+      $check=mysqli_query($conn,"select * from examsubject where examid='". $_POST["eid"] ."' AND subjectid='" . $_POST["subjectnameid"] . "' AND id <> '$id' ");
+     $erow=mysqli_fetch_array($check);
+      if($erow>0) {
+        $_SESSION["error_remarks"]="Cannot be saved, found data duplication";
+           
+              $_SESSION["error"]="error";
+              header('location:examdetails.php?examcategoryid='.$examcategoryid.'&classnameid='.$classnameid.'&id='.$eid.'&sy='.$sy.'');
+          
+              exit();
+                }      
+      }
       
-                if (!mysqli_query($conn, "UPDATE examsubject set examid='$examnameid',subjectid='$subjectnameid',examname='$examname',subjectname='$subjectname',examdatetime='$examdatetime',totalquestion='$totalquestion',rightmark='$rightmark',wrongmark='$wrongmark' where id='$id'")) {
+                if (!mysqli_query($conn, "UPDATE examsubject set examid='$examnameid',subjectid='$subjectnameid',examdatetime='$examdatetime',totalquestion='$totalquestion' where id='$id'")) {
             echo("Error description: " . mysqli_error($conn));
                 }else{
                       $_SESSION["edited"]="edit";
-                      header('location:examsubject.php');
+                      header('location:examdetails.php?examcategoryid='.$examcategoryid.'&classnameid='.$classnameid.'&id='.$eid.'&sy='.$sy.'');
+          
                       
                 }
 
