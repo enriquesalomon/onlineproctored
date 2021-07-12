@@ -262,7 +262,7 @@ include('../includes/pagetopbar.php');
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Subject with Classlist</li>
+              <li class="breadcrumb-item active">Class Subject</li>
             </ol>
           </div>
         </div>
