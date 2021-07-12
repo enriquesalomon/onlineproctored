@@ -377,7 +377,7 @@ unset($_SESSION['error_remarks']);
           </div>
           <!-- /.col -->
         </div>
-        <!-- /.row -->
+        <!-- /.row a-->
       </div>
       <!-- /.container-fluid -->
     </section>
