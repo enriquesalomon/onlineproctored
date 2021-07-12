@@ -301,6 +301,7 @@ unset($_SESSION['error_remarks']);
 
         <div class="row">
           <div class="col-12">
+            
            
 
             <div class="card">
@@ -355,9 +356,9 @@ unset($_SESSION['error_remarks']);
                 <td><?php echo $createdon; ?></td>    
                 <td ><?php                  
                         echo ' <a class="btn btn-info btn-sm editbtn" href="#"><i class="fas fa-pencil-alt"></i>Edit</a>&nbsp';
-                        echo '<a class="btn btn-danger btn-sm deletebtn" href="#"><i class="fas fa-trash"></i>Delete</a>';
-                        echo '  <a class="btn btn-primary btn-sm" href="examdetails.php?tellerid=<?php echo  $tellerid; ?>&fid=<?php echo  $fid; ?>><i class="fas fa-folder"></i>Manage Exam Subjects</a>';
-                   ?>
+                        echo '<a class="btn btn-danger btn-sm deletebtn" href="#"><i class="fas fa-trash"></i>Delete</a>&nbsp';
+                           echo "<a href='examdetails.php?examnameid=".$examnameid."&classnameid=".$classnameid."&id=".$id."&sy=".$schoolyear."' class='btn btn-sm btn-success'> <i class='fas fa-folder'></i>Manage Exam Subjects</a>";
+                    ?>
                </td>   
                <td hidden><?php echo $classnameid; ?></td>    
                <td hidden><?php echo $examnameid; ?></td>               

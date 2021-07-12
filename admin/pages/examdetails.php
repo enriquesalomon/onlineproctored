@@ -44,7 +44,35 @@ include('dbconnect.php');
   <link rel="stylesheet" href="../assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../assets/dist/css/adminlte.min.css">
-  <link rel="stylesheet" href="toastr/css/toastr.min.css">
+  <link rel="stylesheet" href="../toastr/css/toastr.min.css">
+  <!----->
+
+
+
+  
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="../assets/plugins/daterangepicker/daterangepicker.css">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="../assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="../assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="../assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="../assets/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="../assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!-- Bootstrap4 Duallistbox -->
+  <link rel="stylesheet" href="../assets/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+  <!-- BS Stepper -->
+  <link rel="stylesheet" href="../assets/plugins/bs-stepper/css/bs-stepper.min.css">
+  <!-- dropzonejs -->
+  <link rel="stylesheet" href="../assets/plugins/dropzone/min/dropzone.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../assets/dist/css/adminlte.min.css">
   <style>
 
 .main-sidebar { background-color: rgb(165,42,42) !important }
@@ -249,33 +277,33 @@ include('../includes/pagetopbar.php');
     </div>
     <!-- /.sidebar -->
   </aside>
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+ 
+   <!-- Content Wrapper. Contains page content -->
+   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Exam Management</h1>
+            <h1>Exam Details</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Exam </li>
+              <li class="breadcrumb-item active">Details</li>
             </ol>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
     <?php
-if ( isset( $_SESSION['examadded']) ) {
+if ( isset( $_SESSION['added']) ) {
 include('toast-add.php');
 }
-if ( isset( $_SESSION['examedited']) ) {
+if ( isset( $_SESSION['edited']) ) {
   include('toast-edited.php');
   }
-if ( isset( $_SESSION['examdeleted']) ) {
+if ( isset( $_SESSION['deleted']) ) {
 include('toast-deleted.php');
 }
 
@@ -284,108 +312,153 @@ if ( isset( $_SESSION['error']) ) {
   include('toast-error.php');
   }
 
-unset($_SESSION['examadded']);
-unset($_SESSION['examedited']);
-unset($_SESSION['examdeleted']);
+unset($_SESSION['added']);
+unset($_SESSION['edited']);
+unset($_SESSION['deleted']);
 unset($_SESSION['error']);
 unset($_SESSION['error_remarks']);
 
 
 ?> 
- <!-- Main content -->
-    
- <?php include 'modal-add-exam.php'?>
- <section class="content">
-       <div class="container-fluid">
-       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-exam">New</button>
-
+<?php include 'modal-add-exam-subject.php'?>
+    <section class="content">
+      <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-           
 
-            <div class="card">
-              <!-- /.card-header -->
-              <div class="card-body">
-              <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                  <th hidden>Id</th>
-                  <th>Exam Name</th>
-                    <th>Class Name</th>
-                    <th>School Year</th>
-                      <th>Result Date & Time</th>
-                    <th>Created On</th>
-                    <th>Action</th>
-                    <th hidden>classid </th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                <?php
-                include('dbconnect.php');                           
-                $query=mysqli_query($conn," select *  from exam");                                            
-                while($getrow=mysqli_fetch_array($query)){
-                ?>
-                <?php 
-                $id=$getrow['id'];   
-                $examnameid=$getrow['examcategoryid'];             
-                $classnameid=$getrow['classnameid'];    
-                $schoolyear=$getrow['sy'];           
-                $resultdatetime=$getrow['resultdatetime'];
-                if ($resultdatetime ==''){
-                  $resultdatetime= "Not Publish";
+          <?php
+             $examnameid = $_GET['examnameid'];
+             $classnameid = $_GET['classnameid'];
+             $eid = $_GET['id'];
+             $sy = $_GET['sy'];
+             
+              include('dbconnect.php');  
+              
+                if(!empty($_GET["examnameid"]) && !empty($_GET["classnameid"]) && !empty($_GET["id"]) && !empty($_GET["sy"])) {
+                    $check=mysqli_query($conn,"select * from exam where id='" .$eid . "'");
+                    $erow=mysqli_fetch_array($check);
+                    if($erow>0) {              
+                    }else{
+                    header('location:exam.php');
+                    exit();
+                    }   
+                    $check=mysqli_query($conn,"select * from exam where sy='" .$sy . "'");
+                    $erow=mysqli_fetch_array($check);
+                    if($erow>0) {              
+                    }else{
+                    header('location:exam.php');
+                    exit();
+                    }   
+                    $check=mysqli_query($conn,"select * from class where id='" .$classnameid . "'");
+                    $erow=mysqli_fetch_array($check);
+                    if($erow>0) {              
+                    }else{
+                    header('location:exam.php');
+                    exit();
+                    }   
+                    $check=mysqli_query($conn,"select * from examcategory where id='" .$examnameid . "'");
+                    $erow=mysqli_fetch_array($check);
+                    if($erow>0) {              
+                    }else{
+                    header('location:exam.php');
+                    exit();
+                    }   
+                  
+
+                }else{
+                    header('location:exam.php');
                 }
-                $createdon=$getrow['createdon'];  
 
-                $getrow1=mysqli_query($conn,"SELECT * FROM class where id='$classnameid'");
-                $getrow1=mysqli_fetch_array($getrow1);
-                 $classname=$getrow1['classname'];
+           $getrow1=mysqli_query($conn,"SELECT * FROM examcategory where id='$examnameid'");
+           $getrow1=mysqli_fetch_array($getrow1);
+            $examcat=$getrow1['examcategoryname'];
+            $getrow1=mysqli_query($conn,"SELECT * FROM class where id='$classnameid'");
+            $getrow1=mysqli_fetch_array($getrow1);
+             $classname=$getrow1['classname'];
+          ?>
 
-                 
-                $getrow1=mysqli_query($conn,"SELECT * FROM examcategory where id='$examnameid'");
-                $getrow1=mysqli_fetch_array($getrow1);
-                 $examcat=$getrow1['examcategoryname'];
-                
-                ?>             
-                <tr>
-                <td hidden><?php echo $id; ?></td>
-                <td><?php echo $examcat; ?></td>
-                <td ><?php echo $classname; ?></td>   
-                <td ><?php echo $schoolyear; ?></td>               
-                <td><?php echo $resultdatetime; ?></td>   
-                <td><?php echo $createdon; ?></td>    
-                <td><?php 
 
-                    // echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
-                    // echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletegradelevel">Delete</button>';
-   
-                    echo ' <a class="btn btn-info btn-sm editbtn" href="#"><i class="fas fa-pencil-alt"></i>Edit</a>';
-                            echo '<a class="btn btn-danger btn-sm deletebtn" href="#"><i class="fas fa-trash"></i>Delete</a>';
-                    echo '<a href="franchisee-teller-account-overview.php?tellerid=<?php echo  $tellerid; ?>&fid=<?php echo  $fid; ?>" class="btn btn-block bg-gradient-success btn-xs ">
-                    <i class="fas fa-arrow-circle-right"></i> Manage Exam Subjects</a>';
-                    echo '  <a class="btn btn-primary btn-sm" href="#"><i class="fas fa-folder"></i>Manage Exam Subjects</a>';
-                    
-                   ?>
-               </td>   
-               <td hidden><?php echo $classnameid; ?></td>    
-               <td hidden><?php echo $examnameid; ?></td>               
-                </tr> 
-<?php
-}                      
-?>                                            
-                    </tbody>                     
-                </table>
-              </div>
-              <!-- /.card-body -->
+
+          <div class="callout callout-info">
+              <h5><i class="far fa-folder"></i> Examination Details:</h5>
+              <?php echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Periodical Exam: '. $examcat; ?></br>
+              <?php echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Class: '. $classname; ?></br>
+              <?php echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SY: '. $sy; ?></br> 
+        
             </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row a-->
-      </div>
-      <!-- /.container-fluid -->
+           
+       
+            <!-- Main content -->
+            <div class="invoice p-3 mb-3">
+              <!-- title row -->
+              <div class="row">
+                <div class="col-12">
+                <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-exam-subject">Add New Subject</button>
+
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- info row -->
+            
+              <!-- /.row -->
+
+              <!-- Table row -->
+              <div class="row">
+                <div class="col-12 table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Subject</th>
+                      <th>Date & Time of Exam</th>
+                      <th>Total Question</th>
+                      <th>Total Points</th>
+                      <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>English</td>
+                      <td>455-981-221</td>
+                      <td>50 </td>
+                      <td>50 </td>
+                      <td ><?php                  
+                        echo ' <a class="btn btn-info btn-sm editbtn" href="#"><i class="fas fa-pencil-alt"></i>Edit</a>&nbsp';
+                        echo '<a class="btn btn-danger btn-sm deletebtn" href="#"><i class="fas fa-trash"></i>Delete</a>';
+                           //echo "<a href='examdetails.php?examnameid=".$examnameid."&classnameid=".$classnameid."&id=".$id."&sy=".$schoolyear."' class='btn btn-sm btn-success'> <i class='fas fa-folder'></i>Manage Exam Subjects</a>";
+                    ?>
+               </td>   
+                    </tr>
+                   
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+
+         
+
+              <!-- this row will not appear when printing -->
+              <div class="row no-print">
+                <div class="col-12">
+                  <a href="invoice-print.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                  <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
+                    Payment
+                  </button>
+                  <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                    <i class="fas fa-download"></i> Generate PDF
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- /.invoice -->
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+      
     </section>
-    <!-- /.content -->
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -449,7 +522,122 @@ unset($_SESSION['error_remarks']);
 <script src="../assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="../assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
+<!-- date-range-picker -->
+
+<!-- jQuery -->
+<script src="../assets/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Select2 -->
+<script src="../assets/plugins/select2/js/select2.full.min.js"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="../assets/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+<!-- InputMask -->
+<script src="../assets/plugins/moment/moment.min.js"></script>
+<script src="../assets/plugins/inputmask/jquery.inputmask.min.js"></script>
+<!-- date-range-picker -->
+<script src="../assets/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap color picker -->
+<script src="../assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="../assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Bootstrap Switch -->
+<script src="../assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<!-- BS-Stepper -->
+<script src="../assets/plugins/bs-stepper/js/bs-stepper.min.js"></script>
+<!-- dropzonejs -->
+<script src="../assets/plugins/dropzone/min/dropzone.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../assets/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../assets/dist/js/demo.js"></script>
+<!-- Page specific script -->
+
 <script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date picker
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
+
+    //Date and time picker for modal add
+    $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+    //Date and time picker for modal edit
+    $('#reservationdatetimes').datetimepicker({ icons: { time: 'far fa-clock' } });
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({
+      timePicker: true,
+      timePickerIncrement: 30,
+      locale: {
+        format: 'MM/DD/YYYY hh:mm A'
+      }
+    })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Timepicker
+    $('#timepicker').datetimepicker({
+      format: 'LT'
+    })
+
+
+  })
+</script>
+
+<script>
+  
+ function validate(evt) {
+  var theEvent = evt || window.event;
+
+  // Handle paste
+  if (theEvent.type === 'paste') {
+      key = event.clipboardData.getData('text/plain');
+  } else {
+  // Handle key press
+      var key = theEvent.keyCode || theEvent.which;
+      key = String.fromCharCode(key);
+  }
+  var regex = /[0-9]|\./;
+  if( !regex.test(key) ) {
+    theEvent.returnValue = false;
+    if(theEvent.preventDefault) theEvent.preventDefault();
+  }
+}
+
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -511,6 +699,8 @@ $(document).ready(function(){
 });
 
 
+
+
 </script>
 
    
@@ -531,57 +721,48 @@ $(document).ready(function(){
         <input type="hidden" class="form-control" id="id" name="idedit" required >
         <div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Exam Name</label>
+							<label class="control-label" style="position:relative; top:7px;">Date and Time</label>
 						</div>
-						<div class="col-lg-8">
-                            <select name="examname" id="examnameid" class="form-control custom-select" required>
-                            <option selected value="" disabled>Select Class</option>
-                          <?php
-                                  include('dbconnect.php'); 
-                          $query = mysqli_query($conn,"SELECT * FROM examcategory");
-
-                          while ($result = mysqli_fetch_array($query)) {
-                          echo "<option value=" .$result['id']. ">" .$result['examcategoryname']."</option>";
-                          }
-                          ?>
-                          </select>
-						</div>
-					</div>
-								<div style="height:10px;"></div>
-				<div class="row">
+                        <div class="col-lg-8">
+                            <div class="input-group date" id="reservationdatetimes" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetimes" required/>
+                                <div class="input-group-append" data-target="#reservationdatetimes" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>                
+             
+				    <div style="height:10px;"></div>
+                    <div class="row">
 						<div class="col-lg-4">
-							<label class="control-label" style="position:relative; top:7px;">Class</label>
+							<label class="control-label" style="position:relative; top:7px;">Subject</label>
 						</div>
 						<div class="col-lg-8">
-                            <select name="classname" id="classnameid" class="form-control custom-select" required>
-                            <option selected value="" disabled>Select Class</option>
+                            <select name="subjectname" class="form-control custom-select" required>
+                            <option selected value="" disabled>Select Subject</option>
                           <?php
                                   include('dbconnect.php'); 
-                          $query = mysqli_query($conn,"SELECT * FROM class");
+                          $query = mysqli_query($conn,"SELECT * FROM subjects");
 
                           while ($result = mysqli_fetch_array($query)) {
-                          echo "<option value=" .$result['id']. ">" .$result['classname']."</option>";
+                          echo "<option value="  .$result['id']. ">" .$result['subjectname']."</option>";
                           }
                           ?>
                           </select>
 						</div>
 					</div>
-          <div style="height:10px;"></div>
-                <div class="row">
-                <div class="col-lg-4">
-                <label class="control-label" style="position:relative; top:7px;">School Year</label>
-                </div>
-                <div class="col-lg-8">
-                <select name="schoolyear" id="schoolyearid" class="form-control custom-select" required>
-                <option selected value="" disabled>Select</option> 
-                 <option value="2020-2021">2020-2021</option>"     
-                 <option value="2021-2022">2021-2022</option>"     
-                 <option value="2022-2023">2022-2023</option>" 
-                 <option value="2023-2024">2023-2024</option>"
-                 <option value="2024-2025">2024-2025</option>"   
-                </select>
-                </div>
-                </div>	
+					
+						<div style="height:10px;"></div>
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label" style="position:relative; top:7px;">Total Question</label>
+						</div>
+						<div class="col-lg-8">
+							<input type="text" class="form-control" name="examtitle" onkeypress='validate(event)' required>
+                           
+						</div>
+					</div>
 									
         
 									
@@ -660,9 +841,11 @@ $(document).ready(function(){
 </div>
 </div>
 </div>
+
 <?php 
 include 'modal-logout.php';
 ?>
+
 
 
 

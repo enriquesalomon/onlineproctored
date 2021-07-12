@@ -209,19 +209,19 @@ include('../includes/pagetopbar.php');
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./pages/exam.php" class="nav-link">
+                <a href="./exam.php" class="nav-link">
                 <i class="far fas-file nav-icon"></i>
                   <p>Exam</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./pages/examsubject.php" class="nav-link">
+                <a href="./examsubject.php" class="nav-link">
                 <i class="far fas-file nav-icon"></i>
                   <p>Exam Subject</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/mailbox/materials" class="nav-link">
+                <a href="./question.php" class="nav-link">
                   <i class="far fas-file nav-icon"></i>
                   <p>Question</p>
                 </a>
