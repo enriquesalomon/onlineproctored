@@ -285,7 +285,7 @@ include('../includes/pagetopbar.php');
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Exam Details</h1> 
+            <h1>Exam Subject Question Management</h1> 
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -325,65 +325,15 @@ unset($_SESSION['error_remarks']);
       <div class="container-fluid">
         <div class="row">
 
-          <div class="col-12">
-          <?php
-             $examcategoryid = $_GET['examcategoryid'];
-             $classnameid = $_GET['classnameid'];
-             $eid = $_GET['id'];
-             $sy = $_GET['sy'];
-             
-              include('dbconnect.php');  
-              
-                if(!empty($_GET["examcategoryid"]) && !empty($_GET["classnameid"]) && !empty($_GET["id"]) && !empty($_GET["sy"])) {
-                    $check=mysqli_query($conn,"select * from exam where id='" .$eid . "'");
-                    $erow=mysqli_fetch_array($check);
-                    if($erow>0) {              
-                    }else{
-                    header('location:exam.php');
-                    exit();
-                    }   
-                    $check=mysqli_query($conn,"select * from exam where sy='" .$sy . "'");
-                    $erow=mysqli_fetch_array($check);
-                    if($erow>0) {              
-                    }else{
-                    header('location:exam.php');
-                    exit();
-                    }   
-                    $check=mysqli_query($conn,"select * from class where id='" .$classnameid . "'");
-                    $erow=mysqli_fetch_array($check);
-                    if($erow>0) {              
-                    }else{
-                    header('location:exam.php');
-                    exit();
-                    }   
-                    $check=mysqli_query($conn,"select * from examcategory where id='" .$examcategoryid . "'");
-                    $erow=mysqli_fetch_array($check);
-                    if($erow>0) {              
-                    }else{
-                    header('location:exam.php');
-                    exit();
-                    }   
-                  
-
-                }else{
-                    header('location:exam.php');
-                }
-
-           $getrow1=mysqli_query($conn,"SELECT * FROM examcategory where id='$examcategoryid'");
-           $getrow1=mysqli_fetch_array($getrow1);
-            $examcat=$getrow1['examcategoryname'];
-            $getrow1=mysqli_query($conn,"SELECT * FROM class where id='$classnameid'");
-            $getrow1=mysqli_fetch_array($getrow1);
-             $classname=$getrow1['classname'];
-          ?>
+          <div class="col-12">      
 
 
 
           <div class="callout callout-info">
               <h5><i class="far fa-file-alt"></i> Examination Details:</h5> 
-              <?php echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Periodical Exam: '. $examcat; ?></br>
-              <?php echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Class: '. $classname; ?></br>
-              <?php echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SY: '. $sy; ?></br> 
+              <?php echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Periodical Exam: ' ?></br>
+              <?php echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Class: ' ?></br>
+              <?php echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SY: '?></br> 
         
             </div>
            
@@ -394,8 +344,8 @@ unset($_SESSION['error_remarks']);
               <div class="row">
              
               <div class="col-12">
-              <a  href="./exam.php"><button class="btn btn-info"style="margin-bottom: 15px;"data-toggle="modal" ><i class="fas fa-angle-double-left"></i> Back to Exam </button></a>
-                <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-exam-subject">Add New Subject</button>
+              <a  href="./examdetails.php"><button class="btn btn-info"style="margin-bottom: 15px;"data-toggle="modal" ><i class="fas fa-angle-double-left"></i> Back to Exam Subjects </button></a>
+                <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-exam-subject">Add New Question</button>
                 </div>
                 <!-- /.col -->
               </div>
@@ -418,48 +368,7 @@ unset($_SESSION['error_remarks']);
                     </tr>
                     </thead>
                     <tbody>
-                    <?php
-                include('dbconnect.php');                           
-                $query=mysqli_query($conn," select *  from examsubject where examid='".$eid."'");                                            
-                while($getrow=mysqli_fetch_array($query)){
-                ?>
-                <?php 
-                $id=$getrow['id'];   
-                $examnameid=$getrow['examid'];             
-                $subjectid=$getrow['subjectid'];    
-                $examdatetime=$getrow['examdatetime'];      
-                $totalquestion=$getrow['totalquestion'];        
-               
-
-                $getrow1=mysqli_query($conn,"SELECT * FROM subjects where id='$subjectid'");
-                $getrow1=mysqli_fetch_array($getrow1);
-                 $subjectname=$getrow1['subjectname'];   
                  
-                 $examcatid = $_GET['examcategoryid'];
-                 $classnameid = $_GET['classnameid'];
-                 $eid = $_GET['id'];
-                 $sy = $_GET['sy'];
-                 
-                ?>  
-                    <tr>
-                      <td><?php echo $id; ?></td>
-                      <td><?php echo $subjectname; ?></td>
-                      <td><?php echo $examdatetime; ?></td>
-                      <td><?php echo $totalquestion; ?></td>
-                      <td>0</td>
-                      <td ><?php                  
-                        echo ' <a class="btn btn-info btn-sm editbtn" href="#"><i class="fas fa-pencil-alt"></i>Edit</a>&nbsp';
-                        echo '<a class="btn btn-danger btn-sm deletebtn" href="#"><i class="fas fa-trash"></i>Delete</a>&nbsp';
-                        echo "<a href='examsubjquestion.php?examsubjectid=".$id."&examcategoryid=".$examcatid."&classnameid=".$classnameid."&id=".$id."&sy=".$sy."' class='btn btn-sm btn-success'> <i class='fas fa-folder'></i>Manage Questions</a>";
-                    
-                   ?>
-                     </td>   
-                     <td hidden><?php echo $subjectid; ?></td>                    
-
-                    </tr>
-                    <?php
-}                      
-?>       
                     </tbody>
                   </table>
                 </div>

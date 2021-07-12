@@ -269,7 +269,7 @@ session_start();
                 }      
       }
       
-                if (!mysqli_query($conn, "UPDATE examsubject set examid='$examnameid',subjectid='$subjectnameid',examdatetime='$examdatetime',totalquestion='$totalquestion' where id='$id'")) {
+                if (!mysqli_query($conn, "UPDATE examsubject set examid='$eid',subjectid='$subjectnameid',examdatetime='$examdatetime',totalquestion='$totalquestion' where id='$id'")) {
             echo("Error description: " . mysqli_error($conn));
                 }else{
                       $_SESSION["edited"]="edit";
