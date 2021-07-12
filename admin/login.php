@@ -22,7 +22,7 @@ session_destroy();?>
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="#"><b>OPE</b>LOGIN</a>
+    <a href="#"><b>OPA</b>LOGIN</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
