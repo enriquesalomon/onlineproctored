@@ -294,7 +294,7 @@ unset($_SESSION['error_remarks']);
     <?php include 'modal-add-assignstudent.php'?>
     <section class="content">
        <div class="container-fluid">
-       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add">New</button>
+       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add"><i class="fa fa-plus" aria-hidden="true"></i></button>
 
         <div class="row">
           <div class="col-12">

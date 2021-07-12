@@ -293,7 +293,7 @@ include 'modal-add-gradelevel.php';
     <!-- Main content -->
     <section class="content">
        <div class="container-fluid">
-       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-gradelevel">New</button>
+       <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-gradelevel"><i class="fa fa-plus" aria-hidden="true"></i></button>
    
         <div class="row">
           <div class="col-12">

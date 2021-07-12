@@ -395,7 +395,7 @@ unset($_SESSION['error_remarks']);
              
               <div class="col-12">
               <a  href="./exam.php"><button class="btn btn-info"style="margin-bottom: 15px;"data-toggle="modal" ><i class="fas fa-angle-double-left"></i> Back to Exam </button></a>
-                <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-exam-subject">Add New Subject</button>
+                <button class="btn btn-success"style="margin-bottom: 15px;"data-toggle="modal" data-target="#add-exam-subject"><i class="fa fa-plus" aria-hidden="true"></i>New Subject</button>
                 </div>
                 <!-- /.col -->
               </div>
