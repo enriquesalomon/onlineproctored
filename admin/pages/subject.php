@@ -333,9 +333,9 @@ unset($_SESSION['error_remarks']);
                 <td><?php echo $createdon; ?></td>                
                 <td><?php echo $status; ?></td>  
                 <td><?php               
-                  echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
-                   echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" >Delete</button>';
-                  
+                   echo ' <a class="btn btn-info btn-sm editbtn" href="#"><i class="fas fa-pencil-alt"></i></a>&nbsp';
+                   echo '<a class="btn btn-danger btn-sm deletebtn" href="#"><i class="fas fa-trash"></i></a>&nbsp';
+
                    ?>
                </td>                  
                 </tr> 
@@ -412,12 +412,12 @@ unset($_SESSION['error_remarks']);
 <script src="../assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script src="../assets/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="../assets/plugins/jszip/jszip.min.js"></script>
+<!--<script src="../assets/plugins/jszip/jszip.min.js"></script>
 <script src="../assets/plugins/pdfmake/pdfmake.min.js"></script>
 <script src="../assets/plugins/pdfmake/vfs_fonts.js"></script>
 <script src="../assets/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="../assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="../assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="../assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>-->
 <script>
 
 

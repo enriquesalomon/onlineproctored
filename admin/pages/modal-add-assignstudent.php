@@ -55,7 +55,7 @@
 							<label class="control-label" style="position:relative; top:7px;">Control No</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" name="controlno" required>
+							<input type="text" class="form-control" name="controlno" onkeypress='validate(event)' required>
 						</div>
 					</div>				
                     <div style="height:10px;"></div>
@@ -88,6 +88,33 @@
             </div>
         </div>
     </div>
+    
+<script type="text/javascript">
+
+/**$('#datequiz2').datepicker();
+ $('.datepicker').datepicker({
+   weekStart:1,
+   color: 'red'
+ });
+*/
+ function validate(evt) {
+  var theEvent = evt || window.event;
+
+  // Handle paste
+  if (theEvent.type === 'paste') {
+      key = event.clipboardData.getData('text/plain');
+  } else {
+  // Handle key press
+      var key = theEvent.keyCode || theEvent.which;
+      key = String.fromCharCode(key);
+  }
+  var regex = /[0-9]|\./;
+  if( !regex.test(key) ) {
+    theEvent.returnValue = false;
+    if(theEvent.preventDefault) theEvent.preventDefault();
+  }
+}
+</script>
     <?php
     
  date_default_timezone_set('Asia/Manila');

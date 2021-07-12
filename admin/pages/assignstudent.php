@@ -344,10 +344,11 @@ unset($_SESSION['error_remarks']);
                 <td><?php echo $createdon; ?></td>  
                 <td><?php echo $status; ?></td>
                 <td><?php echo $schoolyear; ?></td>
-                <td><?php               
-                  echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
-                   echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletequiz">Delete</button>';
-                  
+                <td><?php              
+                 
+                   echo ' <a class="btn btn-info btn-sm editbtn" href="#"><i class="fas fa-pencil-alt"></i></a>&nbsp';
+                   echo '<a class="btn btn-danger btn-sm deletebtn" href="#"><i class="fas fa-trash"></i></a>&nbsp';
+
                    ?>
                </td>                
                <td hidden><?php echo $classid; ?></td>     
@@ -426,12 +427,13 @@ unset($_SESSION['error_remarks']);
 <script src="../assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script src="../assets/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="../assets/plugins/jszip/jszip.min.js"></script>
+<!--<script src="../assets/plugins/jszip/jszip.min.js"></script>
 <script src="../assets/plugins/pdfmake/pdfmake.min.js"></script>
 <script src="../assets/plugins/pdfmake/vfs_fonts.js"></script>
 <script src="../assets/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="../assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="../assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+-->
 <script>
 
 
@@ -564,7 +566,7 @@ $(document).ready(function(){
 							<label class="control-label" style="position:relative; top:7px;">Control No</label>
 						</div>
 						<div class="col-lg-8">
-							<input type="text" class="form-control" id="controlnoidedit" name="controlnoedit" required>
+							<input type="text" class="form-control" id="controlnoidedit" onkeypress='validate(event)' name="controlnoedit" required>
 						</div>
 					</div>				
           <div style="height:10px;"></div>
@@ -597,6 +599,33 @@ $(document).ready(function(){
             </div>
         </div>
     </div>
+    
+<script type="text/javascript">
+
+/**$('#datequiz2').datepicker();
+ $('.datepicker').datepicker({
+   weekStart:1,
+   color: 'red'
+ });
+*/
+ function validate(evt) {
+  var theEvent = evt || window.event;
+
+  // Handle paste
+  if (theEvent.type === 'paste') {
+      key = event.clipboardData.getData('text/plain');
+  } else {
+  // Handle key press
+      var key = theEvent.keyCode || theEvent.which;
+      key = String.fromCharCode(key);
+  }
+  var regex = /[0-9]|\./;
+  if( !regex.test(key) ) {
+    theEvent.returnValue = false;
+    if(theEvent.preventDefault) theEvent.preventDefault();
+  }
+}
+</script>
 </body>
 </html>
 

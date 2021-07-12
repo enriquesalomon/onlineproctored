@@ -355,9 +355,9 @@ unset($_SESSION['error_remarks']);
                 <td><?php echo $rightmark; ?></td>
                 <td><?php echo $wrongmark; ?></td>   
                 <td><?php 
-                      echo ' <button type="button" class="btn btn-block bg-gradient-info btn-xs editbtn">Edit</button>';
-                    echo ' <button type="button" class="btn btn-block bg-gradient-danger btn-xs deletebtn" name="deletegradelevel">Delete</button>';
-                   
+                      echo ' <a class="btn btn-info btn-sm editbtn" href="#"><i class="fas fa-pencil-alt"></i></a>&nbsp';
+                      echo '<a class="btn btn-danger btn-sm deletebtn" href="#"><i class="fas fa-trash"></i></a>&nbsp';
+   
                    ?>
                </td>   
                <td hidden><?php echo $examid; ?></td>   
